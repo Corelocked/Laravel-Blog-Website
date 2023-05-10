@@ -10,7 +10,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'title', 'excerpt', 'body', 'image_path', 'is_published'
+        'user_id', 'title', 'excerpt', 'body', 'image_path', 'is_published', 'additional_info'
     ];
 
     public function user(){
@@ -18,5 +18,8 @@ class Post extends Model
     }
     public function comments(){
         return $this->hasMany(Comment::class)->orderBy('id', 'DESC');
+    }
+    public function historypost(){
+        return $this->hasMany(HistoryPost::class);
     }
 }

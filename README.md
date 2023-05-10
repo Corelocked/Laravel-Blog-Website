@@ -91,7 +91,7 @@ Password: writer1234
 ![posts_create](https://user-images.githubusercontent.com/103435077/222498518-6e6b2c32-28dd-4379-8eeb-6a93d0bc9dec.png)
 
 ## Incoming Features
-* version control of each post
+* ~~version control of each post~~
 * probably tiles on the home page
 
 ## Acknowledgements

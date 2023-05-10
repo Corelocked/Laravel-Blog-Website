@@ -5,9 +5,20 @@
         @vite(['resources/js/post.js'])
     @endsection
 
-    <x-dashboard-navbar route="/dashboard/posts"/>
+    <header class="header_post_edit">
+        <a href="/dashboard/posts"><i class="fa-solid fa-left-long"></i> Powrót</a>
+        <div class="edit_post_actions">
+            <div class="preview_mode" onClick="showPreview();"><span class="text">Podgląd</span><span class="icon"><i class="fa-solid fa-eye"></i></span></div>
+            <a href="{{ route('history.index', $post->id) }}" class="history"><span class="text">Historia</span><span class="icon"><i class="fa-solid fa-timeline"></i></span></a>
+            <div class="submit" onClick="$('#form').submit();"><span class="text">Opublikuj</span><span class="icon"><i class="fa-solid fa-upload"></i></span></div>
+        </div>
+        <div class="profile">
+            <img src="{{ asset(Auth::user()->image_path) }}" alt="" class="profile_img">
+            <i class="fa-solid fa-angles-down"></i>
+        </div>
+    </header>
 
-    <section class="post__create">
+    <section class="post__create post__edit">
         <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data" id="form">
             @csrf
             @method('PATCH')
@@ -45,12 +56,11 @@
                     
                 </div>
                 <textarea name="body" style="display: none" id="hiddenArea">{!! $post->body !!}</textarea>
-                <div class="preview_mode" onClick="showPreview();">Podgląd</div>
-                <input type="submit" value="Opublikuj">
+                
             </div>
         </form>
     </section>
-    <aside class="post__preview">
+    <aside class="post__preview post__edit">
         <div class="post_container">
             <div class="top">
                 <img src="{{ asset($post->image_path) }}" id="output">

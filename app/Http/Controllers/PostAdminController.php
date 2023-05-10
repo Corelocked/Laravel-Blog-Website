@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\SavedPost;
+use App\Models\HistoryPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostUpdateFormRequest;
@@ -111,8 +112,8 @@ class PostAdminController extends Controller
             'body' => 'required',
         ];
         
-        if(isset($request->image)){
-            if($SavedPost->image_path){
+        if(!isset($request->image)){
+            if(isset($SavedPost->image_path)){
                 $request['image_path'] = $SavedPost->image_path;
                 $request->except('image');
 
@@ -138,9 +139,24 @@ class PostAdminController extends Controller
             'is_published' => $request->is_published == 'on' ? true : false,
         ]);
 
-        $SavedPost->delete();
+        if($SavedPost){
+            $SavedPost->delete();
+        }
 
         return redirect()->route('posts.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $post = Post::find($id);
+
+        return response()->json($post);
     }
 
     /**
@@ -176,11 +192,22 @@ class PostAdminController extends Controller
        $post = Post::where('id', $id);
 
        $this->checkUserIdPost($post->get()[0]);
+        
+       HistoryPost::create([
+            'post_id' => $post->get()[0]->id,
+            'title' => $post->get()[0]->title,
+            'excerpt' => $post->get()[0]->excerpt,
+            'body' => $post->get()[0]->body,
+            'image_path' => $post->get()[0]->image_path,
+            'is_published' => $post->get()[0]->is_published,
+            'additional_info' => $post->get()[0]->additional_info
+       ]);
 
        $input['title'] = $request->title;
        $input['excerpt'] = $request->excerpt;
        $input['body'] = $request->body;
-       $input['is_published'] = $request->is_published == 'on' ? true : false; 
+       $input['is_published'] = $request->is_published == 'on' ? true : false;
+       $input['additional_info'] = 0;
 
        if($request->image){
            $input['image_path'] = $this->storeImage($request);

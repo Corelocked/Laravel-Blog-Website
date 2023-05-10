@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostAdminController;
+use App\Http\Controllers\PostHistoryController;
 use App\Http\Controllers\PostImageController;
 use App\Http\Controllers\PostSavedController;
 
@@ -32,6 +33,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function() {
 
     // POSTS
     Route::resource('posts', PostAdminController::class, ['except' => 'show']);
+    Route::get('posts/{id}/show', [PostAdminController::class, 'show']);
 
     // SAVED POSTS
     Route::get('/posts-saved', [PostSavedController::class, 'index'])->name('posts.saved');
@@ -48,6 +50,11 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function() {
 
     // ROLES
     Route::resource('roles', RoleController::class);
+
+    // HISTORY POSTS
+    Route::get('posts/{id}/edit/history', [PostHistoryController::class, 'index'])->name('history.index');
+    Route::get('posts/history/{history}', [PostHistoryController::class, 'show'])->name('history.show');
+    Route::get('posts/history/{post}/{history}/revert', [PostHistoryController::class, 'revert'])->name('history.revert');
 });
 
 // Store Comment Route
