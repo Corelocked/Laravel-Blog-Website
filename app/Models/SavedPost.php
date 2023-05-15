@@ -10,10 +10,11 @@ class SavedPost extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'title', 'excerpt', 'body', 'image_path', 'is_published'
+        'user_id', 'title', 'excerpt', 'body', 'image_path', 'is_published',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

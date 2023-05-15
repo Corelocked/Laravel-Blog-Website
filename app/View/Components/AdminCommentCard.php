@@ -12,6 +12,7 @@ class AdminCommentCard extends Component
      * @return void
      */
     public $comment;
+
     public function __construct($comment)
     {
         $this->comment = $comment;

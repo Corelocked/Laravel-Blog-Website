@@ -12,7 +12,9 @@ class CommentCard extends Component
      * @return void
      */
     public $comment;
+
     public $post;
+
     public function __construct($comment, $post)
     {
         $this->comment = $comment;

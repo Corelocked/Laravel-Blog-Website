@@ -31,26 +31,25 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        
+
         $nextPost = Post::where('id', '>', $id)->min('id');
 
         $user = User::find($post->user_id);
-        
-        if($post->is_published == false){
-            if(Auth::User()){
-                if(Auth::User() == $user || Auth::User()->hasRole('Admin')){
-                }else{
+
+        if ($post->is_published == false) {
+            if (Auth::User()) {
+                if (Auth::User() == $user || Auth::User()->hasRole('Admin')) {
+                } else {
                     abort(404);
                 }
-            }else{
+            } else {
                 abort(404);
             }
         }
 
         return view('post.show', [
             'post' => $post,
-            'nextPost' => $nextPost
+            'nextPost' => $nextPost,
         ]);
     }
-    
 }

@@ -18,7 +18,7 @@ class PostSavedController extends Controller
         $saved = SavedPost::where('user_id', Auth::User()->id)->orderBy('id', 'DESC')->get();
 
         return view('post.saved', [
-            'posts' => $saved
+            'posts' => $saved,
         ]);
     }
 
@@ -75,7 +75,7 @@ class PostSavedController extends Controller
 
         $this->checkUserIdPost($saved);
 
-        return redirect('dashboard/posts/create?edit=' . $saved->id);
+        return redirect('dashboard/posts/create?edit='.$saved->id);
     }
 
     /**
@@ -88,21 +88,21 @@ class PostSavedController extends Controller
     public function update(Request $request, $id)
     {
         $SavedPost = SavedPost::where('id', $id);
-        
+
         $this->checkUserIdPost($SavedPost->get()[0]);
 
         $input['title'] = $request->title;
         $input['excerpt'] = $request->excerpt;
         $input['body'] = $request->body;
-        $input['is_published'] = $request->is_published ? 1 : 0; 
+        $input['is_published'] = $request->is_published ? 1 : 0;
 
-        if($request->image != 'undefined'){
-           $input['image_path'] = $this->storeImage($request);
+        if ($request->image != 'undefined') {
+            $input['image_path'] = $this->storeImage($request);
         }
-       
-       $SavedPost->update($input);
 
-       return response()->json(['message' => 'zapisano']);
+        $SavedPost->update($input);
+
+        return response()->json(['message' => 'zapisano']);
     }
 
     /**
@@ -124,14 +124,15 @@ class PostSavedController extends Controller
 
     private function storeImage($request)
     {
-        $newImageName = uniqid() . '-' . $request->image->getClientOriginalName();
+        $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
         $request->image->move(public_path('images'), $newImageName);
 
-        return '/images/' . $newImageName;
+        return '/images/'.$newImageName;
     }
-    private function checkUserIdPost(SavedPost $SavedPost): Void
+
+    private function checkUserIdPost(SavedPost $SavedPost): void
     {
-        if($SavedPost->user_id != Auth::id() && !Auth::User()->hasRole('Admin')){
+        if ($SavedPost->user_id != Auth::id() && ! Auth::User()->hasRole('Admin')) {
             abort(403);
         }
     }

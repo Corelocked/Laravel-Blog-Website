@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 class AdminLayout extends Component
 {
     public $edit;
+
     /**
      * Create a new component instance.
      *

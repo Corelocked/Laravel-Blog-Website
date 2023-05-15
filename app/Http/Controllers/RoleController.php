@@ -1,24 +1,23 @@
 <?php
-    
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
-    
+use Spatie\Permission\Models\Role;
+
 class RoleController extends Controller
 {
-
-    function __construct()
+    public function __construct()
     {
-         $this->middleware('permission:role-list', ['only' => ['index']]);
-         $this->middleware('permission:role-create', ['only' => ['create','store']]);
-         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:role-list', ['only' => ['index']]);
+        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -26,13 +25,13 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
-        
+        $roles = Role::orderBy('id', 'DESC')->paginate(5);
+
         return view('role.index', [
-            'roles' => $roles
+            'roles' => $roles,
         ]);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,11 +41,11 @@ class RoleController extends Controller
     {
         $permissions = Permission::get();
 
-        return view('role.create',[
-            'permissions' => $permissions
+        return view('role.create', [
+            'permissions' => $permissions,
         ]);
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -59,12 +58,13 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
-    
+
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
-    
+
         return redirect()->route('roles.index');
     }
+
     /**
      * Display the specified resource.
      *
@@ -74,16 +74,16 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)
+        $rolePermissions = Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
+            ->where('role_has_permissions.role_id', $id)
             ->get();
-    
+
         return view('role.show', [
             'role' => $role,
-            'rolePermissions' => $rolePermissions
+            'rolePermissions' => $rolePermissions,
         ]);
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -94,26 +94,26 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
 
-        if($role->name == 'Admin'){
+        if ($role->name == 'Admin') {
             abort(403);
         }
 
-        if($role->id == Auth::User()->roles[0]->id){
+        if ($role->id == Auth::User()->roles[0]->id) {
             abort(403);
         }
 
         $permissions = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
+        $rolePermissions = DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id)
             ->pluck('role_has_permissions.permission_id')
             ->all();
 
-        return view('role.edit',[
+        return view('role.edit', [
             'role' => $role,
             'permissions' => $permissions,
-            'rolePermissions' => $rolePermissions
+            'rolePermissions' => $rolePermissions,
         ]);
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -127,27 +127,28 @@ class RoleController extends Controller
             'name' => 'required',
             'permission' => 'required',
         ]);
-    
+
         $role = Role::find($id);
 
         $path = parse_url($request->headers->get('referer'), PHP_URL_PATH);
         $role_id = explode('/', $path)[3];
 
-        if($role_id != $role->id){
+        if ($role_id != $role->id) {
             abort(403);
         }
 
-        if(!Auth::User()->hasRole('Admin') && $role->id == Auth::User()->roles[0]->id){
+        if (! Auth::User()->hasRole('Admin') && $role->id == Auth::User()->roles[0]->id) {
             abort(403);
         }
 
         $role->name = $request->input('name');
         $role->save();
-    
+
         $role->syncPermissions($request->input('permission'));
-    
+
         return redirect()->route('roles.index');
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -156,18 +157,18 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = DB::table("roles")->where('id', $id);
+        $role = DB::table('roles')->where('id', $id);
 
-        if($role->get()[0]->name == 'Admin'){
+        if ($role->get()[0]->name == 'Admin') {
             abort(403);
         }
 
-        if(Auth::User()->roles[0]->name == $role->get()[0]->name){
+        if (Auth::User()->roles[0]->name == $role->get()[0]->name) {
             abort(403);
         }
 
         $role->delete();
-        
+
         return redirect()->route('roles.index');
     }
 }

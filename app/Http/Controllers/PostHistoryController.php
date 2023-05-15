@@ -4,16 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\HistoryPost;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostHistoryController extends Controller
 {
-
-    function __construct()
+    public function __construct()
     {
-         $this->middleware('permission:post-list', ['only' => ['index']]);
-         $this->middleware('permission:post-edit', ['only' => ['revert', 'update']]);
-         $this->middleware('permission:post-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:post-list', ['only' => ['index']]);
+        $this->middleware('permission:post-edit', ['only' => ['revert', 'update']]);
+        $this->middleware('permission:post-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -29,7 +27,7 @@ class PostHistoryController extends Controller
         return view('post.history', [
             'posts' => $historyPosts,
             'actualPost' => $actualPost,
-            'id' => $id
+            'id' => $id,
         ]);
     }
 
@@ -59,8 +57,8 @@ class PostHistoryController extends Controller
             'body' => $post->body,
             'image_path' => $post->image_path,
             'is_published' => $post->is_published,
-            'additional_info' => $post->additional_info
-       ]);
+            'additional_info' => $post->additional_info,
+        ]);
 
         $post->update([
             'title' => $historyPost->title,
@@ -70,7 +68,7 @@ class PostHistoryController extends Controller
             'image_path' => $historyPost->image_path,
             'additional_info' => 1,
         ]);
-        
+
         return redirect()->route('posts.edit', ['post' => $postid]);
     }
 }

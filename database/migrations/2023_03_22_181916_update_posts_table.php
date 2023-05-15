@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function(Blueprint $table){
+        Schema::table('posts', function (Blueprint $table) {
             $table->tinyInteger('additional_info')->default(0);
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function(Blueprint $table){
+        Schema::table('posts', function (Blueprint $table) {
             $table->dropColumn('additional_info');
         });
     }

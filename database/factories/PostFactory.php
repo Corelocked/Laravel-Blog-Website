@@ -20,9 +20,9 @@ class PostFactory extends Factory
             'title' => $this->faker->words(8, true),
             'excerpt' => $this->faker->sentence(40),
             'body' => $this->faker->text(2000),
-            'image_path' => $this->faker->randomElement(['/images/picture2.jpg','/images/picture.jpg']),
+            'image_path' => $this->faker->randomElement(['/images/picture2.jpg', '/images/picture.jpg']),
             'is_published' => true,
-            'user_id' => 1
+            'user_id' => 1,
         ];
     }
 }

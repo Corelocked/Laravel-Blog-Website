@@ -7,24 +7,22 @@ use Illuminate\Support\Facades\Auth;
 
 class PostImageController extends Controller
 {
-
     private function storeImage($request)
     {
-        $newImageName = uniqid() . '-' . $request->image->getClientOriginalName();
+        $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
         $request->image->move(public_path('images'), $newImageName);
 
-        return '/images/' . $newImageName;
+        return '/images/'.$newImageName;
     }
 
     public function store(Request $request)
     {
-        
-        if(!Auth::User()){
+        if (! Auth::User()) {
             abort(404);
         }
 
         return response()->json([
-            "url" => $this->storeImage($request)
+            'url' => $this->storeImage($request),
         ]);
     }
 }

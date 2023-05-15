@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CreateWriterUserSeeder extends Seeder
 {
@@ -22,7 +20,7 @@ class CreateWriterUserSeeder extends Seeder
             'lastname' => 'Pisarz',
             'email' => 'writer@db.com',
             'image_path' => 'images/user.png',
-            'password' => bcrypt('writer1234')
+            'password' => bcrypt('writer1234'),
         ]);
 
         $role = Role::create(['name' => 'Pisarz']);

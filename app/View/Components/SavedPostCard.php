@@ -12,6 +12,7 @@ class SavedPostCard extends Component
      * @return void
      */
     public $post;
+
     public function __construct($post)
     {
         $this->post = $post;

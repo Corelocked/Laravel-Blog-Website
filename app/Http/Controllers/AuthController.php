@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
-    public function index(){
+    public function index()
+    {
         return view('auth.login');
     }
 
@@ -21,12 +21,13 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             return redirect('/');
         }
 
         return redirect('/login')->with('message', 'Dane się nie zgadzają!');
     }
+
     public function logout(Request $request)
     {
         Auth::logout();

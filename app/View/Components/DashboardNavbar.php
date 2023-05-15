@@ -11,9 +11,9 @@ class DashboardNavbar extends Component
      *
      * @return void
      */
+    public $route;
 
-     public $route;
-    public function __construct($route = "/")
+    public function __construct($route = '/')
     {
         $this->route = $route;
     }

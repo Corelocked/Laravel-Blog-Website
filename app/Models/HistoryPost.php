@@ -10,10 +10,11 @@ class HistoryPost extends Model
     use HasFactory;
 
     protected $fillable = [
-        'post_id', 'title', 'excerpt', 'body', 'image_path', 'is_published', 'additional_info'
+        'post_id', 'title', 'excerpt', 'body', 'image_path', 'is_published', 'additional_info',
     ];
 
-    public function post(){
+    public function post()
+    {
         return $this->belongsTo(Post::class);
     }
 }
