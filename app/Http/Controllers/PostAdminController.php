@@ -78,7 +78,7 @@ class PostAdminController extends Controller
         }
 
         if ($request->edit) {
-            $saved = SavedPost::find($request->edit);
+            $saved = SavedPost::findOrFail($request->edit);
 
             if ($saved->user_id != Auth::User()->id) {
                 abort(404);
@@ -151,7 +151,7 @@ class PostAdminController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
 
         return response()->json($post);
     }
@@ -164,7 +164,7 @@ class PostAdminController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
 
         $this->checkUserIdPost($post);
 
@@ -186,6 +186,10 @@ class PostAdminController extends Controller
         $request->validated();
 
         $post = Post::where('id', $id);
+
+        if ($post->get()->isEmpty()) {
+            abort(404);
+        }
 
         $this->checkUserIdPost($post->get()[0]);
 
@@ -222,7 +226,7 @@ class PostAdminController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
 
         $this->checkUserIdPost($post);
 

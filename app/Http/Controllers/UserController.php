@@ -27,10 +27,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id', 'DESC')->paginate(5);
+        $data = User::orderBy('id', 'DESC')->get();
 
-        return view('user.index', compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('user.index', [
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -109,7 +110,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         if (! empty($user->roles[0])) {
             if ($user->roles[0]->name == 'Admin' && ! Auth::User()->hasRole('Admin')) {
@@ -192,7 +193,7 @@ class UserController extends Controller
 
         $data = [];
 
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         if (! empty($user->roles[0])) {
             if ($user->roles[0]->name == 'Admin' && ! Auth::User()->hasRole('Admin')) {
@@ -268,7 +269,7 @@ class UserController extends Controller
                     'data' => $data,
                 ]);
             }
-            if ($data['toEmail'] == 'admin@db.pl' || ! isset($data['toEmail'])) {
+            if ($data['toEmail'] == 'admin@db.com' || ! isset($data['toEmail'])) {
                 return redirect()->back();
             }
         } else {

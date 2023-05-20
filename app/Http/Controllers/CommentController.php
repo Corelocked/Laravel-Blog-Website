@@ -115,8 +115,9 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        $comment = Comment::find($id);
-        $post = Post::find($comment->post_id);
+        $comment = Comment::findOrFail($id);
+
+        $post = Post::findOrFail($comment->post_id);
 
         $this->checkUserIdPost($post);
 
@@ -148,9 +149,9 @@ class CommentController extends Controller
             abort(403);
         }
 
-        $comment = Comment::find($comment_id);
+        $comment = Comment::findOrFail($comment_id);
 
-        $post = Post::find($comment->post_id);
+        $post = Post::findOrFail($comment->post_id);
 
         $this->checkUserIdPost($post);
 
@@ -167,8 +168,9 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $comment = Comment::find($id);
-        $post = Post::find($comment->post_id);
+        $comment = Comment::findOrFail($id);
+
+        $post = Post::findOrFail($comment->post_id);
 
         $this->checkUserIdPost($post);
 

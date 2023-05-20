@@ -71,7 +71,7 @@ class PostSavedController extends Controller
      */
     public function edit($id)
     {
-        $saved = SavedPost::find($id);
+        $saved = SavedPost::findOrFail($id);
 
         $this->checkUserIdPost($saved);
 
@@ -88,6 +88,10 @@ class PostSavedController extends Controller
     public function update(Request $request, $id)
     {
         $SavedPost = SavedPost::where('id', $id);
+
+        if ($SavedPost->get()->isEmpty()) {
+            abort(404);
+        }
 
         $this->checkUserIdPost($SavedPost->get()[0]);
 
@@ -113,7 +117,7 @@ class PostSavedController extends Controller
      */
     public function destroy($id)
     {
-        $SavedPost = SavedPost::find($id);
+        $SavedPost = SavedPost::findOrFail($id);
 
         $this->checkUserIdPost($SavedPost);
 

@@ -25,7 +25,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('id', 'DESC')->paginate(5);
+        $roles = Role::orderBy('id', 'DESC')->get();
 
         return view('role.index', [
             'roles' => $roles,
@@ -73,7 +73,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
+
         $rolePermissions = Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
             ->where('role_has_permissions.role_id', $id)
             ->get();
@@ -92,7 +93,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
 
         if ($role->name == 'Admin') {
             abort(403);
@@ -128,7 +129,7 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
 
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
 
         $path = parse_url($request->headers->get('referer'), PHP_URL_PATH);
         $role_id = explode('/', $path)[3];
@@ -158,6 +159,10 @@ class RoleController extends Controller
     public function destroy($id)
     {
         $role = DB::table('roles')->where('id', $id);
+
+        if ($role->get()->isEmpty()) {
+            abort(404);
+        }
 
         if ($role->get()[0]->name == 'Admin') {
             abort(403);

@@ -22,7 +22,7 @@ class PostHistoryController extends Controller
     public function index($id)
     {
         $historyPosts = HistoryPost::where('post_id', $id)->orderBy('id', 'DESC')->get();
-        $actualPost = Post::find($id);
+        $actualPost = Post::findOrFail($id);
 
         return view('post.history', [
             'posts' => $historyPosts,
@@ -39,16 +39,16 @@ class PostHistoryController extends Controller
      */
     public function show($id)
     {
-        $post = HistoryPost::find($id);
+        $post = HistoryPost::findOrFail($id);
 
         return response()->json($post);
     }
 
     public function revert($postid, $historyid)
     {
-        $post = Post::find($postid);
+        $post = Post::findOrFail($postid);
 
-        $historyPost = HistoryPost::find($historyid);
+        $historyPost = HistoryPost::findOrFail($historyid);
 
         HistoryPost::create([
             'post_id' => $post->id,
