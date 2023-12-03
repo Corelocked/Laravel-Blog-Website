@@ -8,7 +8,6 @@
         </div>
 
         <div class="container">
-            <div class="recent_post_text">Ostatnie posty</div>
             <div class="posts">      
                 @foreach ($posts as $post)
                     <x-main-post-card :post="$post" />

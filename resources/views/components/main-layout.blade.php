@@ -20,7 +20,7 @@
     @endif
 
     <footer>
-        <p>Mateusz Zaborski © 2023</p>
+        <p>Mateusz Zaborski ● 2023</p>
     </footer>
 
 </body>

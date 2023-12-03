@@ -1,18 +1,20 @@
 # Laravel-Blog-Website
 
-A straightforward blog page written in PHP/Laravel. 
+A straightforward blog page written in PHP/Laravel.
 
-![main](https://user-images.githubusercontent.com/103435077/222498136-66c4fb01-4053-4b14-9b08-c61423a12380.png)
+![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/44c99090-0936-4f60-85b8-da3043e26714)
 
 ## Table of Contents
-* [General Info](#general-info)
-* [Technologies](#technologies)
-* [Setup](#setup)
-* [Incoming Features](#incoming-features)
-* [Acknowledgements](#acknowledgements)
-* [Contact](#contact)
+
+-   [General Info](#general-info)
+-   [Technologies](#technologies)
+-   [Setup](#setup)
+-   [Incoming Features](#incoming-features)
+-   [Acknowledgements](#acknowledgements)
+-   [Contact](#contact)
 
 ## General Info
+
 The website was built with PHP, MySQL, and Laravel. It allows you to go through every post that is on the main page. You can add comments. You have complete control while logged in as an administrator, including the ability to create, edit, and delete posts, users, and comments, as well as manage roles. There are two positions available: administrator and writer. Default permissions for Writer are: adding or editing owned posts; deleting comments in your posts. Furthermore, you can save posts, continue writing later, and then publish them. Also, you are able to send emails to users after updating their accounts.
 
 Furthermore, the website is fully responsive.
@@ -22,18 +24,20 @@ I tried to add the best protection I could to this website. I'm referring to pro
 ![post](https://user-images.githubusercontent.com/103435077/222498262-06241a60-120f-4595-9765-e75f0371954d.png)
 
 ## Technologies
-* Laravel 9.45.1
-* Blade
-* PHP 8.1.7
-* MySQL 8.0.29
-* HTML 5
-* CSS 3
-* JavaScript
-* JQuery
-* SweetAlert 2
-* FontAwesome 6.1.2
+
+-   Laravel 9.45.1
+-   Blade
+-   PHP 8.1.7
+-   MySQL 8.0.29
+-   HTML 5
+-   CSS 3
+-   JavaScript
+-   JQuery
+-   SweetAlert 2
+-   FontAwesome 6.1.2
 
 ## Setup
+
 To run this project you will need to install PHP, MySQL, [Composer](https://getcomposer.org/download/), [NPM](https://www.npmjs.com/package/npm) on your local machine.
 
 If you have everything, you can run these commands:
@@ -51,8 +55,8 @@ If you have everything, you can run these commands:
 # Install packages from package.json
 > npm install
 
-# Compile assets 
-> npm run dev
+# Compile assets
+> npm run build
 ```
 
 `Create or copy the .env file and configure it. e.g., db_username, db_password, db_database`
@@ -77,6 +81,7 @@ http://localhost:8000
 ```
 
 Now you can login using created accounts:
+
 ```
 Role: Admin
 Email: admin@db.com
@@ -91,13 +96,16 @@ Password: writer1234
 ![posts_create](https://user-images.githubusercontent.com/103435077/222498518-6e6b2c32-28dd-4379-8eeb-6a93d0bc9dec.png)
 
 ## Incoming Features
-* ~~version control of each post~~
-* probably tiles on the home page
+
+-   ~~version control of each post~~
+-   ~~probably tiles on the home page~~
 
 ## Acknowledgements
+
 Thanks <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by kmg design - Flaticon</a> for the user profile icon</br>
 Thanks <a href="https://www.flaticon.com/free-icons/email" title="email icons">Email icons created by Freepik - Flaticon</a> for the envelope icon on the contact page</br>
 Thanks <a href="https://www.flaticon.com/free-icons/blog" title="blog icons">Blog icons created by zero_wing - Flaticon</a> for the blog icon as favicon</br>
 
 ## Contact
+
 Feel free to contact me via email mateusz.zaborski1@gmail.com. :D
