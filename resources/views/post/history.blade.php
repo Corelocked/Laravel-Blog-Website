@@ -55,8 +55,8 @@
             {!! $actualPost->body !!}
 
             <div class="actions">
-                <a href=""><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
-                <a href="">Następny post <i class="fa-solid fa-arrow-right"></i></a>
+                <a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
+                <a>Następny post <i class="fa-solid fa-arrow-right"></i></a>
             </div>
 
             <div class="exit_preview" onClick="exitPreview();">Do góry <i class="fa-solid fa-arrow-up"></i></div>

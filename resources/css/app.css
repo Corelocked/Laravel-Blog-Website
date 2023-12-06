@@ -826,10 +826,16 @@ body.login-page {
     }
     article .post {
         width: calc(100% - 20px);
+        margin: auto;
+        height: auto;
     }
     article .post img,
     article .post .read {
         width: 100%;
+    }
+    article a.read_post {
+        width: calc(100% - 20px);
+        margin-bottom: 20px;
     }
 }
 @media only screen and (max-width: 800px) {
