@@ -93,12 +93,14 @@ Password: writer1234
 ```
 
 ![dashboard](https://user-images.githubusercontent.com/103435077/222498375-b9d12ae4-1eb9-47bb-8a9d-b446675f7fc5.png)
-![posts_create](https://user-images.githubusercontent.com/103435077/222498518-6e6b2c32-28dd-4379-8eeb-6a93d0bc9dec.png)
+![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/0f1f3095-a905-41bd-afd1-fea5f7422f1e)
 
 ## Incoming Features
 
 -   ~~version control of each post~~
 -   ~~probably tiles on the home page~~
+-   categories
+-   pinned post
 
 ## Acknowledgements
 
