@@ -80,7 +80,9 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $path = parse_url($request->headers->get('referer'), PHP_URL_PATH);
-        $post_id = explode('/', $path)[2];
+        $post_slug = explode('/', $path)[2];
+
+        $post = Post::where('slug', $post_slug)->firstOrFail();
 
         $request->validate([
             'name' => 'required',
@@ -90,7 +92,7 @@ class CommentController extends Controller
         $comment = Comment::create([
             'name' => $request->name,
             'body' => $request->body,
-            'post_id' => $post_id,
+            'post_id' => $post->id,
         ]);
 
         return redirect()->back();

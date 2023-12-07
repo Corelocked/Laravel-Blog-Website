@@ -25,14 +25,15 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $post = Post::findOrFail($id);
+        // $post = Post::findOrFail($id);
+        $post = Post::where('slug', $slug)->firstOrFail();
 
-        $nextPost = Post::where('id', '>', $id)->min('id');
+        $nextPost = Post::where('id', '>', $post->id)->min('id');
 
         $user = User::find($post->user_id);
 

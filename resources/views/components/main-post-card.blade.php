@@ -1,4 +1,4 @@
-<a href="{{ route('posts.show', $post->id) }}" class="read_post">
+<a href="{{ route('posts.show', $post->slug) }}" class="read_post">
 <div class="post">
     <img src="{{ asset($post->image_path) }}">
     <div class="read"><i class="fa-solid fa-angles-right"></i>Przeczytaj</div>

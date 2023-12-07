@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostUpdateFormRequest;
-use App\Models\HistoryPost;
 use App\Models\Post;
-use App\Models\SavedPost;
 use App\Models\User;
+use App\Models\SavedPost;
+use App\Models\HistoryPost;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PostUpdateFormRequest;
 
 class PostAdminController extends Controller
 {
@@ -133,6 +134,7 @@ class PostAdminController extends Controller
             'excerpt' => $request->excerpt,
             'body' => $request->body,
             'image_path' => isset($request->image_path) ? $request->image_path : $this->storeImage($request),
+            'slug' => Str::slug($request->title),
             'is_published' => $request->is_published == 'on' ? true : false,
         ]);
 
@@ -199,6 +201,7 @@ class PostAdminController extends Controller
             'excerpt' => $post->get()[0]->excerpt,
             'body' => $post->get()[0]->body,
             'image_path' => $post->get()[0]->image_path,
+            'slug' => $post->get()[0]->slug,
             'is_published' => $post->get()[0]->is_published,
             'additional_info' => $post->get()[0]->additional_info,
         ]);
@@ -206,6 +209,7 @@ class PostAdminController extends Controller
         $input['title'] = $request->title;
         $input['excerpt'] = $request->excerpt;
         $input['body'] = $request->body;
+        $input['slug'] = Str::slug($request->title);
         $input['is_published'] = $request->is_published == 'on' ? true : false;
         $input['additional_info'] = 0;
 

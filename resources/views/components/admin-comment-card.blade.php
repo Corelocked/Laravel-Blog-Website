@@ -8,7 +8,7 @@
         <p>{{ $comment->body }}</p>
     </div>
     <div class="actions">
-        <a href="/post/{{ $comment->post->id }}" class="redirect_to_post"><p>Pzejdź do posta</p> <i class="fa-solid fa-angles-right"></i></a>
+        <a href="/post/{{ $comment->post->slug }}" class="redirect_to_post"><p>Pzejdź do posta</p> <i class="fa-solid fa-angles-right"></i></a>
         @can('comment-edit')
             <a href="{{ route('comments.edit', $comment->id) }}" class="edit"><p>Edytuj</p> <i class="fa-solid fa-pen-to-square"></i></a>
         @endcan

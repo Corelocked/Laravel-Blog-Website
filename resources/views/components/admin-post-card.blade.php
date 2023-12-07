@@ -5,7 +5,7 @@
         <p class="date">{{ $post->updated_at->format('d.m.Y') }} by {{ $post->user->firstname . ' ' . $post->user->lastname }}</p>
     </div>
     <div class="actions">
-        <a href="{{ route('posts.show', $post->id) }}" class="read_more">Przejdź <i class="fa-solid fa-angles-right"></i></a>
+        <a href="{{ route('posts.show', $post->slug) }}" class="read_more">Przejdź <i class="fa-solid fa-angles-right"></i></a>
         @can('post-edit')
             <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edytuj <i class="fa-solid fa-pen-to-square"></i></a>
         @endcan
