@@ -20,20 +20,22 @@ window.save = function(){
     const body = $(".ql-editor").html();
     const image = document.querySelector('input[name=image]').files[0];
     const is_published = document.querySelector('input[name=is_published]').checked;
+    const category = document.querySelector('input[name=category_id]').value;
     const token = document.querySelector('input[name=_token]').value;
 
     const id = document.querySelector('input[name=id_saved_post]').value;
 
-    if(image || title != '' || excerpt != '' || body != '<p><br></p>'){
+    if(image || title !== '' || excerpt !== '' || body !== '<p><br></p>'){
         var form = new FormData();
         form.append('title', title);
         form.append('excerpt', excerpt);
         form.append('body', body);
         form.append('image', image);
         form.append('is_published', is_published);
+        form.append('category_id', category);
         form.append('_token', token);
 
-        if(id == 0){
+        if(id === 0){
             $.ajax({
                 type: "POST",
                 url: "/dashboard/posts-saved",

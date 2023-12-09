@@ -17,7 +17,7 @@
 @else
     <body>
 @endif
-    
+
     {{ $slot }}
 
     <x-user-panel />

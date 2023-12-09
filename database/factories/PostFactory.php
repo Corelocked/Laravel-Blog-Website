@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -26,6 +26,7 @@ class PostFactory extends Factory
             'slug' => Str::slug($title),
             'is_published' => true,
             'user_id' => 1,
+            'category_id' => $this->faker->numberBetween(1, 15),
         ];
     }
 }

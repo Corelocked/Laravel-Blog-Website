@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PostAdminController;
@@ -34,6 +35,9 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     // POSTS
     Route::resource('posts', PostAdminController::class, ['except' => 'show']);
     Route::get('posts/{id}/show', [PostAdminController::class, 'show']);
+
+    // CATEGORIES
+    Route::resource('categories', CategoryController::class, ['except' => 'show']);
 
     // SAVED POSTS
     Route::get('/posts-saved', [PostSavedController::class, 'index'])->name('posts.saved');

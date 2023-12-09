@@ -14,7 +14,11 @@ show_actual.addEventListener("click", (event) => {
         processData: false,
         contentType: false,
         success: function (data) {
+            const category = $(".post__preview .post_container .info .category");
             $(".preview_title").html(data.title);
+            category.html(data.category.name);
+            category.css('background', data.category.backgroundColor + 'CC');
+            category.css('color', data.category.textColor);
             let date = new Date(data.created_at);
             let formattedDate = date.toLocaleDateString("pl-PL", {
                 day: "2-digit",
@@ -29,7 +33,7 @@ show_actual.addEventListener("click", (event) => {
             var output = document.getElementById("output");
             output.src = data.image_path;
 
-            if (last_id != 0) {
+            if (last_id !== 0) {
                 $(".h_0").addClass("active");
                 $(".h_" + last_id).removeClass("active");
             }
@@ -62,7 +66,11 @@ window.show = function (id) {
         processData: false,
         contentType: false,
         success: function (data) {
+            const category = $(".post__preview .post_container .info .category");
             $(".preview_title").html(data.title);
+            category.html(data.category.name);
+            category.css('background', data.category.backgroundColor + 'CC');
+            category.css('color', data.category.textColor);
             let date = new Date(data.created_at);
             let formattedDate = date.toLocaleDateString("pl-PL", {
                 day: "2-digit",
@@ -77,7 +85,7 @@ window.show = function (id) {
             var output = document.getElementById("output");
             output.src = data.image_path;
 
-            if (last_id != id) {
+            if (last_id !== id) {
                 $(".h_" + id).addClass("active");
                 $(".h_" + last_id).removeClass("active");
             }

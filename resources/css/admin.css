@@ -169,11 +169,35 @@ header .profile:hover i {
 .filter-button.rec_4 .dot i {
     color: #2980b9;
 }
-.filter-button.show_results {
-    transition: var(--tran-01);
+.filter .filtr_body .selected-categories,
+.filter .filtr_body .categories {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-bottom: 8px;
 }
-.filter-button.show_results:hover {
-    color: var(--button-color);
+.filter .filtr_body .categories {
+    overflow: hidden;
+    height: 0;
+}
+.filter .filtr_body .categories.active {
+    height: auto;
+}
+.filter .filtr_body .selected-categories .category,
+.filter .filtr_body .categories .category {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 8px 8px 0 8px;
+    cursor: pointer;
+}
+.filter .filtr_body .selected-categories .category-empty {
+    border: 1px solid #bdc3c7;
+}
+.filter .filtr_body .categories_extend {
+    margin-left: 8px;
+    user-select: none;
 }
 
 section.divided_minimal {
@@ -194,7 +218,7 @@ section.dashboard {
     flex-direction: column;
     background: var(--bar-color);
     border-radius: 10px;
-    padding: 20px;
+    /*padding: 20px;*/
     width: calc(100% - 20px);
     margin: 94px 10px 10px 10px;
     min-height: calc(100vh - 80px - 30px);
@@ -215,8 +239,8 @@ section.roles {
     box-shadow: 0px 0px 40px 6px var(--shadow-color);
 }
 section #dashboard__image {
-    width: 512px;
-    height: 288px;
+    width: 464px;
+    height: 261px;
     object-fit: cover;
     border-radius: 15px;
     margin: 30px;
@@ -269,12 +293,7 @@ section .actions_home .button {
     user-select: none;
     text-decoration: none;
     color: #000;
-}
-section .actions_home .connected:nth-of-type(1) .button:nth-child(1),
-section .actions_home .connected:nth-of-type(1) .button:nth-child(2),
-section .actions_home .connected:nth-last-child(1) .button:nth-child(1),
-section .actions_home .connected:nth-last-child(1) .button:nth-child(2) {
-    width: 50%;
+    flex-grow: 1;
 }
 section .actions_home .button i {
     padding: 0 8px;
@@ -360,11 +379,19 @@ section .post .body {
     justify-content: center;
     flex-direction: column;
     margin: 5px 0;
+    align-items: flex-start;
+}
+section .post .body .category {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 8px 8px 0 8px;
 }
 section .post .body .title {
     font-size: 20px;
     font-weight: 600;
-    margin: 8px;
+    margin: 0 8px 8px 8px;
     word-break: break-word;
 }
 section .post .body .short_body {
@@ -450,7 +477,13 @@ table tr {
     border: 1px solid #dfecf0;
     padding: 0.35em;
 }
-
+table tr .box{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #725197;
+    margin: auto;
+}
 table th,
 table td {
     padding: 0.625em;
@@ -756,7 +789,9 @@ section .comment .actions .delete:hover {
 form#create_user,
 form#edit_comment,
 .role,
-form#create_role {
+form#create_role,
+form#create_category,
+form#edit_category{
     width: 75%;
     background: var(--bar-color);
     border-radius: 10px;
@@ -772,9 +807,19 @@ form.role_list {
     display: flex;
     flex-direction: column;
 }
+.category_list .preview {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    min-width: 100px;
+    display: inline-block;
+    border-radius: 5px;
+}
 form#create_user .body_form,
 form#edit_comment .body_form,
-form#create_role .body_form {
+form#create_role .body_form,
+form#create_category .body_form,
+form#edit_category .body_form{
     margin: 20px;
     display: flex;
     align-items: center;
@@ -782,7 +827,9 @@ form#create_role .body_form {
 }
 form#create_user label,
 form#edit_comment label,
-form#create_role label:not(.container) {
+form#create_role label:not(.container),
+form#create_category label,
+form#edit_category label{
     font-size: 14px;
     font-weight: 500;
     padding: 5px;
@@ -1114,7 +1161,9 @@ aside.post__preview .ql-size-huge {
     text-align: left;
 }
 .post__create form p.info,
-.post__create .info_title_length {
+.post__create .info_title_length,
+.post__create .categories_extend,
+.filter .filtr_body .categories_extend{
     font-size: 12px;
 }
 .post__create form textarea[name="short_body"] {
@@ -1134,9 +1183,43 @@ aside.post__preview .ql-size-huge {
     padding: 5px;
     border: 1px solid #bdc3c7;
     border-radius: 4px;
+    margin: 8px 0;
 }
 .post__create form .published p {
     font-size: 14px;
+}
+.post__create form .category-selected {
+    border: 1px solid #bdc3c7;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    margin: 8px 0;
+    border-radius: 5px;
+    width: fit-content;
+}
+.post__create .categories_extend,
+.filter .filtr_body .categories_extend{
+    cursor: pointer;
+}
+.post__create .categories {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    height: auto;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+}
+.post__create .categories.active{
+    height: 0;
+}
+.post__create .categories .category {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 8px;
+    cursor: pointer;
 }
 
 .post__history .history_card {
@@ -1167,6 +1250,14 @@ aside.post__preview .ql-size-huge {
     flex-direction: column;
     margin: 10px;
     width: calc(100% - 225px - 140px - 20px);
+    align-items: flex-start;
+}
+.post__history .history_card .category {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 4px 0;
 }
 .post__history .history_card .title {
     font-size: 18px;
@@ -1331,12 +1422,22 @@ aside.post__preview .ql-size-huge {
     flex-direction: column;
     justify-content: center;
 }
+.post__preview .post_container .info {
+    align-items: center;
+}
 .post__create .post_container .info .title,
 .post__preview .post_container .info .preview_title {
     font-size: 24px;
     font-weight: 500;
     text-align: center;
     word-break: break-word;
+}
+.post__preview .post_container .info .category {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 8px;
 }
 .post__create .post_container .info .date,
 .post__preview .post_container .info .date {
@@ -1859,6 +1960,9 @@ form ul li {
     table td:last-child {
         border-bottom: 0;
     }
+    .category_list .preview {
+        text-align: center;
+    }
 }
 @media only screen and (max-width: 570px) {
     section #dashboard__image {
@@ -1867,7 +1971,9 @@ form ul li {
     }
     form#create_user,
     form#edit_comment,
-    .role {
+    .role,
+    form#create_category,
+    form#edit_category {
         min-width: 0;
         width: 100%;
     }
@@ -1886,6 +1992,18 @@ form ul li {
     }
     .edit_post_actions .icon {
         display: block;
+    }
+    section .actions_home .connected {
+        flex-direction: column;
+    }
+    section .actions_home .button {
+        padding: 15px;
+    }
+    section .actions_home .button p {
+        font-size: 15px;
+    }
+    section .actions_home {
+        width: 95%;
     }
 }
 @media only screen and (max-width: 650px) {
@@ -1915,6 +2033,10 @@ form ul li {
     section .post .body {
         width: calc(100% - 10px);
         text-align: center;
+        align-items: center;
+    }
+    section .posts img {
+        margin: 20px 0 0 0;
     }
     section .post .actions {
         width: calc(100% - 10px);
@@ -1972,9 +2094,6 @@ form ul li {
     section .actions_home {
         margin-bottom: 0;
     }
-    section .actions_home .button {
-        padding: 5px;
-    }
     header {
         padding: 12px 20px;
     }
@@ -1992,6 +2111,9 @@ form ul li {
         margin: 66px 10px 10px 10px;
         min-height: calc(100vh - 50px - 30px);
     }
+    section.dashboard {
+        padding: 20px 0;
+    }
     .filter {
         margin-top: 5px;
         top: 56px;
@@ -2002,7 +2124,9 @@ form ul li {
     }
     form#create_user,
     form#edit_comment,
-    .role {
+    .role,
+    form#create_category,
+    form#edit_category {
         padding: 60px 15px;
     }
     .post__create form .published p,
@@ -2022,26 +2146,8 @@ form ul li {
     }
 }
 @media only screen and (max-width: 390px) {
-    section .actions_home .connected {
-        flex-direction: column;
-    }
-    section .actions_home .button,
-    section .actions_home .connected .button,
-    section .actions_home .connected:nth-of-type(1) .button:nth-child(1),
-    section .actions_home .connected:nth-of-type(1) .button:nth-child(2),
-    section .actions_home .connected:nth-last-child(1) .button:nth-child(1),
-    section .actions_home .connected:nth-last-child(1) .button:nth-child(2) {
-        width: 100%;
-        padding: 15px;
-    }
-    section .actions_home .button p {
-        font-size: 15px;
-    }
     section .welcome {
         font-size: 30px;
-    }
-    section .actions_home {
-        width: 95%;
     }
 }
 @media only screen and (max-width: 500px) {

@@ -30,8 +30,8 @@ class CreateWriterUserSeeder extends Seeder
             '6' => 6,
             '7' => 7,
             '8' => 8,
-            '13' => 13,
-            '15' => 15,
+            '17' => 17,
+            '19' => 19,
         ];
 
         $role->syncPermissions($permissions);

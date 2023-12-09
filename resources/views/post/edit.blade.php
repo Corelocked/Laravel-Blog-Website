@@ -45,9 +45,9 @@
             </div>
             <div class="post_body">
                 <div id="editor">
-                    
+
                 </div>
-                
+
                 <textarea name="body" style="display: none" id="hiddenArea">{!!$post->body !!}</textarea>
 
                 <div class="actions">
@@ -68,6 +68,23 @@
                         <span class="slider round"></span>
                     </label>
                 </div>
+                <label>Kategoria</label>
+                @isset($post)
+                    @isset($post->category)
+                        <div class="category-selected" style="border: none; background: {{ $post->category->backgroundColor }}CC; color: {{ $post->category->textColor }}">{{ $post->category->name }}</div>
+                    @else
+                        <div class="category-selected">Nie wybrano</div>
+                    @endisset
+                @else
+                    <div class="category-selected">Nie wybrano</div>
+                @endisset
+                <p class="categories_extend" onclick="categoriesToggle();">Ukryj <i class="fa-solid fa-chevron-up"></i></p>
+                <div class="categories">
+                    @foreach($categories as $category)
+                        <div class="category" style="background: {{ $category->backgroundColor }}CC; color: {{ $category->textColor }}" onclick="changeToCategory(event, {{ $category->id }})" data-id="{{ $category->id }}">{{ $category->name }}</div>
+                    @endforeach
+                </div>
+                <input type="hidden" name="category_id" value="{{ isset($post) ? ($post->category ? $post->category->id : 0) : 0 }}"/>
             </div>
         </form>
 

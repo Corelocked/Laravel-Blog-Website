@@ -30,7 +30,7 @@
                                             @method('DELETE')
                                             @csrf
                                         </form>
-                                        <button onClick="confirmDelete({{ $role->id }}, 'role')" class="delete"><i class="fa-solid fa-trash"></i></a>
+                                        <button onClick="confirmDelete({{ $role->id }}, 'role')" class="delete"><i class="fa-solid fa-trash"></i></button>
                                     @endif
                                 @endcan
                             </td>

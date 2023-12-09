@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -33,11 +34,11 @@ class PostController extends Controller
         // $post = Post::findOrFail($id);
         $post = Post::where('slug', $slug)->firstOrFail();
 
-        $nextPost = Post::where('id', '>', $post->id)->min('id');
+        $nextPost = Post::where('id', '>', $post->id)->first();
 
         $user = User::find($post->user_id);
 
-        if ($post->is_published == false) {
+        if (!$post->is_published) {
             if (Auth::User()) {
                 if (Auth::User() == $user || Auth::User()->hasRole('Admin')) {
                 } else {

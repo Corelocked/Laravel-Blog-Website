@@ -1,6 +1,9 @@
 <div class="post">
     <img src="{{ asset($post->image_path) }}">
     <div class="body">
+        @if ($post->category)
+            <div class="category" style="background: {{ $post->category->backgroundColor }}CC; color: {{ $post->category->textColor }}">{{ $post->category->name }}</div>
+        @endif
         <p class="title">{{ $post->title }}</p>
         <p class="date">{{ $post->updated_at->format('d.m.Y') }} by {{ $post->user->firstname . ' ' . $post->user->lastname }}</p>
     </div>

@@ -8,11 +8,11 @@
         </div>
 
         <div class="container">
-            <div class="posts">      
+            <div class="posts">
                 @foreach ($posts as $post)
                     <x-main-post-card :post="$post" />
                 @endforeach
             </div>
-        </div>   
+        </div>
     </article>
 </x-main-layout>

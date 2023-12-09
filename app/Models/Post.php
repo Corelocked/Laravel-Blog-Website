@@ -10,7 +10,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'title', 'excerpt', 'body', 'image_path', 'slug', 'is_published', 'additional_info',
+        'user_id', 'title', 'excerpt', 'body', 'image_path', 'slug', 'is_published', 'additional_info', 'category_id',
     ];
 
     public function user()
@@ -27,4 +27,10 @@ class Post extends Model
     {
         return $this->hasMany(HistoryPost::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 }

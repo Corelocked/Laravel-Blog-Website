@@ -4,9 +4,9 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         @vite(['resources/js/filtr.js'])
     @endsection
-    
+
     <x-dashboard-navbar route="/dashboard"/>
-    
+
     <section class="divided_minimal">
         <p class="head">Posty</p>
         <div class="line-1"></div>
@@ -45,6 +45,23 @@
                         <span class="dot"><i class="fa-regular fa-square"></i></span>
                     </div>
                     <div class="line-1"></div>
+                    <p id="filtr-2">Kategorie</p>
+                    <div class="selected-categories">
+                        @if(empty($selected_categories))
+                            <div class="category category-empty">Nie wybrano</div>
+                        @else
+                            @foreach($selected_categories as $category)
+                                <div class="category" style="background: {{ $category->backgroundColor }}CC; color: {{ $category->textColor }}" onclick="removeCategory(event, {{ $category->id }})">{{ $category->name }}</div>
+                            @endforeach
+                        @endif
+                    </div>
+                    <p class="categories_extend" onclick="categoriesToggle();">Rozwiń <i class="fa-solid fa-chevron-down"></i></p>
+                    <div class="categories">
+                        @foreach($categories as $category)
+                            <div class="category" style="background: {{ $category->backgroundColor }}CC; color: {{ $category->textColor }}" onclick="selectCategory(event, {{ $category->id }})">{{ $category->name }}</div>
+                        @endforeach
+                    </div>
+                    <div class="line-1"></div>
                     @role('Admin')
                         <p id="filtr-2">Wyszukaj posty użytkownika</p>
                         <select class="js-select2" id="user_modal" name="user">
@@ -66,6 +83,7 @@
                     <form action="" style="display: none" id="filter_form">
                         <input type="text" id="order" name="order" value="{{ $order ? $order : 'desc' }}">
                         <input type="text" id="limit" name="limit" value="{{ $limit ? $limit : ($limit == 0 ? 0 : 20) }}">
+                        <input type="text" id="categories" name="categories[]" value="{{ is_array($selected_categories_array) ? implode(',', $selected_categories_array) : '' }}">
                         @role('Admin')
                             <input type="text" id="user" name="user" value="{{ $selectedUser ? $selectedUser : 0 }}">
                         @endrole
@@ -77,7 +95,7 @@
                     <x-admin-post-card :post="$post"/>
                 @endforeach
             </div>
-            
+
         </div>
         @include('pagination.default', ['paginator' => $posts])
     </section>

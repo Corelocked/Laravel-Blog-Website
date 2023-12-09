@@ -13,12 +13,12 @@ toggleHeight();
 
 function toggleHeight() {
     let e = document.querySelector('.filtr_body');
-    
+
     if(e.style.height != '0px') {
         e.style.height = '0px';
         $('.button_collapse').removeClass('fa-caret-up').addClass('fa-caret-down');
     } else {
-        e.style.height = maxHeight;
+        e.style.height = 'auto';
         $('.button_collapse').removeClass('fa-caret-down').addClass('fa-caret-up');
     }
 }
@@ -29,7 +29,7 @@ $('.filtr_collapse').click(function (){
 
 function radioCheck(number){
     for(let i = 1; i <= 4; i++){
-        if(number == i){
+        if(number === i){
             $(".rec_" + i).addClass("active");
             $(".rec_" + i + " .dot").html('<i class="fa-solid fa-square-xmark"></i>');
         }else{
@@ -112,3 +112,61 @@ $(".rec_4").click(function(){
 $('.show_results').click(function(){
     $('#filter_form').submit();
 })
+
+let categoryArray = document.querySelector('#categories').value.split(',').map(Number);
+categoryArray = categoryArray.filter(number => number !== 0);
+const selected_categories = document.querySelector('.selected-categories');
+
+window.selectCategory = function (event, id) {
+    let selected = (event.target.dataset.selected === 'true');
+    let cloned = event.target.cloneNode(true);
+    const inputCategories = document.querySelector('#categories');
+    const isEmptyCategoryPresent = selected_categories.querySelector('.category-empty');
+
+    if (!categoryArray.includes(id)) {
+        selected_categories.appendChild(cloned);
+        cloned.onclick = function(event) {
+           removeCategory(event, id);
+        };
+        categoryArray.push(id);
+        inputCategories.value = categoryArray;
+    }
+
+    if (categoryArray.length > 0) {
+        if (isEmptyCategoryPresent !== null) {
+            isEmptyCategoryPresent.remove();
+        }
+    }
+}
+
+window.removeCategory = function (event, id) {
+    const inputCategories = document.querySelector('#categories');
+    if(categoryArray.includes(id)) {
+        categoryArray.splice(categoryArray.indexOf(id), 1);
+        event.target.remove();
+        inputCategories.value = categoryArray;
+        console.log(categoryArray);
+        if (categoryArray.length === 0) {
+            const emptyCategoryElement = document.createElement('div');
+            emptyCategoryElement.classList.add('category', 'category-empty');
+            emptyCategoryElement.textContent = 'Nie wybrano';
+            selected_categories.appendChild(emptyCategoryElement);
+        }
+    }
+}
+
+let visibleCategories = false
+window.categoriesToggle = function () {
+    const categories = document.querySelector(".categories");
+    const toggleButton = document.querySelector(".categories_extend");
+
+    if (visibleCategories) {
+        visibleCategories = false;
+        toggleButton.innerHTML = 'Rozwiń <i class="fa-solid fa-chevron-down"></i>';
+    } else {
+        visibleCategories = true;
+        toggleButton.innerHTML = 'Ukryj <i class="fa-solid fa-chevron-up"></i>';
+    }
+
+    categories.classList.toggle('active');
+}

@@ -8,7 +8,7 @@ title.addEventListener("input", (event) => {
         "/255</span>";
     if (title.value.length >= 255) {
         const length = document.querySelector("span.current_title_length");
-        if (length.style.color != "#eb4d4b") {
+        if (length.style.color !== "#eb4d4b") {
             length.style.color = "#eb4d4b";
             length.style.fontWeight = "700";
         }
@@ -25,7 +25,7 @@ excerpt.addEventListener("input", (event) => {
         "/510</span>";
     if (excerpt.value.length >= 510) {
         const length = document.querySelector("span.current_excerpt_length");
-        if (length.style.color != "#eb4d4b") {
+        if (length.style.color !== "#eb4d4b") {
             length.style.color = "#eb4d4b";
             length.style.fontWeight = "700";
         }
@@ -126,4 +126,32 @@ window.loadFile = function (event) {
     reader.readAsDataURL(event.target.files[0]);
 };
 
-window.scrollTo(0, 0);
+window.changeToCategory = function (event, id) {
+    const selectedCategory = document.querySelector(".category-selected");
+    const sourceStyles = window.getComputedStyle(event.target);
+    const categoryInput = document.querySelector("input[name=category_id]");
+
+    selectedCategory.style.setProperty('background-color', sourceStyles.backgroundColor);
+    selectedCategory.style.setProperty('color', sourceStyles.color);
+    selectedCategory.innerHTML = event.target.innerHTML;
+    selectedCategory.style.border = "none";
+    categoryInput.value = event.target.dataset.id;
+}
+
+let visibleCategories = true
+window.categoriesToggle = function () {
+    const categories = document.querySelector(".categories");
+    const toggleButton = document.querySelector(".categories_extend");
+
+    if (visibleCategories) {
+        visibleCategories = false;
+        toggleButton.innerHTML = 'Rozwiń <i class="fa-solid fa-chevron-down"></i>';
+    } else {
+        visibleCategories = true;
+        toggleButton.innerHTML = 'Ukryj <i class="fa-solid fa-chevron-up"></i>';
+    }
+
+    categories.classList.toggle('active');
+}
+
+// window.scrollTo(0, 0);

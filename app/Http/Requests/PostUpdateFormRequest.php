@@ -30,6 +30,7 @@ class PostUpdateFormRequest extends FormRequest
             'excerpt' => ['required', 'max:510'],
             'body' => 'required',
             'image' => ['mimes:png,jpg,jpeg', 'max:10248'],
+            'category_id' => ['required', 'numeric', 'min:1'],
         ];
     }
 }

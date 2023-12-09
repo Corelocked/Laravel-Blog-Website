@@ -39,7 +39,7 @@ class PostHistoryController extends Controller
      */
     public function show($id)
     {
-        $post = HistoryPost::findOrFail($id);
+        $post = HistoryPost::with('category')->findOrFail($id);
 
         return response()->json($post);
     }
@@ -56,8 +56,10 @@ class PostHistoryController extends Controller
             'excerpt' => $post->excerpt,
             'body' => $post->body,
             'image_path' => $post->image_path,
+            'slug' => $post->slug,
             'is_published' => $post->is_published,
             'additional_info' => $post->additional_info,
+            'category_id' => $post->category_id,
         ]);
 
         $post->update([
@@ -66,7 +68,9 @@ class PostHistoryController extends Controller
             'body' => $historyPost->body,
             'is_published' => $historyPost->is_published,
             'image_path' => $historyPost->image_path,
+            'slug' => $historyPost->slug,
             'additional_info' => 1,
+            'category_id' => $historyPost->category_id,
         ]);
 
         return redirect()->route('posts.edit', ['post' => $postid]);

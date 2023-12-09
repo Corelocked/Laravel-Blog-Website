@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\SavedPost;
@@ -28,6 +29,7 @@ class PostAdminController extends Controller
      */
     public function index(Request $request)
     {
+
         if (isset($request->order)) {
             $order = $request->order;
         } else {
@@ -46,22 +48,37 @@ class PostAdminController extends Controller
 
         if (Auth::User()->hasRole('Admin')) {
             if ($user != 0) {
-                $posts = Post::where('user_id', $request->user)->orderBy('id', $order)->paginate($limit);
+                $posts = Post::where('user_id', $request->user)->orderBy('id', $order);
             } else {
-                $posts = Post::orderBy('id', $order)->paginate($limit);
+                $posts = Post::orderBy('id', $order);
             }
         } else {
-            $posts = Post::orderBy('id', $order)->where('user_id', Auth::User()->id)->paginate($limit);
+            $posts = Post::orderBy('id', $order)->where('user_id', Auth::User()->id);
+        }
+
+        if ($request->categories && $request->categories[0] !== null) {
+            $temp = explode(',', $request->categories[0]);
+            $posts->whereIn('category_id', $temp);
+            $selected_categories = Category::whereIn('id', $temp)->get();
+            $selected_categories_array = $temp;
+        } else {
+            $selected_categories = null;
+            $selected_categories_array = null;
         }
 
         $users = User::all();
 
+        $categories = Category::all();
+
         return view('post.index', [
-            'posts' => $posts,
+            'posts' => $posts->paginate($limit),
             'users' => $users,
             'order' => $order,
             'limit' => $limit,
             'selectedUser' => $user,
+            'categories' => $categories,
+            'selected_categories' => $selected_categories,
+            'selected_categories_array' => $selected_categories_array,
         ]);
     }
 
@@ -73,6 +90,7 @@ class PostAdminController extends Controller
     public function create(Request $request)
     {
         $saved = SavedPost::where('user_id', Auth::User()->id)->get();
+        $categories = Category::all();
 
         if (count($saved) > 0 && ! $request->new && ! $request->edit) {
             return redirect()->route('posts.saved');
@@ -87,10 +105,13 @@ class PostAdminController extends Controller
 
             return view('post.create', [
                 'post' => $saved,
+                'categories' => $categories,
             ]);
         }
 
-        return view('post.create');
+        return view('post.create', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -109,6 +130,7 @@ class PostAdminController extends Controller
             'title' => 'required|max:255|unique:posts,title',
             'excerpt' => 'required|max:510',
             'body' => 'required',
+            'category_id' => 'required',
         ];
 
         if (! isset($request->image)) {
@@ -136,6 +158,7 @@ class PostAdminController extends Controller
             'image_path' => isset($request->image_path) ? $request->image_path : $this->storeImage($request),
             'slug' => Str::slug($request->title),
             'is_published' => $request->is_published == 'on' ? true : false,
+            'category_id' => $request->category_id,
         ]);
 
         if ($SavedPost) {
@@ -153,7 +176,7 @@ class PostAdminController extends Controller
      */
     public function show($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::with('category')->findOrFail($id);
 
         return response()->json($post);
     }
@@ -168,10 +191,13 @@ class PostAdminController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        $categories = Category::all();
+
         $this->checkUserIdPost($post);
 
         return view('post.edit', [
             'post' => $post,
+            'categories' => $categories,
             'editPost' => true,
         ]);
     }
@@ -204,6 +230,7 @@ class PostAdminController extends Controller
             'slug' => $post->get()[0]->slug,
             'is_published' => $post->get()[0]->is_published,
             'additional_info' => $post->get()[0]->additional_info,
+            'category_id' => $post->get()[0]->category_id,
         ]);
 
         $input['title'] = $request->title;
@@ -212,6 +239,7 @@ class PostAdminController extends Controller
         $input['slug'] = Str::slug($request->title);
         $input['is_published'] = $request->is_published == 'on' ? true : false;
         $input['additional_info'] = 0;
+        $input['category_id'] = $request->category_id;
 
         if ($request->image) {
             $input['image_path'] = $this->storeImage($request);

@@ -184,6 +184,14 @@ article .post .body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: flex-start;
+}
+article .post .body .category{
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 8px 8px 0 8px;
 }
 article .post .body .title {
     font-size: 24px;
@@ -259,12 +267,20 @@ article .post_container .info {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 article .post_container .info .title {
     font-size: 24px;
     font-weight: 500;
     text-align: center;
     word-break: break-word;
+}
+article .post_container .info .category {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 8px;
 }
 article .post_container .info .date {
     font-size: 14px;

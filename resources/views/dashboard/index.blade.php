@@ -1,6 +1,6 @@
 <x-admin-layout>
     <x-dashboard-navbar />
-    
+
     <section class="dashboard">
         <img src="{{ asset('images/moon.jpg') }}" id="dashboard__image">
         <p class="welcome">Witaj w Panelu Administracyjnym!</p>
@@ -17,6 +17,20 @@
                     <a href="{{ route('posts.index') }}" class="button">
                         <i class="fa-solid fa-newspaper"></i>
                         <p>Przeglądaj posty</p>
+                    </a>
+                @endcan
+            </div>
+            <div class="connected">
+                @can('category-create')
+                    <a href="{{ route('categories.create') }}" class="button">
+                        <i class="fa-solid fa-square-plus"></i>
+                        <p>Dodaj kategorię</p>
+                    </a>
+                @endcan
+                @can('category-list')
+                    <a href="{{ route('categories.index') }}" class="button">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <p>Przeglądaj kategorie</p>
                     </a>
                 @endcan
             </div>

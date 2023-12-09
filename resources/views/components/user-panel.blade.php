@@ -12,6 +12,9 @@
         @can('post-create')
             <a href="{{ route('posts.create') }}" class="button"><i class="fa-solid fa-plus"></i><p>Dodaj post</p></a>
         @endcan
+        @can('category-create')
+            <a href="{{ route('categories.create') }}" class="button"><i class="fa-solid fa-square-plus"></i><p>Dodaj kategorię</p></a>
+        @endcan
         @can('user-create')
             <a href="{{ route('users.create') }}" class="button"><i class="fa-solid fa-user-plus"></i><p>Dodaj użytownika</p></a>
         @endcan

@@ -5,6 +5,9 @@
                 <img src="{{ asset($post->image_path) }}" alt="">
                 <div class="info">
                     <p class="title">{{ $post->title }}</p>
+                    @if ($post->category)
+                        <div class="category" style="background: {{ $post->category->backgroundColor }}CC; color: {{ $post->category->textColor }}">{{ $post->category->name }}</div>
+                    @endif
                     <p class="date">{{ $post->created_at->format('d.m.Y') }} by {{ $post->user->firstname . ' ' . $post->user->lastname }}</p>
                     @if($post->created_at != $post->updated_at)
                         <p class="date">Zaktualizowano: {{ $post->updated_at->format('d.m.Y') }}</p>
@@ -25,17 +28,13 @@
             </div>
         </div>
         <div class="post_body">
-            {{-- <div class="image_post">
-                <img src="{{ asset('images/picture.jpg') }}" alt="">
-                <p>Taki tam obrazek</p>
-            </div> --}}
 
             {!! $post->body !!}
 
             <div class="actions">
                 @isset($nextPost)
                     <a href="/"><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
-                    <a href="/post/{{ $nextPost }}">Następny post <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="/post/{{ $nextPost->slug }}">Następny post <i class="fa-solid fa-arrow-right"></i></a>
                 @else
                     <a href="/" style="width: 100%"><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
                 @endisset

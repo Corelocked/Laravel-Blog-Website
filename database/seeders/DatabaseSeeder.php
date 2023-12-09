@@ -19,8 +19,9 @@ class DatabaseSeeder extends Seeder
             PermissionTableSeeder::class,
             CreateAdminUserSeeder::class,
             CreateWriterUserSeeder::class,
+            CategoriesSeeder::class,
         ]);
 
-        \App\Models\Post::factory(10)->create();
+        \App\Models\Post::factory(20)->create();
     }
 }
