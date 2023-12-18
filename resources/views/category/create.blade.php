@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="dashboard">
+    <div class="dashboard">
         <form action="{{ route('categories.store') }}" method="POST" id="create_category">
             @csrf
             <div class="welcome-2">Dodaj kategorię</div>
@@ -22,5 +22,5 @@
                 <input type="submit" value="Utwórz">
             </div>
         </form>
-    </section>
+    </div>
 </x-admin-layout>

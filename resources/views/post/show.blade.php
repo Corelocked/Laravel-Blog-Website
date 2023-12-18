@@ -1,5 +1,5 @@
 <x-main-layout>
-    <article>
+    <div class="article">
         <div class="post_container">
             <div class="top">
                 <img src="{{ asset($post->image_path) }}" alt="">
@@ -33,10 +33,10 @@
 
             <div class="actions">
                 @isset($nextPost)
-                    <a href="/"><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
-                    <a href="/post/{{ $nextPost->slug }}">Następny post <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{{ route('home') }}"><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
+                    <a href="{{ route('post.show', $nextPost->slug) }}">Następny post <i class="fa-solid fa-arrow-right"></i></a>
                 @else
-                    <a href="/" style="width: 100%"><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
+                    <a href="{{ route('home') }}" style="width: 100%"><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
                 @endisset
             </div>
         </div>
@@ -59,7 +59,7 @@
                 @endforeach
             @endisset
         </div>
-    </article>
+    </div>
 
     <script>
         $('img:not(.profile_img)').addClass('img-enlargable').click(function(){

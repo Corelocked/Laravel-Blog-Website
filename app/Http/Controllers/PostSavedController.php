@@ -47,7 +47,7 @@ class PostSavedController extends Controller
             'body' => $request->body,
             'image_path' => $request->image != 'undefined' ? $this->storeImage($request) : null,
             'is_published' => $request->is_published ? 1 : 0,
-            'category_id' => $request->category_id,
+            'category_id' => $request->category_id ? $request->category_id : null,
         ]);
 
         return response()->json(['message' => 'Zapisano!', 'id' => $post->id]);

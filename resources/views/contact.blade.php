@@ -1,10 +1,10 @@
 <x-main-layout>
-    <article>
+    <div class="article">
         <div class="contact_form">
             <div class="leave_message">Zostaw wiadomość!</div>
             <div class="body_form">
                 <img src="{{ asset('images/open.png') }}" alt="">
-                <form action="" method="POST">
+                <form method="POST">
                     <label>Imię</label>
                     <input type="text" name="name">
                     <label>Email</label>
@@ -15,5 +15,5 @@
                 </form>
             </div>
         </div>
-    </article>
+    </div>
 </x-main-layout>

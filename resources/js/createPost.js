@@ -20,10 +20,10 @@ window.save = function(){
     const body = $(".ql-editor").html();
     const image = document.querySelector('input[name=image]').files[0];
     const is_published = document.querySelector('input[name=is_published]').checked;
-    const category = document.querySelector('input[name=category_id]').value;
+    const category = parseInt(document.querySelector('input[name=category_id]').value);
     const token = document.querySelector('input[name=_token]').value;
 
-    const id = document.querySelector('input[name=id_saved_post]').value;
+    const id = parseInt(document.querySelector('input[name=id_saved_post]').value);
 
     if(image || title !== '' || excerpt !== '' || body !== '<p><br></p>'){
         var form = new FormData();

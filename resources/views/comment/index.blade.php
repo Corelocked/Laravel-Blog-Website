@@ -5,18 +5,18 @@
         @vite(['resources/js/filtr.js'])
     @endsection
 
-    <x-dashboard-navbar route="/dashboard"/>
-    
-    
-    <section class="divided_minimal">
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
+
+
+    <div class="divided_minimal">
         <p class="head">Komentarze</p>
         <div class="line-1"></div>
         <div class="comments">
             <div class="filter">
-                <span class="filtr_collapse">
+                <div class="filtr_collapse">
                     <p id="filtr">Filtruj</p>
                     <i class="fa-solid fa-caret-down button_collapse"></i>
-                </span>
+                </div>
                 <div class="filtr_body" style="height: {{ Auth::User()->hasRole('Admin') ? '455px' : '356px' }}">
                     <div class="line-1"></div>
                     <div class="filter-button f_1 active">
@@ -28,7 +28,7 @@
                         <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
                     </div>
                     <div class="line-1"></div>
-                    <p id="filtr-2">Ilość rekordów</p>
+                    <p class="filtr-2">Ilość rekordów</p>
                     <div class="filter-button rec_1">
                         <p>20 rekordów</p>
                         <span class="dot"><i class="fa-solid fa-square-xmark"></i></span>
@@ -47,7 +47,7 @@
                     </div>
                     @role('Admin')
                     <div class="line-1"></div>
-                        <p id="filtr-2">Wyszukaj z postu użytkownika</p>
+                        <p class="filtr-2">Wyszukaj z postu użytkownika</p>
                         <select class="js-select2" id="user_modal" name="user">
                             <option value="0">Wszyscy</option>
                             @foreach ($users as $user)
@@ -64,7 +64,7 @@
                         <p>Pokaż</p>
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
-                    <form action="" style="display: none" id="filter_form">
+                    <form style="display: none" id="filter_form">
                         <input type="text" id="order" name="order" value="{{ $order ? $order : 'desc' }}">
                         <input type="text" id="limit" name="limit" value="{{ $limit ? $limit : ($limit == 0 ? 0 : 20) }}">
                         @role('Admin')
@@ -79,5 +79,5 @@
                 @endforeach
             </div>
         </div>
-    </section>
+    </div>
 </x-admin-layout>

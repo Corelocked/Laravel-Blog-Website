@@ -1,5 +1,5 @@
 <x-main-layout>
-    <article>
+    <div class="article">
         <div class="profile_form">
             <div class="edit_profile">Edytuj Profil</div>
             <div class="body_form">
@@ -14,7 +14,7 @@
                     </ul>
                     @endif
                     <div class="profile_file">
-                        <img src="{{ asset(Auth::User()->image_path) }}" id="output">
+                        <img src="{{ asset(Auth::User()->image_path) }}" id="output" alt="profile">
                         <span class="change" onClick="document.getElementById('profile_update_form_profile_image').click()"><i class="fa-solid fa-image"></i></span>
                     </div>
                     <input type="file" name="image" id="profile_update_form_profile_image"  accept="image/*" onchange="loadFile(event)" style="display: none;">
@@ -34,7 +34,7 @@
                 </form>
             </div>
         </div>
-    </article>
+    </div>
     <script>
         var loadFile = function(event) {
             var reader = new FileReader();

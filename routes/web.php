@@ -14,11 +14,11 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Main Routes
-Route::get('/', [PostController::class, 'index']);
+Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/contact', function () {
     return view('contact');
-});
-Route::get('/post/{id}', [PostController::class, 'show'])->name('posts.show');
+})->name('contact');
+Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
 
 // Auth Routes
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -30,11 +30,11 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     // DASHBOARD
     Route::get('', function () {
         return view('dashboard.index');
-    });
+    })->name('dashboard');
 
     // POSTS
     Route::resource('posts', PostAdminController::class, ['except' => 'show']);
-    Route::get('posts/{id}/show', [PostAdminController::class, 'show']);
+    Route::get('posts/{id}/show', [PostAdminController::class, 'show'])->name('posts.show');
 
     // CATEGORIES
     Route::resource('categories', CategoryController::class, ['except' => 'show']);
@@ -72,4 +72,4 @@ Route::group(['middleware' => ['auth']], function () {
 // Profile Route
 Route::get('/profile', function () {
     return view('profile');
-});
+})->name('profile');

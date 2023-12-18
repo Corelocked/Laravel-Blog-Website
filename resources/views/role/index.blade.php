@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="roles">
+    <div class="roles">
         <p class="head">Role</p>
         <div class="roles_list">
             <table>
@@ -39,5 +39,5 @@
                 </tbody>
             </table>
         </div>
-    </section>
+    </div>
 </x-admin-layout>

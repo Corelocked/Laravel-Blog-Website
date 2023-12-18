@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="users">
+    <div class="users">
         <p class="head">Użytkownicy</p>
         <div class="users_list">
             <table>
@@ -18,7 +18,7 @@
                 <tbody class="body_user_list">
                     @foreach ($data as $key => $user)
                         <tr>
-                            <td data-label="IMG"><img src="{{ asset($user->image_path) }}"></td>
+                            <td data-label="IMG"><img src="{{ asset($user->image_path) }}" alt="{{ $user->firstname }}"></td>
                             <td data-label="Imię">{{ $user->firstname }}</td>
                             <td data-label="Nazwisko">{{ $user->lastname }}</td>
                             <td data-label="Email">{{ $user->email }}</td>
@@ -50,8 +50,8 @@
                 </tbody>
             </table>
         </div>
-    </section>
+    </div>
     <script>
-        
+
     </script>
 </x-admin-layout>

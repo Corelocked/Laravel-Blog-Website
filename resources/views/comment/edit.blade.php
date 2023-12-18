@@ -1,8 +1,8 @@
 <x-admin-layout>
-<body>
-    <x-dashboard-navbar route="/dashboard/comments"/>
 
-    <section class="dashboard">
+    <x-dashboard-navbar route="{{ route('comments.index') }}"/>
+
+    <div class="dashboard">
         <form action="{{ route('comments.update', $comment->id) }}" id="edit_comment" method="POST">
             @csrf
             @method('PATCH')
@@ -15,5 +15,5 @@
                 <input type="submit" value="Edytuj">
             </div>
         </form>
-    </section>
+    </div>
 </x-admin-layout>

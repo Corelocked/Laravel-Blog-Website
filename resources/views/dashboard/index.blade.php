@@ -1,8 +1,8 @@
 <x-admin-layout>
-    <x-dashboard-navbar />
+    <x-dashboard-navbar route="{{ route('home') }}"/>
 
-    <section class="dashboard">
-        <img src="{{ asset('images/moon.jpg') }}" id="dashboard__image">
+    <div class="dashboard main">
+        <img src="{{ asset('images/moon.jpg') }}" id="dashboard__image" alt="dashboard">
         <p class="welcome">Witaj w Panelu Administracyjnym!</p>
         <p class="name_profile">{{ Auth::User()->firstname . ' ' . Auth::User()->lastname }}</p>
         <div class="actions_home">
@@ -36,13 +36,13 @@
             </div>
             <div class="connected">
                 @can('user-create')
-                    <a href="/dashboard/users/create" class="button">
+                    <a href="{{ route('users.create') }}" class="button">
                         <i class="fa-solid fa-user-plus"></i>
                         <p>Dodaj użytkownika</p>
                     </a>
                 @endcan
                 @can('user-list')
-                    <a href="/dashboard/users" class="button">
+                    <a href="{{ route('users.index') }}" class="button">
                         <i class="fa-solid fa-user-gear"></i>
                         <p>Zarządzaj użytkownikami</p>
                     </a>
@@ -56,18 +56,18 @@
             @endcan
             <div class="connected">
                 @can('role-create')
-                    <a href="/dashboard/roles/create" class="button">
+                    <a href="{{ route('roles.create') }}" class="button">
                         <i class="fa-solid fa-wrench"></i>
                         <p>Dodaj role</p>
                     </a>
                 @endcan
                 @can('role-list')
-                    <a href="/dashboard/roles" class="button">
+                    <a href="{{ route('roles.index') }}" class="button">
                         <i class="fa-solid fa-toolbox"></i>
                         <p>Przeglądaj role</p>
                     </a>
                 </div>
                 @endcan
         </div>
-    </section>
+    </div>
 </x-admin-layout>

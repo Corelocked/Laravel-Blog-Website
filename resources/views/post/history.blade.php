@@ -6,7 +6,7 @@
     @endsection
 
     <header class="header_post_edit">
-        <a href="/dashboard/posts/{{ $id }}/edit"><i class="fa-solid fa-left-long"></i> Powrót</a>
+        <a href="{{ route('posts.edit', $id) }}"><i class="fa-solid fa-left-long"></i> Powrót</a>
         <span class="info">Historia posta</span>
         <div class="profile">
             <img src="{{ asset(Auth::user()->image_path) }}" alt="" class="profile_img">
@@ -14,7 +14,7 @@
         </div>
     </header>
 
-    <section class="post__history">
+    <div class="post__history">
         <div class="history_card h_0 active">
             <a class="show_actual">Pokaż aktualnie edytowany post</a>
         </div>
@@ -43,11 +43,11 @@
             </div>
         @endif
 
-    </section>
+    </div>
     <aside class="post__preview">
         <div class="post_container">
             <div class="top">
-                <img src="{{ asset($actualPost->image_path) }}" id="output">
+                <img src="{{ asset($actualPost->image_path) }}" id="output" alt="image">
                 <div class="info">
                     <p class="preview_title">{{ $actualPost->title }}</p>
                     @isset($actualPost->category)

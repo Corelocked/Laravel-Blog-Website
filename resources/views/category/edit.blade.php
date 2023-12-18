@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="dashboard">
+    <div class="dashboard">
         <form action="{{ route('categories.update', $category->id) }}" method="POST" id="edit_category">
             @csrf
             @method('PATCH')
@@ -23,5 +23,5 @@
                 <input type="submit" value="Edytuj">
             </div>
         </form>
-    </section>
+    </div>
 </x-admin-layout>

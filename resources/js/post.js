@@ -140,7 +140,7 @@ window.changeToCategory = function (event, id) {
 
 let visibleCategories = true
 window.categoriesToggle = function () {
-    const categories = document.querySelector(".categories");
+    const categories = document.querySelector(".categories_list");
     const toggleButton = document.querySelector(".categories_extend");
 
     if (visibleCategories) {

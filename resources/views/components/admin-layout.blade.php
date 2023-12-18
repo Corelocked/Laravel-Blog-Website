@@ -12,7 +12,7 @@
     @yield('scripts')
     @vite(['resources/css/admin.css', 'resources/js/app.js'])
 </head>
-@if( Request::Url() == route('posts.create') OR $edit == true)
+@if( Request::Url() == route('posts.create') OR $edit)
     <body style="display: block;">
 @else
     <body>

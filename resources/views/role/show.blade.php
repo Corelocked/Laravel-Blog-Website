@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard/roles"/>
+    <x-dashboard-navbar route="{{ route('roles.index') }}"/>
 
-    <section class="dashboard">
+    <div class="dashboard">
         <div class="role">
             <div class="welcome-2">Rola: {{ $role->name }}</div>
             <p class="role_label_2">Uprawnienia</p>
@@ -17,7 +17,7 @@
                         @if($loop->index != 0)
                             </p>
                             </div>
-                            
+
                         @endif
                         <div class="role_container">
                         <p class="role_label">{{ $label[0] }}</p>
@@ -26,12 +26,12 @@
                             $last_label = $label[0];
                         @endphp
                     @endif
-                    
+
                     {{ $label[1] }},
-                    
+
                 @endforeach
             </div>
         </div>
         <a href="{{ route('roles.index') }}" class="role_exit">Powrót</a>
-    </section>
+    </div>
 </x-admin-layout>

@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard/users"/>
+    <x-dashboard-navbar route="{{ route('users.index') }}"/>
 
-    <section class="dashboard">
+    <div class="dashboard">
         <form action="{{ route('users.update', $user->id) }}" method="POST" id="create_user">
             @csrf
             @method('PATCH')
@@ -48,7 +48,7 @@
                 <input type="submit" value="Edytuj">
             </div>
         </form>
-    </section>
+    </div>
     <script>
         function generatePassword(){
             var pwdChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

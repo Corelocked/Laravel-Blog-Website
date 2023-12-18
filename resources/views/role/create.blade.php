@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="dashboard">
+    <div class="dashboard">
         <form action="{{ route('roles.store') }}" method="POST" id="create_role">
             <div class="welcome-2">Dodaj role</div>
             @if(count($errors) > 0)
@@ -18,7 +18,7 @@
                 @php
                     $last_label = '';
                 @endphp
-                
+
                 @foreach ($permissions as $permission)
                     @php
                         $label = explode('-', $permission->name);
@@ -30,14 +30,14 @@
                         @endif
                         <div class="role_container">
                         <p class="role_label">{{ $label[0] }}</p>
-                        
+
                         <p class="permissions">
-                            
+
                         @php
                             $last_label = $label[0];
                         @endphp
                     @endif
-                    <label class="container">{{ $label[1] }}  
+                    <label class="container">{{ $label[1] }}
                     <input type="checkbox" name="permission[]" value="{{ $permission->id }}">
                     <span class="checkmark"></span>
                     </label>
@@ -46,5 +46,5 @@
                 <input type="submit" value="Utwórz">
             </div>
         </form>
-    </section>
+    </div>
 </x-admin-layout>

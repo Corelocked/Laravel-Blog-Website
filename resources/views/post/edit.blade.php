@@ -6,7 +6,7 @@
     @endsection
 
     <header class="header_post_edit">
-        <a href="/dashboard/posts"><i class="fa-solid fa-left-long"></i> Powrót</a>
+        <a href="{{ route('posts.index') }}"><i class="fa-solid fa-left-long"></i> Powrót</a>
         <div class="edit_post_actions">
             <a href="{{ route('history.index', $post->id) }}" class="history"><span class="text">Historia</span><span class="icon"><i class="fa-solid fa-timeline"></i></span></a>
             <div class="submit" onClick="$('#form').submit();"><span class="text">Opublikuj</span><span class="icon"><i class="fa-solid fa-upload"></i></span></div>
@@ -17,7 +17,7 @@
         </div>
     </header>
 
-    <section class="post__create post__edit">
+    <div class="post__create post__edit">
         <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data" id="form">
             @csrf
             @method('PATCH')
@@ -32,7 +32,7 @@
                 @endif
                 <div class="top">
                     <div class="image">
-                        <img src="{{ $post->image_path }}" id="output">
+                        <img src="{{ asset($post->image_path) }}" id="output" alt="image">
                         <input id="image" type="file" name="image" accept="image/*" onchange="loadFile(event)" style="display: none;">
                         <div class="change_image"><i class="fa-solid fa-image"></i> Zmień</div>
                     </div>
@@ -79,7 +79,7 @@
                     <div class="category-selected">Nie wybrano</div>
                 @endisset
                 <p class="categories_extend" onclick="categoriesToggle();">Ukryj <i class="fa-solid fa-chevron-up"></i></p>
-                <div class="categories">
+                <div class="categories_list">
                     @foreach($categories as $category)
                         <div class="category" style="background: {{ $category->backgroundColor }}CC; color: {{ $category->textColor }}" onclick="changeToCategory(event, {{ $category->id }})" data-id="{{ $category->id }}">{{ $category->name }}</div>
                     @endforeach
@@ -88,5 +88,5 @@
             </div>
         </form>
 
-    </section>
+    </div>
 </x-admin-layout>

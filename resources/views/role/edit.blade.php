@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard/roles"/>
+    <x-dashboard-navbar route="{{ route('roles.index') }}"/>
 
-    <section class="dashboard">
+    <div class="dashboard">
         <div class="role">
             <div class="welcome-2">Rola: {{ $role->name }}</div>
             <p class="role_label_2">Uprawnienia</p>
@@ -22,14 +22,14 @@
                         @endif
                         <div class="role_container">
                         <p class="role_label">{{ $label[0] }}</p>
-                        
+
                         <p class="permissions">
                         @php
                             $last_label = $label[0];
                         @endphp
                     @endif
-                    
-                    <label class="container">{{ $label[1] }} 
+
+                    <label class="container">{{ $label[1] }}
                     @if(in_array($permission->id, $rolePermissions))
                         <input type="checkbox" name="permission[]" value="{{ $permission->id }}" checked>
                     @else
@@ -37,12 +37,12 @@
                     @endif
                     <span class="checkmark"></span>
                     </label>
-                    
+
                 @endforeach
                 </div>
                 <input type="hidden" name="name" value="{{ $role->name }}">
                 <input type="submit" value="Edytuj">
             </form>
         </div>
-    </section>
+    </div>
 </x-admin-layout>

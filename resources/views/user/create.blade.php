@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="dashboard">
+    <div class="dashboard">
         <form action="{{ route('users.store') }}" method="POST" id="create_user">
             @csrf
             <div class="welcome-2">Dodaj użytkownika</div>
@@ -43,7 +43,7 @@
                 <input type="submit" value="Utwórz">
             </div>
         </form>
-    </section>
+    </div>
     <script>
         function generatePassword(){
             var pwdChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

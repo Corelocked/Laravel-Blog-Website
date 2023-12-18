@@ -5,17 +5,17 @@
         @vite(['resources/js/filtr.js'])
     @endsection
 
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="divided_minimal">
+    <div class="divided_minimal">
         <p class="head">Posty</p>
         <div class="line-1"></div>
         <div class="posts">
             <div class="filter">
-                <span class="filtr_collapse">
+                <div class="filtr_collapse">
                     <p id="filtr">Filtruj</p>
                     <i class="fa-solid fa-caret-up button_collapse"></i>
-                </span>
+                </div>
                 <div class="filtr_body" style="height: {{ Auth::User()->hasRole('Admin') ? '455px' : '356px' }}">
                     <div class="line-1"></div>
                     <div class="filter-button f_1 active">
@@ -27,7 +27,7 @@
                         <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
                     </div>
                     <div class="line-1"></div>
-                    <p id="filtr-2">Ilość rekordów</p>
+                    <p class="filtr-2">Ilość rekordów</p>
                     <div class="filter-button rec_1">
                         <p>20 rekordów</p>
                         <span class="dot"><i class="fa-solid fa-square-xmark"></i></span>
@@ -45,7 +45,7 @@
                         <span class="dot"><i class="fa-regular fa-square"></i></span>
                     </div>
                     <div class="line-1"></div>
-                    <p id="filtr-2">Kategorie</p>
+                    <p class="filtr-2">Kategorie</p>
                     <div class="selected-categories">
                         @if(empty($selected_categories))
                             <div class="category category-empty">Nie wybrano</div>
@@ -56,14 +56,14 @@
                         @endif
                     </div>
                     <p class="categories_extend" onclick="categoriesToggle();">Rozwiń <i class="fa-solid fa-chevron-down"></i></p>
-                    <div class="categories">
+                    <div class="categories_list">
                         @foreach($categories as $category)
                             <div class="category" style="background: {{ $category->backgroundColor }}CC; color: {{ $category->textColor }}" onclick="selectCategory(event, {{ $category->id }})">{{ $category->name }}</div>
                         @endforeach
                     </div>
                     <div class="line-1"></div>
                     @role('Admin')
-                        <p id="filtr-2">Wyszukaj posty użytkownika</p>
+                        <p class="filtr-2">Wyszukaj posty użytkownika</p>
                         <select class="js-select2" id="user_modal" name="user">
                             <option value="0">Wszyscy</option>
                             @foreach ($users as $user)
@@ -80,7 +80,7 @@
                         <p>Pokaż</p>
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
-                    <form action="" style="display: none" id="filter_form">
+                    <form style="display: none" id="filter_form">
                         <input type="text" id="order" name="order" value="{{ $order ? $order : 'desc' }}">
                         <input type="text" id="limit" name="limit" value="{{ $limit ? $limit : ($limit == 0 ? 0 : 20) }}">
                         <input type="text" id="categories" name="categories[]" value="{{ is_array($selected_categories_array) ? implode(',', $selected_categories_array) : '' }}">
@@ -98,5 +98,5 @@
 
         </div>
         @include('pagination.default', ['paginator' => $posts])
-    </section>
+    </div>
 </x-admin-layout>

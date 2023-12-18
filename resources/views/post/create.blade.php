@@ -5,9 +5,9 @@
         @vite(['resources/js/post.js', 'resources/js/createPost.js'])
     @endsection
 
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="post__create">
+    <div class="post__create">
         <form action="{{ route('posts.store') }}" method="POST" id="form" enctype="multipart/form-data">
             @csrf
             <div id="content" data-image-url="{{route('image.store')}}">
@@ -21,7 +21,7 @@
                 @endif
                 <div class="top">
                     <div class="image">
-                        <img src="{{ isset($post) ? ($post->image_path ? asset($post->image_path) : asset('images/picture3.jpg')) : asset('images/picture3.jpg') }}" id="output">
+                        <img src="{{ isset($post) ? ($post->image_path ? asset($post->image_path) : asset('images/picture3.jpg')) : asset('images/picture3.jpg') }}" id="output" alt="image">
                         <input id="image" type="file" name="image" accept="image/*" onchange="loadFile(event)" style="display: none;">
                         <div class="change_image"><i class="fa-solid fa-image"></i> Zmień</div>
                     </div>
@@ -68,7 +68,7 @@
                     <div class="category-selected">Nie wybrano</div>
                 @endisset
                 <p class="categories_extend" onclick="categoriesToggle();">Ukryj <i class="fa-solid fa-chevron-up"></i></p>
-                <div class="categories">
+                <div class="categories_list">
                     @foreach($categories as $category)
                         <div class="category" style="background: {{ $category->backgroundColor }}CC; color: {{ $category->textColor }}" onclick="changeToCategory(event, {{ $category->id }})" data-id="{{ $category->id }}">{{ $category->name }}</div>
                     @endforeach
@@ -81,5 +81,5 @@
                 </div>
             </div>
         </form>
-    </section>
+    </div>
 </x-admin-layout>

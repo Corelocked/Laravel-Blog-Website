@@ -5,8 +5,8 @@
         <p class="name">{{ Auth::User() ? Auth::User()->firstname . ' ' . Auth::User()->lastname : '' }}</p>
         <p class="role_profile">{{ Auth::User() ? Auth::User()->roles[0]->name : '' }}</p>
         <p class="info">Dostępne akcje</p>
-        <a href="/dashboard" class="button"><i class="fa-solid fa-wrench"></i><p>Panel</p></a>
-        <a href="/profile" class="button"><i class="fa-solid fa-id-card"></i><p>Profil</p></a>
+        <a href="{{ route('dashboard') }}" class="button"><i class="fa-solid fa-wrench"></i><p>Panel</p></a>
+        <a href="{{ route('profile') }}" class="button"><i class="fa-solid fa-id-card"></i><p>Profil</p></a>
         <a href="{{ route('logout') }}" class="button"><i class="fa-solid fa-right-from-bracket"></i><p>Wyloguj</p></a>
         <p class="info">Szybkie akcje</p>
         @can('post-create')

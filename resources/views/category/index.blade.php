@@ -5,9 +5,9 @@ function hexToRgba($hex, $alpha = 1){
 }
 ?>
 <x-admin-layout>
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="roles">
+    <div class="categories">
         <p class="head">Kategorie</p>
         <div class="category_list">
             <table>
@@ -48,5 +48,5 @@ function hexToRgba($hex, $alpha = 1){
                 </tbody>
             </table>
         </div>
-    </section>
+    </div>
 </x-admin-layout>

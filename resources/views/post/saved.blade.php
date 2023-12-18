@@ -5,9 +5,9 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @endsection
 
-    <x-dashboard-navbar route="/dashboard"/>
+    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-    <section class="dashboard">
+    <div class="dashboard">
         <div class="saved_posts">
             <div class="saved_card new_post">
                 <form action="{{ route('posts.create') }}" method="GET">
@@ -20,5 +20,5 @@
                 <x-saved-post-card :post="$post" />
             @endforeach
         </div>
-    </section>
+    </div>
 </x-admin-layout>

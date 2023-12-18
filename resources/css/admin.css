@@ -123,7 +123,7 @@ header .profile:hover i {
     font-weight: 600;
     text-align: center;
 }
-.filter p#filtr-2 {
+.filter p.filtr-2 {
     margin-top: 10px;
     font-size: 13px;
     font-weight: 600;
@@ -170,21 +170,21 @@ header .profile:hover i {
     color: #2980b9;
 }
 .filter .filtr_body .selected-categories,
-.filter .filtr_body .categories {
+.filter .filtr_body .categories_list {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     margin-bottom: 8px;
 }
-.filter .filtr_body .categories {
+.filter .filtr_body .categories_list {
     overflow: hidden;
     height: 0;
 }
-.filter .filtr_body .categories.active {
+.filter .filtr_body .categories_list.active {
     height: auto;
 }
 .filter .filtr_body .selected-categories .category,
-.filter .filtr_body .categories .category {
+.filter .filtr_body .categories_list .category {
     font-weight: 600;
     font-size: 16px;
     padding: 4px 8px;
@@ -200,7 +200,7 @@ header .profile:hover i {
     user-select: none;
 }
 
-section.divided_minimal {
+.divided_minimal {
     background: var(--bar-color);
     border-radius: 10px;
     padding: 20px;
@@ -211,7 +211,7 @@ section.divided_minimal {
     -moz-box-shadow: 0px -10px 40px 6px var(--shadow-color);
     box-shadow: 0px -10px 40px 6px var(--shadow-color);
 }
-section.dashboard {
+.dashboard {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -226,8 +226,9 @@ section.dashboard {
     -moz-box-shadow: 0px 0px 40px 6px var(--shadow-color);
     box-shadow: 0px 0px 40px 6px var(--shadow-color);
 }
-section.users,
-section.roles {
+.users,
+.roles,
+.categories{
     background: var(--bar-color);
     border-radius: 10px;
     padding: 20px;
@@ -238,7 +239,7 @@ section.roles {
     -moz-box-shadow: 0px 0px 40px 6px var(--shadow-color);
     box-shadow: 0px 0px 40px 6px var(--shadow-color);
 }
-section #dashboard__image {
+.dashboard #dashboard__image {
     width: 464px;
     height: 261px;
     object-fit: cover;
@@ -246,35 +247,35 @@ section #dashboard__image {
     margin: 30px;
     object-position: 0 20%;
 }
-section .welcome {
+.dashboard .welcome {
     font-size: 48px;
     font-weight: 800;
     font-family: "Dosis";
     text-align: center;
 }
-section .welcome-2 {
+.dashboard .welcome-2 {
     font-size: 28px;
     font-weight: 800;
     font-family: "Dosis";
     text-align: center;
 }
-section .name_profile {
+.dashboard .name_profile {
     font-family: "Poppins", sans-serif;
     font-size: 18px;
     padding: 20px;
     text-align: center;
 }
 
-section .actions_home {
+.dashboard .actions_home {
     display: flex;
     flex-direction: column;
     margin-bottom: 50px;
 }
-section .actions_home .connected {
+.dashboard .actions_home .connected {
     display: flex;
     flex-direction: row;
 }
-section .actions_home .button {
+.dashboard .actions_home .button {
     min-width: 300px;
     padding: 15px;
     margin: 5px;
@@ -295,39 +296,39 @@ section .actions_home .button {
     color: #000;
     flex-grow: 1;
 }
-section .actions_home .button i {
+.dashboard .actions_home .button i {
     padding: 0 8px;
     margin: auto;
     font-size: 18px;
     transition: 0.1s all ease;
 }
-section .actions_home .button:hover i {
+.dashboard .actions_home .button:hover i {
     color: #3498db;
 }
-section .actions_home .button p {
+.dashboard .actions_home .button p {
     padding: 0 5px;
     font-family: "Poppins", sans-serif;
     font-size: 17px;
     transition: 0.1s all ease;
     margin: auto;
 }
-section .actions_home .button:hover p {
+.dashboard .actions_home .button:hover p {
     font-weight: 500;
 }
 
-section .head {
+.head {
     text-align: center;
     font-size: 22px;
     font-weight: 800;
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
     margin-bottom: 5px;
 }
-section .posts {
+.divided_minimal .posts {
     position: relative;
     height: calc(100% - 50px);
     width: 100%;
 }
-section .posts-list {
+.divided_minimal .posts-list {
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
@@ -337,15 +338,13 @@ section .posts-list {
     float: left;
 }
 
-section .container .recent_post_text {
-    font-size: 22px;
-    margin: 10px;
-    font-weight: 600;
-    text-align: center;
-}
-section .posts img {
-    margin-top: 20px;
-    margin-left: 10px;
+/*section .container .recent_post_text {*/
+/*    font-size: 22px;*/
+/*    margin: 10px;*/
+/*    font-weight: 600;*/
+/*    text-align: center;*/
+/*}*/
+.divided_minimal .posts img {
     margin: 20px 0 20px 10px;
     max-width: 128px;
     /* max-height: 225px; */
@@ -354,7 +353,7 @@ section .posts img {
     object-fit: cover;
 }
 
-section .post {
+.divided_minimal .posts .post {
     display: flex;
     align-items: center;
     width: 100%;
@@ -366,13 +365,13 @@ section .post {
     transition: 0.1s all ease;
     margin-top: 10px;
 }
-section .post:hover {
+.divided_minimal .posts .post:hover {
     transform: scale(1.01);
     -webkit-box-shadow: 0px 0px 25px 5px var(--shadow-color);
     -moz-box-shadow: 0px 0px 25px 5px var(--shadow-color);
     box-shadow: 0px 0px 25px 5px var(--shadow-color);
 }
-section .post .body {
+.divided_minimal .posts .post .body {
     width: calc(100% - 128px - 150px);
     padding: 5px;
     display: flex;
@@ -381,40 +380,40 @@ section .post .body {
     margin: 5px 0;
     align-items: flex-start;
 }
-section .post .body .category {
+.divided_minimal .posts .post .body .category {
     font-weight: 600;
     font-size: 16px;
     padding: 4px 8px;
     border-radius: 5px;
     margin: 8px 8px 0 8px;
 }
-section .post .body .title {
+.divided_minimal .posts .post .body .title {
     font-size: 20px;
     font-weight: 600;
     margin: 0 8px 8px 8px;
     word-break: break-word;
 }
-section .post .body .short_body {
+.divided_minimal .posts .post .body .short_body {
     margin: 8px;
 }
-section .post .body .date {
+.divided_minimal .posts .post .body .date {
     font-size: 12px;
     margin: 0 8px;
     font-weight: 500;
     font-style: italic;
 }
-section .post .actions {
+.divided_minimal .posts .post .actions {
     display: flex;
     flex-direction: column;
     width: 150px;
     align-items: center;
 }
-section .post .actions form {
+.divided_minimal .posts .post .actions form {
     width: 120px;
 }
-section .post .actions .read_more,
-section .post .actions .edit,
-section .post .actions .delete {
+.divided_minimal .posts .post .actions .read_more,
+.divided_minimal .posts .post .actions .edit,
+.divided_minimal .posts .post .actions .delete {
     margin: 4px 8px;
     padding: 4px;
     font-size: 14px;
@@ -427,25 +426,25 @@ section .post .actions .delete {
     text-align: center;
     transition: 0.1s ease all;
 }
-section .post .actions .read_more {
+.divided_minimal .posts .post .actions .read_more {
     background: #2ecc71;
 }
-section .post .actions .read_more:hover {
+.divided_minimal .posts .post .actions .read_more:hover {
     background: #27ae60;
 }
-section .post .actions .edit {
+.divided_minimal .posts .post .actions .edit {
     background: #3498db;
 }
-section .post .actions .edit:hover {
+.divided_minimal .posts .post .actions .edit:hover {
     background: #2980b9;
 }
-section .post .actions .delete {
+.divided_minimal .posts .post .actions .delete {
     background: #e74c3c;
     border: none;
     padding: 6.5px;
     margin: 4px 0;
 }
-section .post .actions .delete:hover {
+.divided_minimal .posts .post .actions .delete:hover {
     background: #c0392b;
 }
 
@@ -534,16 +533,16 @@ table td .show {
 table td .show:hover {
     background: #27ae60;
 }
-section .comments-list {
+.divided_minimal .comments-list {
     width: calc(80% - 20px);
     float: left;
 }
-section .comments {
+.divided_minimal .comments {
     position: relative;
     height: calc(100% - 50px);
     width: 100%;
 }
-section .comment {
+.divided_minimal .comments .comment {
     font-family: "Poppins", sans-serif;
     margin-top: 10px;
     display: flex;
@@ -555,42 +554,42 @@ section .comment {
     border-radius: 10px;
     transition: 0.1s all ease;
 }
-section .comment:hover {
+.divided_minimal .comments .comment:hover {
     transform: scale(1.01);
     -webkit-box-shadow: 0px 0px 25px 5px var(--shadow-color);
     -moz-box-shadow: 0px 0px 25px 5px var(--shadow-color);
     box-shadow: 0px 0px 25px 5px var(--shadow-color);
 }
-section .comments .comment .head__comment {
+.divided_minimal .comments .comment .head__comment {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-section .comment .head__comment i {
+.divided_minimal .comments .comment .head__comment i {
     font-size: 14px;
 }
-section .comment .head__comment p {
+.divided_minimal .comments .comment .head__comment p {
     margin: 0 10px;
     font-weight: 500;
 }
-section .comment .head__comment p:nth-of-type(2) {
+.divided_minimal .comments .comment .head__comment p:nth-of-type(2) {
     font-size: 14px;
 }
-section .comment .body__comment {
+.divided_minimal .comments .comment .body__comment {
     width: calc(100% - 180px);
     margin: auto;
     word-break: break-word;
 }
 
-section .comment .actions {
+.divided_minimal .comments .comment .actions {
     padding: 10px;
     display: flex;
     flex-direction: column;
     width: 180px;
     justify-content: center;
 }
-section .comment .actions a,
-section .comment button {
+.divided_minimal .comments .comment .actions a,
+.divided_minimal .comments .comment button {
     width: 100%;
     text-align: center;
     border: none;
@@ -608,30 +607,30 @@ section .comment button {
     flex-wrap: wrap;
 }
 
-section .comment button {
+.divided_minimal .comments .comment button {
     width: 100%;
 }
-section .comment .actions a p,
-section .comment button i {
+.divided_minimal .comments .comment .actions a p,
+.divided_minimal .comments .comment button i {
     margin: 0 3px;
 }
-section .comment .actions .redirect_to_post {
+.divided_minimal .comments .comment .actions .redirect_to_post {
     background: #2ecc71;
 }
-section .comment .actions .redirect_to_post:hover {
+.divided_minimal .comments .comment .actions .redirect_to_post:hover {
     background: #27ae60;
 }
-section .comment .actions .edit {
+.divided_minimal .comments .comment .actions .edit {
     background: #3498db;
 }
-section .comment .actions .edit:hover {
+.divided_minimal .comments .comment .actions .edit:hover {
     background: #2980b9;
 }
-section .comment .actions .delete {
+.divided_minimal .comments .comment .actions .delete {
     background: #e74c3c;
     font-family: "Poppins", sans-serif;
 }
-section .comment .actions .delete:hover {
+.divided_minimal .comments .comment .actions .delete:hover {
     background: #c0392b;
 }
 
@@ -1043,23 +1042,12 @@ input[type="submit"],
     font-family: "Poppins", sans-serif !important;
     font-size: 17px !important;
 }
-section.edit_post_actions {
-    display: flex;
-    justify-content: stretch;
-    padding: 5px;
-    margin: 84px 0 0 0;
-    background: var(--bar-color);
-    border-radius: 10px;
-    -webkit-box-shadow: 0px 0px 40px 6px var(--shadow-color);
-    -moz-box-shadow: 0px 0px 40px 6px var(--shadow-color);
-    box-shadow: 0px 0px 40px 6px var(--shadow-color);
-}
 .edit_post_actions {
     display: flex;
     flex-direction: row;
     width: calc(100% - 200px);
 }
-section.post__create {
+.post__create {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1069,7 +1057,7 @@ section.post__create {
     margin: 94px auto 10px auto;
     font-family: "Poppins";
 }
-section.post__history {
+.post__history {
     float: left;
     display: flex;
     align-items: center;
@@ -1099,14 +1087,14 @@ aside.post__preview {
     font-family: "Poppins", sans-serif;
 }
 
-section.post__create blockquote,
+.post__create blockquote,
 aside.post__preview blockquote {
     border-left: 4px solid #ccc;
     margin-bottom: 5px;
     margin-top: 5px;
     padding-left: 16px;
 }
-section.post__create pre.ql-syntax,
+.post__create pre.ql-syntax,
 aside.post__preview pre.ql-syntax {
     background-color: #23241f;
     color: #f8f8f2;
@@ -1117,27 +1105,27 @@ aside.post__preview pre.ql-syntax {
     padding: 5px 10px;
     border-radius: 3px;
 }
-section.post__create .ql-align-center,
+.post__create .ql-align-center,
 aside.post__preview .ql-align-center {
     text-align: center;
 }
-section.post__create .ql-align-right,
+.post__create .ql-align-right,
 aside.post__preview .ql-align-right {
     text-align: right;
 }
-section.post__create .ql-align-justify,
+.post__create .ql-align-justify,
 aside.post__preview .ql-align-justify {
     text-align: justify;
 }
-section.post__create .ql-size-small,
+.post__create .ql-size-small,
 aside.post__preview .ql-size-small {
     font-size: 0.75em;
 }
-section.post__create .ql-size-large,
+.post__create .ql-size-large,
 aside.post__preview .ql-size-large {
     font-size: 1.5em;
 }
-section.post__create .ql-size-huge,
+.post__create .ql-size-huge,
 aside.post__preview .ql-size-huge {
     font-size: 2.5em;
 }
@@ -1201,7 +1189,7 @@ aside.post__preview .ql-size-huge {
 .filter .filtr_body .categories_extend{
     cursor: pointer;
 }
-.post__create .categories {
+.post__create .categories_list {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -1210,10 +1198,10 @@ aside.post__preview .ql-size-huge {
     overflow: hidden;
     transition: all 0.5s ease-in-out;
 }
-.post__create .categories.active{
+.post__create .categories_list.active{
     height: 0;
 }
-.post__create .categories .category {
+.post__create .categories_list .category {
     font-weight: 600;
     font-size: 16px;
     padding: 4px 8px;
@@ -1891,8 +1879,8 @@ form ul li {
     }
 }
 @media only screen and (max-width: 900px) {
-    section .comments,
-    section .posts {
+    .divided_minimal .comments,
+    .divided_minimal .posts {
         display: flex;
         flex-direction: column;
         margin-top: 5px;
@@ -1903,14 +1891,14 @@ form ul li {
         height: auto;
         padding: 0;
     }
-    section .comments-list,
-    section .posts-list {
+    .divided_minimal .comments-list,
+    .divided_minimal .posts .posts-list {
         width: 100%;
     }
     .filter .filtr_collapse i {
         display: block;
     }
-    section.divided_minimal {
+    .divided_minimal {
         float: none;
         width: calc(100% - 20px);
         margin: 94px 10px 10px 10px;
@@ -1965,7 +1953,7 @@ form ul li {
     }
 }
 @media only screen and (max-width: 570px) {
-    section #dashboard__image {
+    .dashboard #dashboard__image {
         width: 384px;
         height: 216px;
     }
@@ -1993,81 +1981,75 @@ form ul li {
     .edit_post_actions .icon {
         display: block;
     }
-    section .actions_home .connected {
+    .dashboard .actions_home .connected {
         flex-direction: column;
     }
-    section .actions_home .button {
+    .dashboard .actions_home .button {
         padding: 15px;
     }
-    section .actions_home .button p {
+    .dashboard .actions_home .button p {
         font-size: 15px;
     }
-    section .actions_home {
+    .dashboard .actions_home {
         width: 95%;
     }
 }
 @media only screen and (max-width: 650px) {
-    section.post__create,
-    section.post__history,
+    .post__create,
+    .post__history,
     aside.post__preview {
         width: calc(100% - 20px);
         float: none;
         position: relative;
         margin: 94px auto 10px;
     }
-
+    aside.post__preview{
+        margin-top: 0;
+    }
     .exit_preview {
         display: block;
     }
-    section .actions_home .button {
+    .dashboard .actions_home .button {
         min-width: auto;
     }
 }
 @media only screen and (max-width: 610px) {
-    section .actions_home .button {
+    .dashboard .actions_home .button {
         padding: 10px;
     }
-    section .posts .posts-list .post {
+    .divided_minimal .posts .posts-list .post {
         flex-direction: column;
     }
-    section .post .body {
+    .divided_minimal .posts .post .body {
         width: calc(100% - 10px);
         text-align: center;
         align-items: center;
     }
-    section .posts img {
+    .divided_minimal .posts img {
         margin: 20px 0 0 0;
     }
-    section .post .actions {
+    .divided_minimal .posts .post .actions {
         width: calc(100% - 10px);
     }
-    section .post .actions form {
+    .divided_minimal .posts .post .actions form,
+    .divided_minimal .posts .post .actions .delete,
+    .divided_minimal .posts .post a,
+    .divided_minimal .comments .comment .actions{
         width: 100%;
     }
-    section .post .actions .delete {
-        width: 100%;
-    }
-    section .post a {
-        width: 100%;
-    }
-    section .posts-list {
+    .divided_minimal .posts .posts-list,
+    .divided_minimal .comments-list{
         padding: 0 10px 10px;
     }
-    section.divided_minimal {
+    .divided_minimal {
         padding: 20px 5px;
     }
-    section .comments-list {
-        padding: 0 10px 10px;
-    }
-    section .comment {
+    .divided_minimal .comments .comment {
         flex-direction: column;
     }
-    section .comment .body__comment {
+    .divided_minimal .comments .comment .body__comment {
         width: 100%;
         margin: 10px;
-    }
-    section .comment .actions {
-        width: 100%;
     }
     form#create_role {
         min-width: 0;
@@ -2082,16 +2064,16 @@ form ul li {
     }
 }
 @media only screen and (max-width: 425px) {
-    section #dashboard__image {
+    .dashboard #dashboard__image {
         height: 216px;
         width: 216px;
         margin-top: 0;
         margin-bottom: 10px;
     }
-    section .welcome {
+    .dashboard .welcome {
         font-size: 36px;
     }
-    section .actions_home {
+    .dashboard .actions_home {
         margin-bottom: 0;
     }
     header {
@@ -2104,22 +2086,23 @@ form ul li {
         width: 32px;
         height: 32px;
     }
-    section.dashboard,
-    section.users,
-    section.roles,
-    section.divided_minimal {
+    .dashboard,
+    .users,
+    .roles,
+    .categories,
+    .divided_minimal {
         margin: 66px 10px 10px 10px;
         min-height: calc(100vh - 50px - 30px);
     }
-    section.dashboard {
+    .dashboard.main {
         padding: 20px 0;
     }
     .filter {
         margin-top: 5px;
         top: 56px;
     }
-    section.post__create,
-    section.post__history {
+    .post__create,
+    .post__history {
         margin: 66px 10px 10px 10px;
     }
     form#create_user,
@@ -2146,7 +2129,7 @@ form ul li {
     }
 }
 @media only screen and (max-width: 390px) {
-    section .welcome {
+    .dashboard .welcome {
         font-size: 30px;
     }
 }

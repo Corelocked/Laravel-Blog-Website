@@ -1,5 +1,5 @@
 <div class="saved_card">
-    <img src="{{ $post->image_path ? asset($post->image_path) : asset('images/picture3.jpg') }}" alt="">
+    <img src="{{ $post->image_path ? asset($post->image_path) : asset('images/picture3.jpg') }}" alt="image">
     <h3>{{ Str::limit($post->title, 15, '...') }}</h3>
     <p class="name"><i class="fa-regular fa-calendar-plus"></i> Utworzono:</p>
     <p>{{ $post->created_at->format('d.m.Y H:i:s') }}</p>
