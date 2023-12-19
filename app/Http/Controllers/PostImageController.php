@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostImageController extends Controller
 {
-    private function storeImage($request)
+    private function storeImage(Request $request)
     {
         $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
         $request->image->move(public_path('images'), $newImageName);

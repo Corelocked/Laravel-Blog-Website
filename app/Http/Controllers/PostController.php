@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -12,7 +13,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function index()
     {
@@ -26,10 +27,10 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $slug
-     * @return \Illuminate\Http\Response
+     * @param  string $slug
+     * @return Factory|View
      */
-    public function show($slug)
+    public function show(string $slug)
     {
         // $post = Post::findOrFail($id);
         $post = Post::where('slug', $slug)->firstOrFail();

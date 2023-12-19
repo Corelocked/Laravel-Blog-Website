@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\HistoryPost;
 use App\Models\Post;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class PostHistoryController extends Controller
 {
@@ -17,9 +21,10 @@ class PostHistoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return Factory|View
      */
-    public function index($id)
+    public function index(int $id)
     {
         $historyPosts = HistoryPost::where('post_id', $id)->orderBy('id', 'DESC')->get();
         $actualPost = Post::findOrFail($id);
@@ -34,17 +39,24 @@ class PostHistoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(int $id)
     {
         $post = HistoryPost::with('category')->findOrFail($id);
 
         return response()->json($post);
     }
 
-    public function revert($postid, $historyid)
+    /**
+     * Revert the specified resource.
+     *
+     * @param  int $postid
+     * @param  int $historyid
+     * @return RedirectResponse
+     */
+    public function revert(int $postid, int $historyid)
     {
         $post = Post::findOrFail($postid);
 
