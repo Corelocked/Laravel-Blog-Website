@@ -72,6 +72,7 @@ class PostHistoryController extends Controller
             'is_published' => $post->is_published,
             'additional_info' => $post->additional_info,
             'category_id' => $post->category_id,
+            'read_time' => $post->read_time,
         ]);
 
         $post->update([
@@ -83,6 +84,7 @@ class PostHistoryController extends Controller
             'slug' => $historyPost->slug,
             'additional_info' => 1,
             'category_id' => $historyPost->category_id,
+            'read_time' => $historyPost->read_time,
         ]);
 
         return redirect()->route('posts.edit', ['post' => $postid]);

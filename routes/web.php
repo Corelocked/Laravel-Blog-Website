@@ -43,6 +43,9 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     Route::get('/posts-saved', [PostSavedController::class, 'index'])->name('posts.saved');
     Route::resource('posts-saved', PostSavedController::class, ['except' => ['index', 'create', 'show']]);
 
+    // READ TIME
+    Route::post('/calculate-read-time', [PostAdminController::class, 'calculate'])->name('post.readTime');
+
     // UPLOAD IMAGE (THROUGH THE QUILL) ROUTE
     Route::post('/image-upload-post', [PostImageController::class, 'store'])->name('image.store');
 

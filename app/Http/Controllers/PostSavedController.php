@@ -10,9 +10,18 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class PostSavedController extends Controller
 {
+
+    private function calculateReadTime($body)
+    {
+        $readingSpeed = 200;
+        $words = str_word_count(strip_tags($body));
+        return ceil($words / $readingSpeed);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,6 +52,7 @@ class PostSavedController extends Controller
             'image_path' => $request->image != 'undefined' ? $this->storeImage($request) : null,
             'is_published' => $request->is_published ? 1 : 0,
             'category_id' => $request->category_id ? $request->category_id : null,
+            'read_time' => $this->calculateReadTime($request->body),
         ]);
 
         return response()->json(['message' => 'Zapisano!', 'id' => $post->id]);
@@ -84,7 +94,8 @@ class PostSavedController extends Controller
         $input['excerpt'] = $request->excerpt;
         $input['body'] = $request->body;
         $input['is_published'] = $request->is_published ? 1 : 0;
-        $input['category_id'] = $request->category_id;
+        $input['category_id'] = $request->category_id ? $request->category_id : Null;
+        $input['read_time'] = $this->calculateReadTime($request->body);
 
         if ($request->image != 'undefined') {
             $input['image_path'] = $this->storeImage($request);

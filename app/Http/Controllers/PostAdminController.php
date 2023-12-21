@@ -26,6 +26,13 @@ class PostAdminController extends Controller
         $this->middleware('permission:post-delete', ['only' => ['destroy']]);
     }
 
+    private function calculateReadTime($body)
+    {
+        $readingSpeed = 200;
+        $words = str_word_count(strip_tags($body));
+        return ceil($words / $readingSpeed);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -163,6 +170,7 @@ class PostAdminController extends Controller
             'slug' => Str::slug($request->title),
             'is_published' => $request->is_published == 'on' ? true : false,
             'category_id' => $request->category_id,
+            'read_time' => $this->calculateReadTime($request->body),
         ]);
 
         if ($SavedPost) {
@@ -235,6 +243,7 @@ class PostAdminController extends Controller
             'is_published' => $post->get()[0]->is_published,
             'additional_info' => $post->get()[0]->additional_info,
             'category_id' => $post->get()[0]->category_id,
+            'read_time' => $post->get()[0]->read_time,
         ]);
 
         $input['title'] = $request->title;
@@ -244,6 +253,7 @@ class PostAdminController extends Controller
         $input['is_published'] = $request->is_published == 'on' ? true : false;
         $input['additional_info'] = 0;
         $input['category_id'] = $request->category_id;
+        $input['read_time'] = $this->calculateReadTime($request->body);
 
         if ($request->image) {
             $input['image_path'] = $this->storeImage($request);
@@ -269,6 +279,13 @@ class PostAdminController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index');
+    }
+
+    public function calculate(Request $request)
+    {
+        $readingTime = $this->calculateReadTime($request->get('body'));
+
+        return response()->json($readingTime);
     }
 
     private function storeImage(Request $request)

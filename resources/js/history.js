@@ -19,6 +19,20 @@ show_actual.addEventListener("click", (event) => {
             category.html(data.category.name);
             category.css('background', data.category.backgroundColor + 'CC');
             category.css('color', data.category.textColor);
+            const postInfo = $(".post__preview .post_container .top .info");
+            const readTime = postInfo.find(".reading-info .reading-time");
+            const readInfo = postInfo.find(".reading-info");
+            if (data.read_time === null) {
+                if (readInfo.length) { readInfo.empty() }
+            }
+            if (readTime.length) {
+                readTime.html(data.read_time + " min");
+            } else {
+                const readTimeTextElement = $('<p>').addClass('reading-text').text('Czas czytania: ');
+                const watchIcon = $('<i>').addClass('fa-solid fa-clock');
+                const readTimeElement = $('<p>').addClass('reading-time').text(data.read_time +' min');
+                $(".post__preview .post_container .top .info .reading-info").append(readTimeTextElement, watchIcon, readTimeElement);
+            }
             let date = new Date(data.created_at);
             let formattedDate = date.toLocaleDateString("pl-PL", {
                 day: "2-digit",
@@ -71,6 +85,20 @@ window.show = function (id) {
             category.html(data.category.name);
             category.css('background', data.category.backgroundColor + 'CC');
             category.css('color', data.category.textColor);
+            const postInfo = $(".post__preview .post_container .top .info");
+            const readTime = postInfo.find(".reading-info .reading-time");
+            const readInfo = postInfo.find(".reading-info");
+            if (data.read_time === null) {
+                if (readInfo.length) { readInfo.empty() }
+            }
+            if (readTime.length) {
+                readTime.html(data.read_time + " min");
+            } else {
+                const readTimeTextElement = $('<p>').addClass('reading-text').text('Czas czytania: ');
+                const watchIcon = $('<i>').addClass('fa-solid fa-clock');
+                const readTimeElement = $('<p>').addClass('reading-time').text(data.read_time +' min');
+                $(".post__preview .post_container .top .info .reading-info").append(readTimeTextElement, watchIcon, readTimeElement);
+            }
             let date = new Date(data.created_at);
             let formattedDate = date.toLocaleDateString("pl-PL", {
                 day: "2-digit",

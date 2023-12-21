@@ -2,7 +2,7 @@
 
 A straightforward blog page written in PHP/Laravel.
 
-![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/5138e103-3ae2-4eed-b08b-55568248fa7a)
+![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/adb20446-7479-49d6-8124-2b4624a8526f)
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ Furthermore, the website is fully responsive.
 
 I tried to add the best protection I could to this website. I'm referring to prohibitions against deleting other people's posts besides the "Admin" account, deleting roles owned by others or the "Admin" role, deleting yourself, and even editing another person's account.
 
-![post](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/a6f2c156-6560-4227-a96d-d7ba7b481a34)
+![post](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/a460068f-e71e-4896-a433-b84594f87533)
 
 ## Technologies
 
@@ -93,7 +93,7 @@ Password: writer1234
 ```
 
 ![dashboard](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/c3d756c1-fda3-4a91-93a6-102acbc32103)
-![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/71455038-5ab7-4f87-95e0-6ac8513934ee)
+![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/c7e3ce79-7df2-48ea-92ff-b76fdbbbf0e7)
 
 ## Incoming Features
 

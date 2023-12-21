@@ -651,7 +651,7 @@ table td .show:hover {
 }
 
 .select2.select2-container .select2-selection .select2-selection__rendered {
-    color: var(--text-color-dark);
+    color: var(--text-color);
     background-color: var(--primary-color-light);
     line-height: 51px !important;
     padding-right: 33px;
@@ -756,7 +756,7 @@ table td .show:hover {
     border-bottom: none !important;
     padding: 4px 6px !important;
     background-color: var(--primary-color-light);
-    color: var(--text-color-dark);
+    color: var(--text-color);
 }
 
 .select2-container .select2-dropdown .select2-results {
@@ -765,7 +765,7 @@ table td .show:hover {
 
 .select2-container .select2-dropdown .select2-results ul {
     background: var(--primary-color-light) !important;
-    color: var(--text-color-dark);
+    color: var(--text-color);
     border: 1px solid #34495e;
 }
 
@@ -1427,6 +1427,42 @@ aside.post__preview .ql-size-huge {
     border-radius: 5px;
     margin: 8px;
 }
+.post__create .post_container .info .reading-info,
+.post__preview .post_container .info .reading-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.post__create .post_container .info .reading-info i,
+.post__preview .post_container .info .reading-info i {
+    margin-left: 6px;
+    color: #808080;
+    font-size: 14px;
+}
+.post__create .post_container .info .reading-info p,
+.post__preview .post_container .info .reading-info p {
+    color: #808080;
+    margin-left: 6px;
+    font-weight: 500;
+    font-size: 14px;
+}
+.post__create .post_container .info .reading-info button,
+.post__preview .post_container .info .reading-info button{
+    margin-left: 6px;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: var(--primary-color-light);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.1s ease all;
+}
+.post__create .post_container .info .reading-info button:hover,
+.post__preview .post_container .info .reading-info button:hover {
+    background: #DDDCE5;
+}
+
 .post__create .post_container .info .date,
 .post__preview .post_container .info .date {
     font-size: 14px;

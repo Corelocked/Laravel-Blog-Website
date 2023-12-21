@@ -186,12 +186,28 @@ header .profile:hover i {
     flex-direction: column;
     align-items: flex-start;
 }
-.article .post .body .category{
+.article .post .body .top-info {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+.article .post .body .top-info .category{
     font-weight: 600;
     font-size: 16px;
     padding: 4px 8px;
     border-radius: 5px;
-    margin: 8px 8px 0 8px;
+    margin: 0 8px 0 8px;
+}
+.article .post .body .top-info i {
+    margin-left: 10px;
+    color: #808080;
+    font-size: 14px;
+}
+.article .post .body .top-info .reading-time {
+    color: #808080;
+    margin-left: 6px;
+    font-weight: 500;
+    font-size: 14px;
 }
 .article .post .body .title {
     font-size: 24px;
@@ -282,6 +298,22 @@ footer {
     border-radius: 5px;
     margin: 8px;
 }
+.article .post_container .info .reading-info {
+    display: flex;
+    align-items: center;
+}
+.article .post_container .info .reading-info i {
+    margin-left: 6px;
+    color: #808080;
+    font-size: 14px;
+}
+.article .post_container .info .reading-info p {
+    color: #808080;
+    margin-left: 6px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
 .article .post_container .info .date {
     font-size: 14px;
     margin: 8px;

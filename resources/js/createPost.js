@@ -51,6 +51,8 @@ window.save = function(){
                         title: 'Zapisano!'
                     })
                     document.querySelector('input[name=id_saved_post]').value = data.id;
+                    const newUrl = "/dashboard/posts/create?edit=" + data.id;
+                    history.pushState(null, null, newUrl);
                 },
                 error: function(textStatus){
                     Toast.fire({

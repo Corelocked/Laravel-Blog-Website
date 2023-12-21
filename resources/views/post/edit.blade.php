@@ -39,6 +39,12 @@
                     <div class="info">
                         <p class="info_title_length">Maksymalnie 255 znaków. <span class='current_title_length'>{{ Str::length($post->title) }}/255</span></p>
                         <input type="text" name="title" class="title" autocomplete="off" value="{{ $post->title }}">
+                        <div class="reading-info">
+                            <p class="reading-text">Czas czytania: </p>
+                            <i class="fa-solid fa-clock"></i>
+                            <p class="reading-time">{{ $post->read_time ? $post->read_time : 0 }} min</p>
+                            <button type="button" class="calculate" onclick="calculateReadTime();">Przelicz</button>
+                        </div>
                         <p class="date">{{ $post->updated_at->format('d.m.Y') }} by {{ $post->user->firstname . ' ' . $post->user->lastname }}</p>
                     </div>
                 </div>

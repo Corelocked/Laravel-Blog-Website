@@ -8,6 +8,13 @@
                     @if ($post->category)
                         <div class="category" style="background: {{ $post->category->backgroundColor }}CC; color: {{ $post->category->textColor }}">{{ $post->category->name }}</div>
                     @endif
+                    @if ($post->read_time)
+                        <div class="reading-info">
+                            <p class="reading-text">Czas czytania: </p>
+                            <i class="fa-solid fa-clock"></i>
+                            <p class="reading-time">{{ $post->read_time }} min</p>
+                        </div>
+                    @endif
                     <p class="date">{{ $post->created_at->format('d.m.Y') }} by {{ $post->user->firstname . ' ' . $post->user->lastname }}</p>
                     @if($post->created_at != $post->updated_at)
                         <p class="date">Zaktualizowano: {{ $post->updated_at->format('d.m.Y') }}</p>

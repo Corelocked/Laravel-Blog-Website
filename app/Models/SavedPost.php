@@ -10,7 +10,7 @@ class SavedPost extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'title', 'excerpt', 'body', 'image_path', 'is_published', 'category_id',
+        'user_id', 'title', 'excerpt', 'body', 'image_path', 'is_published', 'category_id', 'read_time'
     ];
 
     public function user()

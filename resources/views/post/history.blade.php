@@ -55,6 +55,15 @@
                     @else
                         <div class="category"></div>
                     @endisset
+                    @isset($actualPost->read_time)
+                        <div class="reading-info">
+                            <p class="reading-text">Czas czytania: </p>
+                            <i class="fa-solid fa-clock"></i>
+                            <p class="reading-time">{{ $actualPost->read_time }} min</p>
+                        </div>
+                    @else
+                        <div class="reading-info"></div>
+                    @endisset
                     <p class="date">{{ $actualPost->updated_at->format('d.m.Y') }} by {{ $actualPost->user->firstname . ' ' . $actualPost->user->lastname }}</p>
                 </div>
             </div>

@@ -3,9 +3,15 @@
     <img src="{{ asset($post->image_path) }}" alt="{{ $post->title }}">
     <div class="read"><i class="fa-solid fa-angles-right"></i>Przeczytaj</div>
     <div class="body">
-        @if ($post->category)
-            <div class="category" style="background: {{ $post->category->backgroundColor }}CC; color: {{ $post->category->textColor }}">{{ $post->category->name }}</div>
-        @endif
+        <div class="top-info">
+            @if ($post->category)
+                <div class="category" style="background: {{ $post->category->backgroundColor }}CC; color: {{ $post->category->textColor }}">{{ $post->category->name }}</div>
+            @endif
+            @if ($post->read_time)
+                <i class="fa-solid fa-clock"></i>
+                <p class="reading-time">{{ $post->read_time }} min</p>
+            @endif
+        </div>
         <p class="title">{{ $post->title }}</p>
         <div class="user">
             <img src="{{ asset($post->user->image_path) }}" alt="user">

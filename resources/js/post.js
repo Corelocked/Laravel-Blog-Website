@@ -96,6 +96,34 @@ window.imageHandler = function (image) {
     });
 };
 
+window.calculateReadTime = function () {
+    let form = new FormData();
+    const body = $(".ql-editor").html();
+    const token = document.querySelector('input[name=_token]').value;
+    form.append('body', body);
+    form.append('_token', token);
+
+    $.ajax({
+        type: "POST",
+        url: "/dashboard/calculate-read-time",
+        enctype: 'multipart/form-data',
+        data: form,
+        processData: false,
+        contentType: false,
+        cache: false,
+
+        success: function(data, status){
+            document.querySelector('.reading-time').innerHTML = data + " min";
+        },
+        error: function(textStatus){
+            Toast.fire({
+                icon: 'error',
+                title: 'Błąd!'
+            })
+        }
+    });
+};
+
 window.insertToEditor = function (url, editor) {
     const range = editor.getSelection();
     editor.insertEmbed(range.index, "image", url);
