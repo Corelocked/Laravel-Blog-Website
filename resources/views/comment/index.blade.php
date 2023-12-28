@@ -7,68 +7,83 @@
 
     <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
-
     <div class="divided_minimal">
-        <p class="head">Komentarze</p>
-        <div class="line-1"></div>
         <div class="comments">
             <div class="filter">
                 <div class="filtr_collapse">
-                    <p id="filtr">Filtruj</p>
-                    <i class="fa-solid fa-caret-down button_collapse"></i>
+                    <p class="head">Komentarze</p>
+                    <i class="fa-solid fa-caret-up button_collapse"></i>
                 </div>
-                <div class="filtr_body" style="height: {{ Auth::User()->hasRole('Admin') ? '455px' : '356px' }}">
-                    <div class="line-1"></div>
-                    <div class="filter-button f_1 active">
-                        <p>Nowe komentarze</p>
-                        <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="filtr_body">
+                    <div class="view">
+                        <p class="name">Widok</p>
+                        <div class="buttons view">
+                            <div class="view_button list active" onclick="changeView('list', 'comment');"><i class="fa-solid fa-bars"></i></div>
+                            <div class="view_button tiles" onclick="changeView('tile', 'comment');"><i class='bx bxs-grid-alt'></i></div>
+                        </div>
                     </div>
-                    <div class="filter-button f_2">
-                        <p>Stare komentarze</p>
-                        <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
+                    <div class="sort">
+                        <p class="name">Sortowanie</p>
+                        <div class="buttons">
+                            <div class="filter-button f_1 active">
+                                <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
+                                <p>Nowe komentarze</p>
+                            </div>
+                            <div class="filter-button f_2">
+                                <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
+                                <p>Stare komentarze</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="line-1"></div>
-                    <p class="filtr-2">Ilość rekordów</p>
-                    <div class="filter-button rec_1">
-                        <p>20 rekordów</p>
-                        <span class="dot"><i class="fa-solid fa-square-xmark"></i></span>
-                    </div>
-                    <div class="filter-button rec_2">
-                        <p>50 rekordów</p>
-                        <span class="dot"><i class="fa-regular fa-square"></i></span>
-                    </div>
-                    <div class="filter-button rec_3">
-                        <p>100 rekordów</p>
-                        <span class="dot"><i class="fa-regular fa-square"></i></span>
-                    </div>
-                    <div class="filter-button rec_4">
-                        <p>Wszystkie rekordy</p>
-                        <span class="dot"><i class="fa-regular fa-square"></i></span>
+                    <div class="records">
+                        <p class="name">Rekordy</p>
+                        <div class="buttons">
+                            <div class="filter-button rec_1">
+                                <span class="dot"><i class="fa-solid fa-square-xmark"></i></span>
+                                <p>20 rekordów</p>
+                            </div>
+                            <div class="filter-button rec_2">
+                                <span class="dot"><i class="fa-regular fa-square"></i></span>
+                                <p>50 rekordów</p>
+                            </div>
+                            <div class="filter-button rec_3">
+                                <span class="dot"><i class="fa-regular fa-square"></i></span>
+                                <p>100 rekordów</p>
+                            </div>
+                            <div class="filter-button rec_4">
+                                <span class="dot"><i class="fa-regular fa-square"></i></span>
+                                <p>Max rekordów</p>
+                            </div>
+                        </div>
                     </div>
                     @role('Admin')
-                    <div class="line-1"></div>
-                        <p class="filtr-2">Wyszukaj z postu użytkownika</p>
-                        <select class="js-select2" id="user_modal" name="user">
-                            <option value="0">Wszyscy</option>
-                            @foreach ($users as $user)
-                                @if ($selectedUser == $user->id)
-                                    <option value="{{ $user->id }}" selected>{{ $user->firstname . ' ' . $user->lastname }}</option>
-                                @else
-                                    <option value="{{ $user->id }}">{{ $user->firstname . ' ' . $user->lastname }}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                        <div class="user">
+                            <p class="name">Posty użytkownika</p>
+                            <div class="buttons">
+                                @foreach ($users as $user)
+                                    @if (isset($selected_users) && in_array($user->toArray(), $selected_users))
+                                        <div class="checkbox" onclick="selectUser(event, {{ $user->id }})" data-user-id="{{ $user->id }}">
+                                            <div class="check"><i class="fa-solid fa-square-check"></i></div>
+                                            <p>{{ $user->firstname . ' ' . $user->lastname }}</p>
+                                        </div>
+                                    @else
+                                        <div class="checkbox" onclick="selectUser(event, {{ $user->id }})" data-user-id="{{ $user->id }}">
+                                            <div class="check"><i class="fa-regular fa-square"></i></div>
+                                            <p>{{ $user->firstname . ' ' . $user->lastname }}</p>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
                     @endrole
-                    <div class="line-1"></div>
                     <div class="filter-button show_results">
-                        <p>Pokaż</p>
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <p>Zastosuj filtry</p>
                     </div>
                     <form style="display: none" id="filter_form">
                         <input type="text" id="order" name="order" value="{{ $order ? $order : 'desc' }}">
                         <input type="text" id="limit" name="limit" value="{{ $limit ? $limit : ($limit == 0 ? 0 : 20) }}">
                         @role('Admin')
-                            <input type="text" id="user" name="user" value="{{ $selectedUser ? $selectedUser : 0 }}">
+                            <input type="text" id="users" name="users[]" value="{{ is_array($selected_users_array) ? implode(',', $selected_users_array) : '' }}">
                         @endrole
                     </form>
                 </div>
@@ -79,5 +94,23 @@
                 @endforeach
             </div>
         </div>
+{{--        @include('pagination.default', ['paginator' => $comments])--}}
+
+        @if ((int)$limit !== 0)
+            @role('Admin')
+                {{ $comments->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20), 'users' => is_array($selected_users_array) ? $selected_users_array : ''])->links('pagination.default') }}
+            @else
+                {{ $comments->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20)])->links('pagination.default') }}
+            @endrole
+        @endif
     </div>
+    <script type="module">
+        const currentView = localStorage.getItem('commentView');
+        const defaultView = currentView || 'list';
+        if (defaultView === 'list') {
+            changeView('list', 'comment');
+        } else {
+            changeView('tile', 'comment');
+        }
+    </script>
 </x-admin-layout>

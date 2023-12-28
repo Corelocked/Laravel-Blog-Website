@@ -1,5 +1,10 @@
 <div class="comment">
     <div class="body__comment">
+        <div class="post">
+            <p class="post_name">{{ $comment->post->title }}</p>
+            <i class="fa-solid fa-circle"></i>
+            <p class="post_user">{{ $comment->post->user->firstname }} {{ $comment->post->user->lastname }}</p>
+        </div>
         <div class="head__comment">
             <i class="fa-solid fa-caret-right"></i>
             <p>{{ $comment->name }}</p>

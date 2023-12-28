@@ -40,56 +40,87 @@ class PostAdminController extends Controller
      */
     public function index(Request $request)
     {
-
-        if (isset($request->order)) {
+        if ($request->input('order') !== null) {
             $order = $request->order;
         } else {
             $order = 'desc';
         }
-        if (isset($request->limit)) {
+        if ($request->input('limit') !== null) {
             $limit = $request->limit;
         } else {
             $limit = 20;
         }
-        if (isset($request->user) && $request->user != 0) {
-            $user = $request->user;
-        } else {
-            $user = 0;
-        }
 
+        $posts = Post::with('category')->orderBy('id', $order);
         if (Auth::User()->hasRole('Admin')) {
-            if ($user != 0) {
-                $posts = Post::where('user_id', $request->user)->orderBy('id', $order);
+            if ($request->input('users') !== null && $request->input('users')[0] !== null) {
+                if (isset($request->input('users')[1])) {
+                    $temp = $request->input('users');
+                } else {
+                    $temp = explode(',', $request->input('users')[0]);
+                }
+                $posts->whereIn('user_id', $temp);
+                $selected_users = User::whereIn('id', $temp)->withCount('posts')->get()->toArray();
+                $selected_users_array = $temp;
             } else {
-                $posts = Post::orderBy('id', $order);
+                $selected_users = null;
+                $selected_users_array = null;
             }
         } else {
-            $posts = Post::orderBy('id', $order)->where('user_id', Auth::User()->id);
+            $posts = Post::orderBy('id', $order)->where('user_id', Auth::Id());
+            $selected_users = null;
+            $selected_users_array = null;
         }
 
-        if ($request->categories && $request->categories[0] !== null) {
-            $temp = explode(',', $request->categories[0]);
+        if ($request->input('categories') !== null && $request->input('categories')[0] !== null) {
+            if (is_array($request->input('categories'))) {
+                $temp = explode(',', $request->input('categories')[0]);
+            } else {
+                $temp = explode(',', $request->input('categories'));
+            }
             $posts->whereIn('category_id', $temp);
-            $selected_categories = Category::whereIn('id', $temp)->get();
+            if (Auth::user()->hasRole('Admin')) {
+                $selected_categories = Category::whereIn('id', $temp)->withCount('posts')->get()->toArray();
+            } else {
+                $selected_categories = Category::whereIn('id', $temp)
+                    ->withCount(['posts' => function ($query) {
+                        $query->where('user_id', Auth::id());
+                    }])
+                    ->get()
+                    ->toArray();
+            }
             $selected_categories_array = $temp;
         } else {
             $selected_categories = null;
             $selected_categories_array = null;
         }
 
-        $users = User::all();
+        $users = User::withCount('posts')->get();
 
-        $categories = Category::all();
+        if (Auth::User()->hasRole('Admin')) {
+            $categories = Category::withCount('posts')->get();
+        } else {
+            $categories = Category::withCount(['posts' => function ($query) {
+                $query->where('user_id', Auth::id());
+            }])->get();
+        }
+
+        if ((int)$limit === 0) {
+            $posts = $posts->get();
+        } else {
+            $posts = $posts->paginate($limit);
+        }
 
         return view('post.index', [
-            'posts' => $posts->paginate($limit),
+            'posts' => $posts,
             'users' => $users,
             'order' => $order,
             'limit' => $limit,
-            'selectedUser' => $user,
             'categories' => $categories,
             'selected_categories' => $selected_categories,
             'selected_categories_array' => $selected_categories_array,
+            'selected_users' => $selected_users,
+            'selected_users_array' => $selected_users_array,
         ]);
     }
 

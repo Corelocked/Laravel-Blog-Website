@@ -27,40 +27,60 @@ class CommentController extends Controller
      */
     public function index(Request $request)
     {
-        if (isset($request->order)) {
-            $order = $request->order;
+        if ($request->input('order') !== null) {
+            $order = $request->input('order');
         } else {
             $order = 'desc';
         }
-        if (isset($request->limit)) {
-            $limit = $request->limit;
+        if ($request->input('limit') !== null) {
+            $limit = $request->input('limit');
         } else {
             $limit = 20;
         }
-        if (isset($request->user) && $request->user != 0) {
-            $user = $request->user;
+        if ($request->input('users') !== null && $request->input('users')[0] !== null) {
+            if (isset($request->input('users')[1])) {
+                $temp = $request->input('users');
+            } else {
+                $temp = explode(',', $request->input('users')[0]);
+            }
+            $selected_users_array = $temp;
+            $selected_users = User::whereIn('id', $selected_users_array)->get()->toArray();
         } else {
-            $user = 0;
+            $selected_users = null;
+            $selected_users_array = null;
         }
 
         if (Auth::User()->hasRole('Admin')) {
-            if ($user != 0) {
-                $comments = Comment::join('posts', 'posts.id', '=', 'comments.post_id')->where('posts.user_id', $user)->orderBy('comments.id', $order)->paginate($limit, ['comments.id', 'comments.post_id', 'comments.name', 'comments.body', 'comments.created_at']);
+            if ($selected_users_array) {
+                $comments = Comment::join('posts', 'posts.id', '=', 'comments.post_id')
+                    ->whereIn('posts.user_id', $selected_users_array)
+                    ->orderBy('comments.id', $order)
+                    ->select('comments.*');
             } else {
-                $comments = Comment::orderBy('id', $order)->paginate($limit);
+                $comments = Comment::orderBy('id', $order);
             }
         } else {
-            $comments = Comment::join('posts', 'posts.id', '=', 'comments.post_id')->where('posts.user_id', Auth::id())->orderBy('id', $order)->paginate($limit, ['comments.id', 'comments.post_id', 'comments.name', 'comments.body', 'comments.created_at']);
+            $comments = Comment::join('posts', 'posts.id', '=', 'comments.post_id')
+                ->where('posts.user_id', Auth::id())
+                ->orderBy('comments.id', $order)
+                ->select('comments.*');
         }
 
         $users = User::all();
+
+        if ((int)$limit === 0) {
+            $comments = $comments->get();
+        } else {
+            $comments = $comments->paginate($limit);
+        }
 
         return view('comment.index', [
             'comments' => $comments,
             'users' => $users,
             'order' => $order,
             'limit' => $limit,
-            'selectedUser' => $user,
+            'selected_users' => $selected_users,
+            'selected_users_array' => $selected_users_array,
         ]);
     }
 

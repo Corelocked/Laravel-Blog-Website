@@ -87,15 +87,11 @@ header .profile:hover i {
     transform: scale(1.05);
 }
 .filter {
-    float: right;
+    float: left;
     background: var(--bar-color);
     width: 20%;
-    border-radius: 10px;
     padding: 10px 0;
     font-family: "Poppins", sans-serif;
-    position: sticky;
-    top: 84px;
-    z-index: 100;
 }
 .filter .filtr_body {
     overflow: hidden;
@@ -105,9 +101,31 @@ header .profile:hover i {
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
 }
+.filter .filtr_body .buttons {
+    padding: 12px 0;
+}
+.filter .filtr_body .buttons.view{
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    margin-left: 6px;
+}
+.filter .filtr_body .buttons.view .view_button {
+    display: flex;
+    margin: 0 4px;
+    cursor: pointer;
+}
+.filter .filtr_body .buttons.view .view_button.active{
+    color: #eb4d4b;
+}
+.filter .filtr_body .name{
+    color: #4C4C4C;
+    font-size: 16px;
+    font-weight: 700;
+}
 .filter .filtr_collapse {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
 }
@@ -130,33 +148,53 @@ header .profile:hover i {
     text-align: center;
 }
 .filter .filter-button {
-    padding: 5px;
-    background: var(--primary-color-light);
     display: flex;
+    align-items: center;
     border-radius: 10px;
-    margin: 8px;
     cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.filter .filter-button.f_1 {
+    margin-bottom: 8px;
+}
+.filter .filter-button.rec_1,
+.filter .filter-button.rec_2,
+.filter .filter-button.rec_3 {
+    margin-bottom: 8px;
 }
 .filter .filter-button.f_1.active i,
 .filter .filter-button.f_2.active i {
     color: #eb4d4b;
 }
 .filter .filter-button p {
-    width: calc(100% - 36px);
-    text-align: center;
     font-size: 14px;
     font-weight: 500;
-    margin: auto;
 }
 .filter .filter-button i {
     margin: auto 10px;
-    font-size: 16px;
+    font-size: 20px;
     transition: 0.2s transform ease;
 }
-.filter .filter-button .dot {
-    margin: auto;
+.filter .filtr_body .checkbox {
+    display: flex;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
 }
-
+.filter .filtr_body .checkbox.hidden {
+    display: none;
+}
+.filter .filtr_body .checkbox.show {
+    display: flex;
+}
+.filter .filtr_body .checkbox:not(:nth-last-child(1)) {
+    margin-bottom: 8px;
+}
+.filter .filtr_body .checkbox .check i {
+    margin: auto 10px;
+    font-size: 20px;
+}
 .filter-button.rec_1 .dot i {
     color: #f1c40f;
 }
@@ -196,10 +234,17 @@ header .profile:hover i {
     border: 1px solid #bdc3c7;
 }
 .filter .filtr_body .categories_extend {
-    margin-left: 8px;
     user-select: none;
 }
-
+.filter .filtr_body .categories_extend i {
+    margin: auto 10px;
+}
+.filter .filtr_body .show_results {
+    background: var(--primary-color-light);
+    font-weight: 600;
+    justify-content: center;
+    padding: 5px;
+}
 .divided_minimal {
     background: var(--bar-color);
     border-radius: 10px;
@@ -335,7 +380,7 @@ header .profile:hover i {
     justify-content: center;
     width: calc(80% - 20px);
     font-family: "Poppins", sans-serif;
-    float: left;
+    float: right;
 }
 
 /*section .container .recent_post_text {*/
@@ -344,7 +389,7 @@ header .profile:hover i {
 /*    font-weight: 600;*/
 /*    text-align: center;*/
 /*}*/
-.divided_minimal .posts img {
+.divided_minimal .posts .post img {
     margin: 20px 0 20px 10px;
     max-width: 128px;
     /* max-height: 225px; */
@@ -352,7 +397,13 @@ header .profile:hover i {
     max-height: 100%;
     object-fit: cover;
 }
-
+.divided_minimal .posts .post.tile img {
+    margin: 0;
+    width: 320px;
+    height: 180px;
+    max-width: 320px;
+    border-radius: 10px 10px 0 0;
+}
 .divided_minimal .posts .post {
     display: flex;
     align-items: center;
@@ -364,6 +415,12 @@ header .profile:hover i {
     border-radius: 15px;
     transition: 0.1s all ease;
     margin-top: 10px;
+}
+.divided_minimal .posts .post.tile{
+    width: 320px;
+    flex-direction: column;
+    margin: 10px;
+    padding: 0;
 }
 .divided_minimal .posts .post:hover {
     transform: scale(1.01);
@@ -380,12 +437,19 @@ header .profile:hover i {
     margin: 5px 0;
     align-items: flex-start;
 }
+.divided_minimal .posts .post.tile .body {
+    width: 100%;
+    flex-direction: column;
+}
 .divided_minimal .posts .post .body .category {
     font-weight: 600;
     font-size: 16px;
     padding: 4px 8px;
     border-radius: 5px;
     margin: 8px 8px 0 8px;
+}
+.divided_minimal .posts .post.tile .body .category {
+    margin: 0 8px 0;
 }
 .divided_minimal .posts .post .body .title {
     font-size: 20px;
@@ -408,7 +472,14 @@ header .profile:hover i {
     width: 150px;
     align-items: center;
 }
+.divided_minimal .posts .post.tile .actions {
+    width: 100%;
+    flex-direction: row;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
 .divided_minimal .posts .post .actions form {
+    display: none;
     width: 120px;
 }
 .divided_minimal .posts .post .actions .read_more,
@@ -425,6 +496,14 @@ header .profile:hover i {
     min-width: 120px;
     text-align: center;
     transition: 0.1s ease all;
+}
+.divided_minimal .posts .post.tile .actions .read_more,
+.divided_minimal .posts .post.tile .actions .edit,
+.divided_minimal .posts .post.tile .actions .delete {
+    margin: 0 4px;
+    padding: 10px 4px;
+    flex-grow: 1;
+    min-width: auto;
 }
 .divided_minimal .posts .post .actions .read_more {
     background: #2ecc71;
@@ -443,6 +522,9 @@ header .profile:hover i {
     border: none;
     padding: 6.5px;
     margin: 4px 0;
+}
+.divided_minimal .posts .post.tile .actions .delete {
+    padding: 12.5px;
 }
 .divided_minimal .posts .post .actions .delete:hover {
     background: #c0392b;
@@ -535,7 +617,13 @@ table td .show:hover {
 }
 .divided_minimal .comments-list {
     width: calc(80% - 20px);
-    float: left;
+    float: right;
+}
+.divided_minimal .comments-list:has(.comment.tile) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .divided_minimal .comments {
     position: relative;
@@ -553,6 +641,12 @@ table td .show:hover {
     padding: 10px;
     border-radius: 10px;
     transition: 0.1s all ease;
+}
+.divided_minimal .comments .comment.tile {
+    flex-direction: column;
+    width: 360px;
+    margin: 10px;
+    justify-content: space-between;
 }
 .divided_minimal .comments .comment:hover {
     transform: scale(1.01);
@@ -580,6 +674,30 @@ table td .show:hover {
     margin: auto;
     word-break: break-word;
 }
+.divided_minimal .comments .comment.tile .body__comment {
+    width: 100%;
+    margin: 0;
+}
+.divided_minimal .comments .comment .body__comment .post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.divided_minimal .comments .comment.tile .body__comment .post {
+    flex-direction: column;
+}
+.divided_minimal .comments .comment .body__comment .post i{
+    font-size: 8px;
+    margin: 0 10px;
+}
+.divided_minimal .comments .comment.tile .body__comment .post i {
+    margin: 4px;
+}
+.divided_minimal .comments .comment .body__comment .post .post_name {
+    font-weight: 600;
+    text-align: center;
+}
 
 .divided_minimal .comments .comment .actions {
     padding: 10px;
@@ -587,6 +705,9 @@ table td .show:hover {
     flex-direction: column;
     width: 180px;
     justify-content: center;
+}
+.divided_minimal .comments .comment.tile .actions {
+    width: 100%;
 }
 .divided_minimal .comments .comment .actions a,
 .divided_minimal .comments .comment button {
@@ -1861,7 +1982,7 @@ form ul li {
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    margin-bottom: 10px;
+    margin: 15px 0;
 }
 .pagination li {
     padding: 5px;
@@ -1987,6 +2108,9 @@ form ul li {
     .category_list .preview {
         text-align: center;
     }
+    .divided_minimal .comments .comment .body__comment .post {
+        flex-direction: column;
+    }
 }
 @media only screen and (max-width: 570px) {
     .dashboard #dashboard__image {
@@ -2092,6 +2216,10 @@ form ul li {
         width: 100%;
         padding: 60px 15px;
     }
+    .filter .filtr_collapse,
+    .filter .filtr_body {
+        margin-left: 10px;
+    }
 }
 @media only screen and (max-width: 430px) {
     .modal-profile {
@@ -2168,6 +2296,12 @@ form ul li {
     .dashboard .welcome {
         font-size: 30px;
     }
+    .divided_minimal .posts .posts-list .post.tile,
+    .divided_minimal .posts .post.tile img,
+    .divided_minimal .comments .comment.tile{
+        width: 100%;
+    }
+
 }
 @media only screen and (max-width: 500px) {
     #create_user .body_form .mail p {
