@@ -35,6 +35,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     // POSTS
     Route::resource('posts', PostAdminController::class, ['except' => 'show']);
     Route::get('posts/{id}/show', [PostAdminController::class, 'show'])->name('posts.show');
+    Route::post('posts/highlight', [PostAdminController::class, 'highlight'])->name('post.highlight');
 
     // CATEGORIES
     Route::resource('categories', CategoryController::class, ['except' => 'show']);

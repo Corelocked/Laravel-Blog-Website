@@ -107,6 +107,71 @@ header .profile:hover i {
     font-size: 26px;
     font-weight: 600;
 }
+.article .highlighted {
+    flex-direction: column;
+    padding: 30px 20px;
+}
+.article .highlighted .highlighted_icon {
+    background: #f1c40f;
+    color: #fff;
+    top: 0;
+    position: absolute;
+    right: 0;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 6px;
+    border-radius: 0 10px 0 10px;
+}
+.article .highlighted a {
+    text-decoration: none;
+    color: #000000;
+}
+.article .highlighted .post {
+    width: 100%;
+    flex-direction: row;
+    box-shadow: none;
+    display: none;
+}
+.article .highlighted .post:hover {
+    box-shadow: none;
+    transform: scale(1);
+    background: rgba(240, 240, 240, 0.6);
+}
+.article .highlighted .post img {
+    width: 400px;
+    height: 100%;
+    border-radius: 10px;
+    max-width: none;
+    max-height: 260px;
+    margin: 0 5px 0 0;
+}
+.article .highlighted .post .body .user {
+    margin: 0 auto;
+}
+.article .highlighted .post .body .user p {
+    font-size: 16px;
+}
+.article .highlighted .post .body .short_body {
+    font-weight: 400;
+}
+.article .highlighted .dots {
+    font-size: 10px;
+    color: #808080;
+}
+.article .highlighted .dots i {
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 0.2s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
 
 .article .container {
     background: var(--bar-color);
@@ -178,6 +243,18 @@ header .profile:hover i {
 .article .post:hover .read {
     visibility: visible;
     opacity: 1;
+}
+.article .posts .highlighted_icon {
+    background: #f1c40f;
+    color: #fff;
+    top: 0;
+    position: absolute;
+    right: 0;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 4px 6px;
+    border-radius: 0 10px 0 10px;
+    z-index: 1;
 }
 .article .post .body {
     padding: 5px;
@@ -727,6 +804,7 @@ body.login-page {
     height: 100%;
     justify-content: flex-end;
     backdrop-filter: blur(4px);
+    z-index: 10;
 }
 .modal-profile {
     background: var(--bar-color);
@@ -885,6 +963,9 @@ body.login-page {
         width: calc(100% - 20px);
         margin-bottom: 20px;
     }
+    .article .highlighted .post {
+        margin: 10px 0;
+    }
 }
 @media only screen and (max-width: 800px) {
     .article .image__container {
@@ -904,6 +985,20 @@ body.login-page {
     }
     .login-form {
         flex-direction: column;
+    }
+    .article .highlighted {
+        flex-direction: column;
+    }
+
+}
+@media only screen and (max-width: 900px) {
+    .article .highlighted .post {
+        flex-direction: column;
+    }
+    .article .highlighted .post img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
     }
 }
 @media only screen and (max-width: 1000px) {

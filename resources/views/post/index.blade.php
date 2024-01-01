@@ -56,6 +56,21 @@
                             </div>
                         </div>
                     </div>
+                    @role('Admin')
+                        <div class="highlight">
+                            <p class="name">Wyróżnione</p>
+                            <div class="buttons">
+                                <div class="checkbox" onclick="selectHighlight('yes');" data-highlight="yes">
+                                    <div class="check"><i class="{{ $highlight ? ($highlight[0] === '1' ? 'fa-solid fa-square-check' : 'fa-regular fa-square') : 'fa-regular fa-square' }}"></i></div>
+                                    <p>Tak ({{ $countHighlighted }})</p>
+                                </div>
+                                <div class="checkbox" onclick="selectHighlight('no');" data-highlight="no">
+                                    <div class="check"><i class="{{ $highlight ? ($highlight[1] === '1' ? 'fa-solid fa-square-check' : 'fa-regular fa-square') : 'fa-regular fa-square' }}"></i></div>
+                                    <p>Nie ({{ $countPosts - $countHighlighted }})</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endrole
                     <div class="category">
                         <p class="name">Kategorie</p>
                         <div class="buttons">
@@ -108,6 +123,7 @@
                         <input type="text" id="limit" name="limit" value="{{ $limit ? $limit : ($limit == 0 ? 0 : 20) }}">
                         <input type="text" id="categories" name="categories[]" value="{{ is_array($selected_categories_array) ? implode(',', $selected_categories_array) : '' }}">
                         @role('Admin')
+                            <input type="text" id="highlight" name="highlight[]" value="{{ $highlight ? implode(',', $highlight) : '' }}">
                             <input type="text" id="users" name="users[]" value="{{ is_array($selected_users_array) ? implode(',', $selected_users_array) : '' }}">
                         @endrole
                     </form>
@@ -115,14 +131,14 @@
             </div>
             <div class="posts-list">
                 @foreach ($posts as $post)
-                    <x-admin-post-card :post="$post"/>
+                    <x-admin-post-card :post="$post" :countHighlighted="$countHighlighted"/>
                 @endforeach
             </div>
 
         </div>
         @if ((int)$limit !== 0)
             @role('Admin')
-                {{ $posts->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20), 'categories' => is_array($selected_categories_array) ? implode(',', $selected_categories_array) : [], 'users' => is_array($selected_users_array) ? $selected_users_array : ''])->links('pagination.default') }}
+                {{ $posts->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20), 'categories' => is_array($selected_categories_array) ? implode(',', $selected_categories_array) : [], 'users' => is_array($selected_users_array) ? $selected_users_array : '', 'highlight' => $highlight ? implode(',', $highlight) : '' ])->links('pagination.default') }}
             @else
                 {{ $posts->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20), 'categories' => is_array($selected_categories_array) ? implode(',', $selected_categories_array) : []])->links('pagination.default') }}
             @endrole

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\HighlightPost;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\SavedPost;
@@ -15,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostUpdateFormRequest;
+use Illuminate\Support\Facades\Schema;
 
 class PostAdminController extends Controller
 {
@@ -41,17 +43,19 @@ class PostAdminController extends Controller
     public function index(Request $request)
     {
         if ($request->input('order') !== null) {
-            $order = $request->order;
+            $order = $request->input('order');
         } else {
             $order = 'desc';
         }
         if ($request->input('limit') !== null) {
-            $limit = $request->limit;
+            $limit = $request->input('limit');
         } else {
             $limit = 20;
         }
 
-        $posts = Post::with('category')->orderBy('id', $order);
+        $posts = Post::with('category')
+            ->select('posts.*', \DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
+            ->orderBy('id', $order);
         if (Auth::User()->hasRole('Admin')) {
             if ($request->input('users') !== null && $request->input('users')[0] !== null) {
                 if (isset($request->input('users')[1])) {
@@ -95,6 +99,21 @@ class PostAdminController extends Controller
             $selected_categories_array = null;
         }
 
+        if ($request->input('highlight') !== null && $request->input('highlight')[0] !== null) {
+            $highlight = explode(',', $request->input('highlight')[0]);
+            if ($highlight[0] and $highlight[1]) {
+            } else {
+                if ($highlight[0]) {
+                    $posts->whereHas('highlightPosts');
+                }
+                if ($highlight[1]) {
+                    $posts->doesntHave('highlightPosts');
+                }
+            }
+        } else {
+            $highlight = null;
+        }
+
         $users = User::withCount('posts')->get();
 
         if (Auth::User()->hasRole('Admin')) {
@@ -105,11 +124,23 @@ class PostAdminController extends Controller
             }])->get();
         }
 
+        if (Schema::hasColumn('posts', 'highlight_posts')) {
+            $posts = $posts->where('highlight_posts', '=', true);
+        }
+
+        if (Auth::User()->hasRole('Admin')) {
+            $countPosts = Post::all()->count();
+        } else {
+            $countPosts = Auth::user()->posts()->count();
+        }
+
         if ((int)$limit === 0) {
             $posts = $posts->get();
         } else {
             $posts = $posts->paginate($limit);
         }
+
+        $countHighlighted = HighlightPost::all()->count();
 
         return view('post.index', [
             'posts' => $posts,
@@ -121,6 +152,9 @@ class PostAdminController extends Controller
             'selected_categories_array' => $selected_categories_array,
             'selected_users' => $selected_users,
             'selected_users_array' => $selected_users_array,
+            'countHighlighted' => $countHighlighted,
+            'highlight' => $highlight,
+            'countPosts' => $countPosts,
         ]);
     }
 
@@ -310,6 +344,41 @@ class PostAdminController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index');
+    }
+
+    /**
+     * Highlight the specified resource from storage.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function highlight(Request $request)
+    {
+        if (! Auth::User()->hasRole('Admin')) {
+            abort(403);
+        }
+
+        $post = Post::findOrFail($request->id);
+
+        $countHighlighted = HighlightPost::all()->count();
+
+        $highlighted_post = HighlightPost::where(['post_id' => $request->id])->get();
+
+        $isHighlighted = !empty($highlighted_post[0]);
+
+        if ($isHighlighted) {
+            $highlighted_post[0]->delete();
+        } else {
+            if ($countHighlighted >= 3) {
+                abort(403);
+            }
+
+            HighlightPost::create([
+                'post_id' => $post->id,
+            ]);
+        }
+
+        return redirect()->back();
     }
 
     public function calculate(Request $request)

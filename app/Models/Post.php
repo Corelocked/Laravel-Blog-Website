@@ -33,4 +33,8 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function highlightPosts()
+    {
+        return $this->hasMany(HighlightPost::class);
+    }
 }

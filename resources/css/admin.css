@@ -441,12 +441,28 @@ header .profile:hover i {
     width: 100%;
     flex-direction: column;
 }
-.divided_minimal .posts .post .body .category {
+.divided_minimal .posts .post .body .top-info {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+.divided_minimal .posts .post .body .top-info .category {
     font-weight: 600;
     font-size: 16px;
     padding: 4px 8px;
     border-radius: 5px;
-    margin: 8px 8px 0 8px;
+    margin-left: 8px;
+}
+.divided_minimal .posts .post .body .top-info i {
+    margin-left: 10px;
+    color: #808080;
+    font-size: 14px;
+}
+.divided_minimal .posts .post .body .top-info .reading-time {
+    color: #808080;
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 14px;
 }
 .divided_minimal .posts .post.tile .body .category {
     margin: 0 8px 0;
@@ -454,18 +470,44 @@ header .profile:hover i {
 .divided_minimal .posts .post .body .title {
     font-size: 20px;
     font-weight: 600;
-    margin: 0 8px 8px 8px;
+    margin: 0 8px 4px 8px;
     word-break: break-word;
+}
+.divided_minimal .posts .post .body .user {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-left: 3px solid #e74c3c;
+    padding-left: 6px;
+    margin-left: 8px;
+}
+.divided_minimal .posts .post .body .user img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 0;
+}
+.divided_minimal .posts .post .body .user p {
+    margin-left: 10px;
+}
+.divided_minimal .posts .post .body p .name {
+    font-size: 16px;
+    font-weight: 500;
+}
+.divided_minimal .posts .post .body p .date {
+    color: #666666;
+    font-weight: 500;
 }
 .divided_minimal .posts .post .body .short_body {
     margin: 8px;
 }
-.divided_minimal .posts .post .body .date {
-    font-size: 12px;
-    margin: 0 8px;
-    font-weight: 500;
-    font-style: italic;
-}
+/*.divided_minimal .posts .post .body .date {*/
+/*    font-size: 12px;*/
+/*    margin: 0 8px;*/
+/*    font-weight: 500;*/
+/*    font-style: italic;*/
+/*}*/
 .divided_minimal .posts .post .actions {
     display: flex;
     flex-direction: column;
@@ -484,7 +526,8 @@ header .profile:hover i {
 }
 .divided_minimal .posts .post .actions .read_more,
 .divided_minimal .posts .post .actions .edit,
-.divided_minimal .posts .post .actions .delete {
+.divided_minimal .posts .post .actions .delete,
+.divided_minimal .posts .post .actions .highlight{
     margin: 4px 8px;
     padding: 4px;
     font-size: 14px;
@@ -499,7 +542,8 @@ header .profile:hover i {
 }
 .divided_minimal .posts .post.tile .actions .read_more,
 .divided_minimal .posts .post.tile .actions .edit,
-.divided_minimal .posts .post.tile .actions .delete {
+.divided_minimal .posts .post.tile .actions .delete,
+.divided_minimal .posts .post.tile .actions .highlight{
     margin: 0 4px;
     padding: 10px 4px;
     flex-grow: 1;
@@ -523,13 +567,28 @@ header .profile:hover i {
     padding: 6.5px;
     margin: 4px 0;
 }
-.divided_minimal .posts .post.tile .actions .delete {
+.divided_minimal .posts .post.tile .actions .delete,
+.divided_minimal .posts .post.tile .actions .highlight{
     padding: 12.5px;
 }
 .divided_minimal .posts .post .actions .delete:hover {
     background: #c0392b;
 }
-
+.divided_minimal .posts .post .actions .highlight {
+    background: #f1c40f;
+    border: none;
+    padding: 6.5px;
+    margin: 4px 0;
+}
+.divided_minimal .posts .post .actions .highlight.deselect {
+    background: #e67e22;
+}
+.divided_minimal .posts .post .actions .highlight:hover {
+    background: #f39c12;
+}
+.divided_minimal .posts .post .actions .highlight.deselect:hover {
+    background: #d35400;
+}
 table img {
     min-width: 48px;
     width: 48px;
@@ -2193,6 +2252,7 @@ form ul li {
     }
     .divided_minimal .posts .post .actions form,
     .divided_minimal .posts .post .actions .delete,
+    .divided_minimal .posts .post .actions .highlight,
     .divided_minimal .posts .post a,
     .divided_minimal .comments .comment .actions{
         width: 100%;

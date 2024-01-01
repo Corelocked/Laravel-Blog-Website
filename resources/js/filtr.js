@@ -204,3 +204,38 @@ window.selectUser = function (event, id) {
     }
 }
 
+let searchForHighlighted = false;
+let searchForNotHighlighted = false;
+if (document.querySelector('#highlight')) {
+    const inputHighlight = document.querySelector('#highlight');
+    const cleanedValue = inputHighlight.value;
+    let arrayValue = cleanedValue.split(',');
+    let numericArray = arrayValue.map(Number);
+
+    searchForHighlighted = numericArray[0] === 1;
+    searchForNotHighlighted = numericArray[1] === 1;
+}
+window.selectHighlight = function (value) {
+    let highlightValue = document.querySelector(".checkbox[data-highlight='" + value + "'] .check i");
+    const inputHighlight = document.querySelector('#highlight');
+    let select;
+
+    if (value === "yes") {
+        searchForHighlighted = !searchForHighlighted;
+        select = searchForHighlighted;
+    } else {
+        searchForNotHighlighted = !searchForNotHighlighted;
+        select = searchForNotHighlighted;
+    }
+
+    inputHighlight.value = [searchForHighlighted ? 1 : 0, searchForNotHighlighted ? 1 : 0];
+
+    if (select) {
+        highlightValue.classList.replace('fa-regular', 'fa-solid');
+        highlightValue.classList.replace('fa-square', 'fa-square-check');
+    } else {
+        highlightValue.classList.replace('fa-solid', 'fa-regular');
+        highlightValue.classList.replace('fa-square-check', 'fa-square');
+    }
+
+}

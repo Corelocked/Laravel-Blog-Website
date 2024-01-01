@@ -13,9 +13,12 @@ class AdminPostCard extends Component
      */
     public $post;
 
-    public function __construct($post)
+    public $countHighlighted;
+
+    public function __construct($post, $countHighlighted)
     {
         $this->post = $post;
+        $this->countHighlighted = $countHighlighted;
     }
 
     /**

@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Post::factory(20)->create();
+
+        $this->call([
+            HighlightPostSeeder::class,
+        ]);
     }
 }

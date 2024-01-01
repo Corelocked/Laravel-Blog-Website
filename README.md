@@ -2,7 +2,7 @@
 
 A straightforward blog page written in PHP/Laravel.
 
-![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/adb20446-7479-49d6-8124-2b4624a8526f)
+![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/8221ef38-b163-4482-9864-e86c2a6df1da)
 
 ## Table of Contents
 
@@ -34,7 +34,7 @@ I tried to add the best protection I could to this website. I'm referring to pro
 -   JavaScript
 -   JQuery
 -   SweetAlert 2
--   FontAwesome 6.1.2
+-   FontAwesome 6.5.1
 
 ## Setup
 
@@ -93,6 +93,7 @@ Password: writer1234
 ```
 
 ![dashboard](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/c3d756c1-fda3-4a91-93a6-102acbc32103)
+![dashboard_posts](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/a4b8fc70-4fed-4785-ad78-ee13e8a0d663)
 ![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/c7e3ce79-7df2-48ea-92ff-b76fdbbbf0e7)
 
 ## Incoming Features
@@ -100,7 +101,7 @@ Password: writer1234
 -   ~~version control of each post~~
 -   ~~probably tiles on the home page~~
 -   ~~categories~~
--   pinned post
+-   ~~pinned post~~
 -   dark mode
 -   better tiles in history
 -   remove jQuery

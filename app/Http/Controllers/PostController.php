@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HighlightPost;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
@@ -17,10 +18,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('is_published', true)->orderBy('id', 'desc')->get();
+        $posts = Post::with('category')
+            ->where('is_published', true)
+            ->select('posts.*', \DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
+            ->orderBy('id', 'desc')->get();
+
+        $highlighted_posts = HighlightPost::all();
 
         return view('welcome', [
             'posts' => $posts,
+            'highlighted_posts' => $highlighted_posts,
         ]);
     }
 
