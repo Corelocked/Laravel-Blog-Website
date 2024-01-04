@@ -27,11 +27,11 @@ class PostHistoryController extends Controller
     public function index(int $id)
     {
         $historyPosts = HistoryPost::where('post_id', $id)->orderBy('id', 'DESC')->get();
-        $actualPost = Post::findOrFail($id);
+        $currentPost = Post::findOrFail($id);
 
-        return view('post.history', [
+        return view('history.index', [
             'posts' => $historyPosts,
-            'actualPost' => $actualPost,
+            'currentPost' => $currentPost,
             'id' => $id,
         ]);
     }
@@ -40,13 +40,28 @@ class PostHistoryController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
-     * @return JsonResponse
+     * @param  mixed $history_id
+     * @return Factory|View
      */
-    public function show(int $id)
+    public function show(int $id, mixed $history_id)
     {
-        $post = HistoryPost::with('category')->findOrFail($id);
+        $currentPost = Post::findOrFail($id);
 
-        return response()->json($post);
+        if ($history_id === 'current') {
+            $post = $currentPost;
+        } else {
+            $post = HistoryPost::findOrFail($history_id);
+        }
+
+        $historyPosts = HistoryPost::where('post_id', $id)->orderBy('id', 'desc')->get();
+
+        return view('history.show', [
+            'post' => $post,
+            'currentPost' => $currentPost,
+            'historyPosts' => $historyPosts,
+            'id' => $id,
+            'history_id' => $history_id,
+        ]);
     }
 
     /**

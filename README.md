@@ -103,7 +103,9 @@ Password: writer1234
 -   ~~categories~~
 -   ~~pinned post~~
 -   dark mode
--   better tiles in history
+-   more filtering
+-   ~~better tiles in history~~
+-   changelog for posts
 -   remove jQuery
 
 ## Acknowledgements

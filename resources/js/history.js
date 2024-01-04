@@ -1,141 +1,70 @@
-let last_id = 0;
+// let last_id = 0;
 
-const show_actual = document.querySelector(".show_actual");
-show_actual.addEventListener("click", (event) => {
-    let url = window.location.pathname;
-    let segments = url.split("/");
-    let postId = segments[3];
-
-    const get_post_url = "/dashboard/posts/" + postId + "/show";
-
-    $.ajax({
-        type: "GET",
-        url: get_post_url,
-        processData: false,
-        contentType: false,
-        success: function (data) {
-            const category = $(".post__preview .post_container .info .category");
-            $(".preview_title").html(data.title);
-            category.html(data.category.name);
-            category.css('background', data.category.backgroundColor + 'CC');
-            category.css('color', data.category.textColor);
-            const postInfo = $(".post__preview .post_container .top .info");
-            const readTime = postInfo.find(".reading-info .reading-time");
-            const readInfo = postInfo.find(".reading-info");
-            if (data.read_time === null) {
-                if (readInfo.length) { readInfo.empty() }
-            }
-            if (readTime.length) {
-                readTime.html(data.read_time + " min");
-            } else {
-                const readTimeTextElement = $('<p>').addClass('reading-text').text('Czas czytania: ');
-                const watchIcon = $('<i>').addClass('fa-solid fa-clock');
-                const readTimeElement = $('<p>').addClass('reading-time').text(data.read_time +' min');
-                $(".post__preview .post_container .top .info .reading-info").append(readTimeTextElement, watchIcon, readTimeElement);
-            }
-            let date = new Date(data.created_at);
-            let formattedDate = date.toLocaleDateString("pl-PL", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-            });
-            let author = $(".date").html().slice(10);
-            $(".date").html(formattedDate + author);
-            let body =
-                '<div class="actions"><a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a><a>Następny post <i class="fa-solid fa-arrow-right"></i></a></div><div class="exit_preview" onClick="exitPreview();">Do góry <i class="fa-solid fa-arrow-up"></i></div>';
-            $(".post_body").html(data.body + body);
-            var output = document.getElementById("output");
-            output.src = data.image_path;
-
-            if (last_id !== 0) {
-                $(".h_0").addClass("active");
-                $(".h_" + last_id).removeClass("active");
-            }
-            last_id = 0;
-
-            if (window.innerWidth < 650) {
-                const preview = document.querySelector(".post__preview");
-                let pos = preview.offsetTop;
-                let offset = 90;
-
-                if (window.innerWidth <= 425) {
-                    offset = 62;
-                }
-
-                window.scrollTo({
-                    top: pos - offset,
-                    behavior: "smooth",
-                });
-            }
-        },
-    });
-});
-
-window.show = function (id) {
-    const url = "/dashboard/posts/history/" + id;
-
-    $.ajax({
-        type: "GET",
-        url: url,
-        processData: false,
-        contentType: false,
-        success: function (data) {
-            const category = $(".post__preview .post_container .info .category");
-            $(".preview_title").html(data.title);
-            category.html(data.category.name);
-            category.css('background', data.category.backgroundColor + 'CC');
-            category.css('color', data.category.textColor);
-            const postInfo = $(".post__preview .post_container .top .info");
-            const readTime = postInfo.find(".reading-info .reading-time");
-            const readInfo = postInfo.find(".reading-info");
-            if (data.read_time === null) {
-                if (readInfo.length) { readInfo.empty() }
-            }
-            if (readTime.length) {
-                readTime.html(data.read_time + " min");
-            } else {
-                const readTimeTextElement = $('<p>').addClass('reading-text').text('Czas czytania: ');
-                const watchIcon = $('<i>').addClass('fa-solid fa-clock');
-                const readTimeElement = $('<p>').addClass('reading-time').text(data.read_time +' min');
-                $(".post__preview .post_container .top .info .reading-info").append(readTimeTextElement, watchIcon, readTimeElement);
-            }
-            let date = new Date(data.created_at);
-            let formattedDate = date.toLocaleDateString("pl-PL", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-            });
-            let author = $(".date").html().slice(10);
-            $(".date").html(formattedDate + author);
-            let body =
-                '<div class="actions"><a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a><a>Następny post <i class="fa-solid fa-arrow-right"></i></a></div><div class="exit_preview" onClick="exitPreview();">Do góry <i class="fa-solid fa-arrow-up"></i></div>';
-            $(".post_body").html(data.body + body);
-            var output = document.getElementById("output");
-            output.src = data.image_path;
-
-            if (last_id !== id) {
-                $(".h_" + id).addClass("active");
-                $(".h_" + last_id).removeClass("active");
-            }
-            last_id = id;
-
-            if (window.innerWidth < 650) {
-                const preview = document.querySelector(".post__preview");
-                let pos = preview.offsetTop;
-                let offset = 90;
-
-                if (window.innerWidth <= 425) {
-                    offset = 62;
-                }
-
-                window.scrollTo({
-                    top: pos - offset,
-                    behavior: "smooth",
-                });
-            }
-        },
-    });
-};
+// window.show = function (id) {
+//     const url = "/dashboard/posts/history/" + id;
+//
+//     $.ajax({
+//         type: "GET",
+//         url: url,
+//         processData: false,
+//         contentType: false,
+//         success: function (data) {
+//             const category = $(".post__preview .post_container .info .category");
+//             $(".preview_title").html(data.title);
+//             category.html(data.category.name);
+//             category.css('background', data.category.backgroundColor + 'CC');
+//             category.css('color', data.category.textColor);
+//             const postInfo = $(".post__preview .post_container .top .info");
+//             const readTime = postInfo.find(".reading-info .reading-time");
+//             const readInfo = postInfo.find(".reading-info");
+//             if (data.read_time === null) {
+//                 if (readInfo.length) { readInfo.empty() }
+//             }
+//             if (readTime.length) {
+//                 readTime.html(data.read_time + " min");
+//             } else {
+//                 const readTimeTextElement = $('<p>').addClass('reading-text').text('Czas czytania: ');
+//                 const watchIcon = $('<i>').addClass('fa-solid fa-clock');
+//                 const readTimeElement = $('<p>').addClass('reading-time').text(data.read_time +' min');
+//                 $(".post__preview .post_container .top .info .reading-info").append(readTimeTextElement, watchIcon, readTimeElement);
+//             }
+//             let date = new Date(data.created_at);
+//             let formattedDate = date.toLocaleDateString("pl-PL", {
+//                 day: "2-digit",
+//                 month: "2-digit",
+//                 year: "numeric",
+//             });
+//             let author = $(".date").html().slice(10);
+//             $(".date").html(formattedDate + author);
+//             let body =
+//                 '<div class="actions"><a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a><a>Następny post <i class="fa-solid fa-arrow-right"></i></a></div><div class="exit_preview" onClick="exitPreview();">Do góry <i class="fa-solid fa-arrow-up"></i></div>';
+//             $(".post_body").html(data.body + body);
+//             var output = document.getElementById("output");
+//             output.src = data.image_path;
+//
+//             if (last_id !== id) {
+//                 $(".h_" + id).addClass("active");
+//                 $(".h_" + last_id).removeClass("active");
+//             }
+//             last_id = id;
+//
+//             if (window.innerWidth < 650) {
+//                 const preview = document.querySelector(".post__preview");
+//                 let pos = preview.offsetTop;
+//                 let offset = 90;
+//
+//                 if (window.innerWidth <= 425) {
+//                     offset = 62;
+//                 }
+//
+//                 window.scrollTo({
+//                     top: pos - offset,
+//                     behavior: "smooth",
+//                 });
+//             }
+//         },
+//     });
+// };
 
 window.revert = function (postId, historyId) {
     Swal.fire({
@@ -158,9 +87,23 @@ window.revert = function (postId, historyId) {
         }
     });
 };
-window.exitPreview = function () {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-};
+
+window.extend_history = function () {
+    const history_list = document.getElementById('history_list');
+    const extend_history = document.querySelector('.extend-history');
+
+    if (history_list.style.height === '0px') {
+        history_list.style.height = 'auto';
+        history_list.style.visibility = 'visible';
+        extend_history.innerHTML = "Ukryj kompaktową historię";
+    } else {
+        history_list.style.height = '0px';
+        history_list.style.visibility = 'hidden';
+        extend_history.innerHTML = "Pokaż kompaktową historię";
+    }
+
+}
+
 function convertDateTime(date) {
     var tzoffset = new Date().getTimezoneOffset() * 60000;
 

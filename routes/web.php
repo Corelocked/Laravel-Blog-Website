@@ -61,7 +61,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 
     // HISTORY POSTS
     Route::get('posts/{id}/edit/history', [PostHistoryController::class, 'index'])->name('history.index');
-    Route::get('posts/history/{history}', [PostHistoryController::class, 'show'])->name('history.show');
+    Route::get('posts/{id}/edit/history/{history_id}/show', [PostHistoryController::class, 'show'])->name('history.show');
     Route::get('posts/history/{post}/{history}/revert', [PostHistoryController::class, 'revert'])->name('history.revert');
 });
 
