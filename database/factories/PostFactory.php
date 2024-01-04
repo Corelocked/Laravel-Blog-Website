@@ -27,13 +27,14 @@ class PostFactory extends Factory
         return [
             'title' => $title,
             'excerpt' => $this->faker->sentence(40),
-            'body' => $body,
+            'body' => '<p>'.$body.'</p>',
             'image_path' => $this->faker->randomElement(['/images/picture2.jpg', '/images/picture.jpg']),
             'slug' => Str::slug($title),
             'is_published' => true,
             'user_id' => 1,
             'category_id' => $this->faker->numberBetween(1, 15),
             'read_time' => $readingTime,
+            'change_user_id' => 1,
         ];
     }
 }

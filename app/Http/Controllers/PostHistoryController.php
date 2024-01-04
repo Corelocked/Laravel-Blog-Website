@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class PostHistoryController extends Controller
 {
@@ -29,6 +30,8 @@ class PostHistoryController extends Controller
         $historyPosts = HistoryPost::where('post_id', $id)->orderBy('id', 'DESC')->get();
         $currentPost = Post::findOrFail($id);
 
+        $this->checkUserIdPost($currentPost);
+
         return view('history.index', [
             'posts' => $historyPosts,
             'currentPost' => $currentPost,
@@ -46,6 +49,8 @@ class PostHistoryController extends Controller
     public function show(int $id, mixed $history_id)
     {
         $currentPost = Post::findOrFail($id);
+
+        $this->checkUserIdPost($currentPost);
 
         if ($history_id === 'current') {
             $post = $currentPost;
@@ -75,6 +80,8 @@ class PostHistoryController extends Controller
     {
         $post = Post::findOrFail($postid);
 
+        $this->checkUserIdPost($post);
+
         $historyPost = HistoryPost::findOrFail($historyid);
 
         HistoryPost::create([
@@ -103,5 +110,14 @@ class PostHistoryController extends Controller
         ]);
 
         return redirect()->route('posts.edit', ['post' => $postid]);
+    }
+
+    private function checkUserIdPost(Post $post = null): void
+    {
+        if ($post) {
+            if ($post->user_id != Auth::id() && !Auth::User()->hasRole('Admin')) {
+                abort(403);
+            }
+        }
     }
 }

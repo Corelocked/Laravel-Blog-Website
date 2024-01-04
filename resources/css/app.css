@@ -49,7 +49,7 @@ header a {
     text-transform: uppercase;
     font-size: 16px;
     font-weight: 800;
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
     transition: all 0.1s ease;
 }
 header a:hover {
@@ -123,6 +123,7 @@ header .profile:hover i {
     border-radius: 0 10px 0 10px;
 }
 .article .highlighted a {
+    width: 100%;
     text-decoration: none;
     color: #000000;
 }
@@ -517,7 +518,7 @@ footer {
     margin-left: 20px;
     font-weight: 800;
     font-size: 20px;
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
 }
 .article .add__comment {
     margin: 0 10px;
@@ -767,7 +768,7 @@ body.login-page {
     width: 280px;
 }
 .login-form form .login-text {
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 26px;
@@ -824,7 +825,7 @@ body.login-page {
 }
 .modal-profile span {
     padding: 15px;
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 40px;

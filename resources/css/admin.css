@@ -295,13 +295,13 @@ header .profile:hover i {
 .dashboard .welcome {
     font-size: 48px;
     font-weight: 800;
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
     text-align: center;
 }
 .dashboard .welcome-2 {
     font-size: 28px;
     font-weight: 800;
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
     text-align: center;
 }
 .dashboard .name_profile {
@@ -1460,6 +1460,7 @@ aside.post__preview .ql-size-huge {
 .history-list .history_card .body,
 .compact-history-list .history_card .body{
     display: flex;
+    justify-content: center;
     flex-direction: column;
     margin: 10px;
     align-items: flex-start;
@@ -1535,29 +1536,48 @@ aside.post__preview .ql-size-huge {
     font-weight: 600;
 }
 .history-list .history_card .bottom-info,
-.compact-history-list .history_card .bottom-info{
+.history-list .history_card .changelog-info,
+.compact-history-list .history_card .bottom-info,
+.compact-history-list .history_card .changelog-info {
     margin-top: 10px;
     border-left: 3px solid #00A8FF;
     font-size: 14px;
     color: #808080;
     padding: 4px 0 4px 6px;
 }
+.compact-history-list .history_card .changelog-info {
+    margin: 0 0 8px 0;
+}
 .history-list .history_card .bottom-info .created,
 .history-list .history_card .bottom-info .additional_info,
+.history-list .history_card .changelog-info .user,
+.history-list .history_card .changelog-info .changelog,
 .compact-history-list .history_card .bottom-info .created,
-.compact-history-list .history_card .bottom-info .additional_info {
+.compact-history-list .history_card .bottom-info .additional_info,
+.compact-history-list .history_card .changelog-info .user,
+.compact-history-list .history_card .changelog-info .changelog {
     display: block;
 }
-.history-list .history_card .bottom-info .additional_info {
+.history-list .history_card .bottom-info .additional_info,
+.history-list .history_card .changelog-info .changelog {
     margin-top: 2px;
 }
 .history-list .history_card .bottom-info .created .time,
-.compact-history-list .history_card .bottom-info .created .time {
+.history-list .history_card .changelog-info .changelog,
+.compact-history-list .history_card .bottom-info .created .time,
+.compact-history-list .history_card .changelog-info .changelog{
     font-weight: 600;
 }
-.history-list .history_card .bottom-info i {
+.history-list .history_card .bottom-info i,
+.history-list .history_card .changelog-info i,
+.compact-history-list .history_card .bottom-info i,
+.compact-history-list .history_card .changelog-info i {
     font-size: 14px;
     margin-right: 3px;
+}
+.history-list .history_card .changelog-info,
+.compact-history-list .history_card .changelog-info {
+    border-left: 3px solid #06D6A0;
 }
 
 .compact-history-list {
@@ -1954,7 +1974,7 @@ aside.post__preview .ql-size-huge {
     margin-bottom: 5px;
     font-weight: 800;
     font-size: 20px;
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
 }
 
 .role_container {
@@ -2118,7 +2138,7 @@ form ul li {
 }
 .modal-profile span {
     padding: 15px;
-    font-family: "Dosis";
+    font-family: "Dosis", sans-serif;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 40px;

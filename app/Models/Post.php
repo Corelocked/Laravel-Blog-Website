@@ -10,10 +10,15 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'title', 'excerpt', 'body', 'image_path', 'slug', 'is_published', 'additional_info', 'category_id', 'read_time'
+        'user_id', 'title', 'excerpt', 'body', 'image_path', 'slug', 'is_published', 'additional_info', 'category_id', 'read_time', 'change_user_id', 'changelog'
     ];
 
     public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function changeUser()
     {
         return $this->belongsTo(User::class);
     }

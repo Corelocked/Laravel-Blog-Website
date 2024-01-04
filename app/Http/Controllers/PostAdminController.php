@@ -294,22 +294,29 @@ class PostAdminController extends Controller
 
         if ($post->get()->isEmpty()) {
             abort(404);
+        } else {
+            $post = $post->get()[0];
         }
 
-        $this->checkUserIdPost($post->get()[0]);
+        $this->checkUserIdPost($post);
 
-        HistoryPost::create([
-            'post_id' => $post->get()[0]->id,
-            'title' => $post->get()[0]->title,
-            'excerpt' => $post->get()[0]->excerpt,
-            'body' => $post->get()[0]->body,
-            'image_path' => $post->get()[0]->image_path,
-            'slug' => $post->get()[0]->slug,
-            'is_published' => $post->get()[0]->is_published,
-            'additional_info' => $post->get()[0]->additional_info,
-            'category_id' => $post->get()[0]->category_id,
-            'read_time' => $post->get()[0]->read_time,
-        ]);
+        $changelog = [];
+
+        if ($post->title !== $request->title) {
+            $changelog[] = 'Tytuł';
+        }
+        if ($post->excerpt !== $request->excerpt) {
+            $changelog[] = 'Krótki opis';
+        }
+        if ($post->body !== $request->body) {
+            $changelog[] = 'Ciało';
+        }
+        if ($post->is_published !== ($request->is_published == 'on' ? 1 : 0)) {
+            $changelog[] = 'Widoczność';
+        }
+        if ($post->category_id !== (int)$request->category_id) {
+            $changelog[] = 'Kategoria';
+        }
 
         $input['title'] = $request->title;
         $input['excerpt'] = $request->excerpt;
@@ -319,12 +326,33 @@ class PostAdminController extends Controller
         $input['additional_info'] = 0;
         $input['category_id'] = $request->category_id;
         $input['read_time'] = $this->calculateReadTime($request->body);
+        $input['change_user_id'] = Auth::id();
 
         if ($request->image) {
             $input['image_path'] = $this->storeImage($request);
+            $changelog[] = 'Obraz';
         }
 
-        $post->update($input);
+        $input['changelog'] = implode(", ", $changelog);;
+
+        if (!empty($changelog)) {
+            HistoryPost::create([
+                'post_id' => $post->id,
+                'title' => $post->title,
+                'excerpt' => $post->excerpt,
+                'body' => $post->body,
+                'image_path' => $post->image_path,
+                'slug' => $post->slug,
+                'is_published' => $post->is_published,
+                'additional_info' => $post->additional_info,
+                'category_id' => $post->category_id,
+                'read_time' => $post->read_time,
+                'change_user_id' => $post->change_user_id,
+                'changelog' => $post->changelog,
+            ]);
+
+            $post->update($input);
+        }
 
         return redirect()->route('posts.index');
     }

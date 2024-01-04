@@ -46,6 +46,12 @@
                                 <span class="additional_info"><i class="fa-solid fa-bolt"></i> Aktualny</span>
                                 <span class="additional_info">{!! $currentPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}</span>
                             </div>
+                            @if ($currentPost->changelog)
+                                <div class="changelog-info">
+                                    <span class="user"><i class="fa-solid fa-user"></i> {{ $currentPost->changeUser->firstname . ' ' . $currentPost->changeUser->lastname }}</span>
+                                    <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $currentPost->changelog }}</span></span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </a>
@@ -80,6 +86,12 @@
                                     <span class="created"><i class="fa-regular fa-clock"></i> {{ $historyPost->updated_at->diffForHumans() }}, <span class="time">{{ $historyPost->updated_at->format('H:i') }}</span></span>
                                     <span class="additional_info">{!! $historyPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}{!! $historyPost->additional_info == 2 ? '<i class="fa-solid fa-floppy-disk"></i> Autozapis' : '' !!}</span>
                                 </div>
+                                @if ($historyPost->changelog)
+                                    <div class="changelog-info">
+                                        <span class="user"><i class="fa-solid fa-user"></i> {{ $historyPost->changeUser->firstname . ' ' . $historyPost->changeUser->lastname }}</span>
+                                        <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $historyPost->changelog }}</span></span>
+                                    </div>
+                                @endif
                                 @if ($historyPost->id === (int)$history_id)
                                     <span class="actions">
                                         <span onClick="revert({{ $id }},{{ $historyPost->id }})">Przywróć <i class="fa-solid fa-clock-rotate-left"></i></span>

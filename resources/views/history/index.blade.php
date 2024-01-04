@@ -39,6 +39,12 @@
                         <span class="additional_info"><i class="fa-solid fa-bolt"></i> Aktualny</span>
                         <span class="additional_info">{!! $currentPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}</span>
                     </div>
+                    @if ($currentPost->changelog)
+                        <div class="changelog-info">
+                            <span class="user"><i class="fa-solid fa-user"></i> {{ $currentPost->changeUser->firstname . ' ' . $currentPost->changeUser->lastname }}</span>
+                            <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $currentPost->changelog }}</span></span>
+                        </div>
+                    @endif
                 </div>
             </div>
         </a>
@@ -76,6 +82,12 @@
                                     <span class="additional_info">{!! $post->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}{!! $post->additional_info == 2 ? '<i class="fa-solid fa-floppy-disk"></i> Autozapis' : '' !!}</span>
                                 @endif
                             </div>
+                            @if ($post->changelog)
+                                <div class="changelog-info">
+                                    <span class="user"><i class="fa-solid fa-user"></i> {{ $post->changeUser->firstname . ' ' . $post->changeUser->lastname }}</span>
+                                    <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $post->changelog }}</span></span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </a>
