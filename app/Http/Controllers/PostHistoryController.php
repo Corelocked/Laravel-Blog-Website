@@ -70,6 +70,28 @@ class PostHistoryController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @param  mixed $history_id
+     * @return JsonResponse
+     */
+    public function showJson(int $id, mixed $history_id)
+    {
+        $currentPost = Post::with('category', 'user', 'changeUser')->findOrFail($id);
+
+        $this->checkUserIdPost($currentPost);
+
+        if ($history_id === 'current') {
+            $post = $currentPost;
+        } else {
+            $post = HistoryPost::with('category', 'changeUser')->findOrFail($history_id);
+        }
+
+        return response()->json($post);
+    }
+
+    /**
      * Revert the specified resource.
      *
      * @param  int $postid
@@ -95,6 +117,8 @@ class PostHistoryController extends Controller
             'additional_info' => $post->additional_info,
             'category_id' => $post->category_id,
             'read_time' => $post->read_time,
+            'change_user_id' => $post->change_user_id,
+            'changelog' => $post->changelog,
         ]);
 
         $post->update([
@@ -107,6 +131,8 @@ class PostHistoryController extends Controller
             'additional_info' => 1,
             'category_id' => $historyPost->category_id,
             'read_time' => $historyPost->read_time,
+            'change_user_id' => $historyPost->change_user_id,
+            'changelog' => null,
         ]);
 
         return redirect()->route('posts.edit', ['post' => $postid]);

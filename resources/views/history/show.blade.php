@@ -27,8 +27,7 @@
                         <div class="line-v"></div>
                     </div>
                 @endif
-                <a href="{{ route('history.show', [$id, 'current']) }}">
-                    <div class="history_card {{ $history_id === 'current' ? ' active' : '' }}">
+                    <div onclick="show({{$currentPost->id}}, 'current');" class="history_card{{ $history_id === 'current' ? ' active' : '' }} h_0">
                         <img src="{{ asset($currentPost->image_path) }}" alt="">
                         <div class="body">
                             <div class="top-info">
@@ -54,7 +53,6 @@
                             @endif
                         </div>
                     </div>
-                </a>
                 @foreach($historyPosts as $historyPost)
                     @php($postDate = $historyPost->updated_at->format('Y-m-d'))
                     @if($lastDate != $postDate)
@@ -67,12 +65,11 @@
                     @else
                         <div class="margin-10"> </div>
                     @endif
-                    {!! $historyPost->id === (int)$history_id ? '' : '<a href="' . route('history.show', [$id, $historyPost->id]) . '">' !!}
-                    <div class="history_card">
-                        <div class="history_card{{ $historyPost->id === (int)$history_id ? ' active' : '' }}">
-                            <img src="{{ asset($historyPost->image_path) }}" alt="">
-                            <div class="body">
-                                <div class="top-info">
+
+                    <div class="history_card h_{{$historyPost->id}} {{(int)$history_id === $historyPost->id ? 'active' : ''}}" onclick="show({{$currentPost->id}}, {{$historyPost->id}});">
+                        <img src="{{ asset($historyPost->image_path) }}" alt="">
+                        <div class="body">
+                            <div class="top-info">
                                     @if ($historyPost->category)
                                         <div class="category" style="background: {{ $historyPost->category->backgroundColor }}CC; color: {{ $historyPost->category->textColor }}">{{ $historyPost->category->name }}</div>
                                     @endif
@@ -81,26 +78,22 @@
                                         <p class="reading-time">{{ $historyPost->read_time }} min</p>
                                     @endif
                                 </div>
-                                <span class="title">{{ $historyPost->title }}</span>
-                                <div class="bottom-info">
+                            <span class="title">{{ $historyPost->title }}</span>
+                            <div class="bottom-info">
                                     <span class="created"><i class="fa-regular fa-clock"></i> {{ $historyPost->updated_at->diffForHumans() }}, <span class="time">{{ $historyPost->updated_at->format('H:i') }}</span></span>
                                     <span class="additional_info">{!! $historyPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}{!! $historyPost->additional_info == 2 ? '<i class="fa-solid fa-floppy-disk"></i> Autozapis' : '' !!}</span>
                                 </div>
-                                @if ($historyPost->changelog)
-                                    <div class="changelog-info">
+                            @if ($historyPost->changelog)
+                                <div class="changelog-info">
                                         <span class="user"><i class="fa-solid fa-user"></i> {{ $historyPost->changeUser->firstname . ' ' . $historyPost->changeUser->lastname }}</span>
                                         <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $historyPost->changelog }}</span></span>
                                     </div>
-                                @endif
-                                @if ($historyPost->id === (int)$history_id)
-                                    <span class="actions">
-                                        <span onClick="revert({{ $id }},{{ $historyPost->id }})">Przywróć <i class="fa-solid fa-clock-rotate-left"></i></span>
-                                    </span>
-                                @endif
-                            </div>
+                            @endif
+                            <span class="actions{{(int)$history_id === $historyPost->id ? '' : ' hidden' }}">
+                                <span onClick="revert({{ $id }},{{ $historyPost->id }})">Przywróć <i class="fa-solid fa-clock-rotate-left"></i></span>
+                            </span>
                         </div>
                     </div>
-                    {!! $historyPost->id === (int)$history_id ? '' : '</a>' !!}
                 @endforeach
             </div>
         </div>
@@ -151,5 +144,8 @@
                 </div>
             </div>
         </aside>
+        <div class="loading hidden">
+            <div class="loader"></div>
+        </div>
     </div>
 </x-admin-layout>

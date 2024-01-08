@@ -1,70 +1,138 @@
-// let last_id = 0;
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
 
-// window.show = function (id) {
-//     const url = "/dashboard/posts/history/" + id;
-//
-//     $.ajax({
-//         type: "GET",
-//         url: url,
-//         processData: false,
-//         contentType: false,
-//         success: function (data) {
-//             const category = $(".post__preview .post_container .info .category");
-//             $(".preview_title").html(data.title);
-//             category.html(data.category.name);
-//             category.css('background', data.category.backgroundColor + 'CC');
-//             category.css('color', data.category.textColor);
-//             const postInfo = $(".post__preview .post_container .top .info");
-//             const readTime = postInfo.find(".reading-info .reading-time");
-//             const readInfo = postInfo.find(".reading-info");
-//             if (data.read_time === null) {
-//                 if (readInfo.length) { readInfo.empty() }
-//             }
-//             if (readTime.length) {
-//                 readTime.html(data.read_time + " min");
-//             } else {
-//                 const readTimeTextElement = $('<p>').addClass('reading-text').text('Czas czytania: ');
-//                 const watchIcon = $('<i>').addClass('fa-solid fa-clock');
-//                 const readTimeElement = $('<p>').addClass('reading-time').text(data.read_time +' min');
-//                 $(".post__preview .post_container .top .info .reading-info").append(readTimeTextElement, watchIcon, readTimeElement);
-//             }
-//             let date = new Date(data.created_at);
-//             let formattedDate = date.toLocaleDateString("pl-PL", {
-//                 day: "2-digit",
-//                 month: "2-digit",
-//                 year: "numeric",
-//             });
-//             let author = $(".date").html().slice(10);
-//             $(".date").html(formattedDate + author);
-//             let body =
-//                 '<div class="actions"><a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a><a>Następny post <i class="fa-solid fa-arrow-right"></i></a></div><div class="exit_preview" onClick="exitPreview();">Do góry <i class="fa-solid fa-arrow-up"></i></div>';
-//             $(".post_body").html(data.body + body);
-//             var output = document.getElementById("output");
-//             output.src = data.image_path;
-//
-//             if (last_id !== id) {
-//                 $(".h_" + id).addClass("active");
-//                 $(".h_" + last_id).removeClass("active");
-//             }
-//             last_id = id;
-//
-//             if (window.innerWidth < 650) {
-//                 const preview = document.querySelector(".post__preview");
-//                 let pos = preview.offsetTop;
-//                 let offset = 90;
-//
-//                 if (window.innerWidth <= 425) {
-//                     offset = 62;
-//                 }
-//
-//                 window.scrollTo({
-//                     top: pos - offset,
-//                     behavior: "smooth",
-//                 });
-//             }
-//         },
-//     });
-// };
+let pathString = window.location.pathname;
+let pathSegments = pathString.split('/');
+let currentSegment = pathSegments[pathSegments.length - 2];
+
+let last_id = parseInt(currentSegment === 'current' ? 0 : currentSegment);
+
+window.show = function (id, history_id) {
+    const url = "/dashboard/posts/history/" + id + '/' + history_id;
+    history_id = history_id === 'current' ? 0 : history_id;
+
+    if (last_id === history_id) {
+        return;
+    }
+
+    const loading = document.querySelector(".loading");
+    const post_preview = document.querySelector(".post__preview");
+
+    loading.classList.remove('hidden');
+    post_preview.style.overflow = 'hidden';
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Nie można wczytać!'
+                })
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const category = document.querySelector(".post__preview .post_container .info .category");
+            document.querySelector(".preview_title").innerHTML = data.title;
+            category.innerHTML = data.category.name;
+            category.style.background = data.category.backgroundColor + 'CC';
+            category.style.color = data.category.textColor;
+
+            const postInfo = document.querySelector(".post__preview .post_container .top .info");
+            const readTime = postInfo.querySelector(".reading-info .reading-time");
+            const readInfo = postInfo.querySelector(".reading-info");
+
+            if (data.read_time === null) {
+                if (readInfo) {
+                    readInfo.innerHTML = "";
+                }
+            }
+
+            if (readTime) {
+                readTime.innerHTML = data.read_time + " min";
+            } else {
+                const readTimeTextElement = document.createElement('p');
+                readTimeTextElement.className = 'reading-text';
+                readTimeTextElement.textContent = 'Czas czytania: ';
+
+                const watchIcon = document.createElement('i');
+                watchIcon.className = 'fa-solid fa-clock';
+
+                const readTimeElement = document.createElement('p');
+                readTimeElement.className = 'reading-time';
+                readTimeElement.textContent = data.read_time + ' min';
+
+                postInfo.querySelector(".reading-info").appendChild(readTimeTextElement, watchIcon, readTimeElement);
+            }
+
+            const date = new Date(data.created_at);
+            const formattedDate = date.toLocaleDateString("pl-PL", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+            });
+
+            const author = document.querySelector(".post__preview .post_container .info .date").innerHTML.slice(10);
+            document.querySelector(".post__preview .post_container .info .date").innerHTML = formattedDate + author;
+
+            const body =
+                '<div class="actions"><a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a><a>Następny post <i class="fa-solid fa-arrow-right"></i></a></div>';
+
+            document.querySelector(".post_body").innerHTML = data.body + body;
+
+            const output = document.getElementById("output");
+            output.src = data.image_path;
+
+            document.querySelector(".excerpt").innerHTML = data.excerpt;
+
+            const visibility = document.querySelector("input[name=is_published]");
+
+            visibility.checked = data.is_published === 1;
+
+            if (last_id !== history_id) {
+                document.querySelector(".history_card.h_" + history_id).classList.add("active");
+                document.querySelector(".history_card.h_" + last_id).classList.remove("active");
+
+                const actions = document.querySelector(".history_card.h_" + history_id + " .actions");
+
+                if (history_id !== 0) {
+                    actions.classList.remove('hidden');
+                }
+
+                const lastActions = document.querySelector(".history_card.h_" + last_id + " .actions");
+
+                if (lastActions) {
+                    lastActions.classList.add('hidden');
+                }
+
+                const history_id_string = history_id === 0 ? 'current' : history_id;
+                const newUrl = "/dashboard/posts/" + id + "/edit/history/" + history_id_string + "/show";
+                history.pushState(null, null, newUrl);
+            }
+            last_id = history_id;
+        })
+        .finally(() => {
+            loading.classList.add('hidden');
+            post_preview.style.overflow = 'auto';
+        })
+        .catch(error => {
+            Toast.fire({
+                icon: 'error',
+                title: 'Nie można wczytać!'
+            })
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+};
 
 window.revert = function (postId, historyId) {
     Swal.fire({
