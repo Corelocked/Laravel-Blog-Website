@@ -5,6 +5,7 @@
 
     <header class="header_post_edit">
         <a href="{{ route('history.index', $id) }}"><i class="fa-solid fa-left-long"></i> Powrót</a>
+        <span class="leave-compare" onclick="leaveCompare();">Opuść porównanie</span>
         <span class="info">Historia posta</span>
         <div class="profile">
             <img src="{{ asset(Auth::user()->image_path) }}" alt="" class="profile_img">
@@ -51,6 +52,7 @@
                                     <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $currentPost->changelog }}</span></span>
                                 </div>
                             @endif
+                            <span onclick="compare(event, 'current');" class="compare{{ $history_id === 'current' ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
                         </div>
                     </div>
                 @foreach($historyPosts as $historyPost)
@@ -85,22 +87,23 @@
                                 </div>
                             @if ($historyPost->changelog)
                                 <div class="changelog-info">
-                                        <span class="user"><i class="fa-solid fa-user"></i> {{ $historyPost->changeUser->firstname . ' ' . $historyPost->changeUser->lastname }}</span>
-                                        <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $historyPost->changelog }}</span></span>
-                                    </div>
+                                    <span class="user"><i class="fa-solid fa-user"></i> {{ $historyPost->changeUser->firstname . ' ' . $historyPost->changeUser->lastname }}</span>
+                                    <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $historyPost->changelog }}</span></span>
+                                </div>
                             @endif
                             <span class="actions{{(int)$history_id === $historyPost->id ? '' : ' hidden' }}">
-                                <span onClick="revert({{ $id }},{{ $historyPost->id }})">Przywróć <i class="fa-solid fa-clock-rotate-left"></i></span>
+                                <span onClick="revert({{ $id }}, {{ $historyPost->id }});">Przywróć <i class="fa-solid fa-clock-rotate-left"></i></span>
                             </span>
+                            <span onclick="compare(event, {{ $historyPost->id }});" class="compare{{(int)$history_id === $historyPost->id ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-        <aside class="post__preview">
+        <aside class="post__preview" id="first_post">
             <div class="post_container">
                 <div class="top">
-                    <img src="{{ asset($post->image_path) }}" id="output" alt="image">
+                    <img src="{{ asset($post->image_path) }}" class="output" alt="image">
                     <div class="info">
                         <p class="preview_title">{{ $post->title }}</p>
                         @isset($post->category)
@@ -144,8 +147,42 @@
                 </div>
             </div>
         </aside>
+        <aside class="post__preview" id="second_post" style="display: none;">
+            <div class="post_container">
+                <div class="top">
+                    <img src="{{ asset('images/picture.jpg') }}" class="output" alt="image">
+                    <div class="info">
+                        <p class="preview_title"></p>
+                        <div class="category"></div>
+                        <div class="reading-info">
+                            <p class="reading-text">Czas czytania: </p>
+                            <i class="fa-solid fa-clock"></i>
+                            <p class="reading-time">0 min</p>
+                        </div>
+                        <p class="date">01.01.2024 by {{ $post->user->firstname . ' ' . $post->user->lastname }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="post_body">
+
+            </div>
+            <div class="post_options">
+                <div class="header">Dodatkowe opcje:</div>
+                <label>Krótki opis</label>
+                <div class="excerpt"></div>
+                <label>Widoczność</label>
+                <div class="published">
+                    <p>Ustawiona widoczność na publiczne</p>
+                    <label class="switch">
+                        <input type="checkbox" name="is_published" disabled>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </aside>
         <div class="loading hidden">
             <div class="loader"></div>
         </div>
+        <div onclick="switchShowCompare();" class="switch-compare">Przełącz</div>
     </div>
 </x-admin-layout>

@@ -105,7 +105,7 @@ Password: writer1234
 -   dark mode
 -   more filtering
 -   ~~better tiles in history~~
--   changelog for posts
+-   ~~changelog for posts~~
 -   remove jQuery
 
 ## Acknowledgements

@@ -13,19 +13,39 @@ const Toast = Swal.mixin({
 let pathString = window.location.pathname;
 let pathSegments = pathString.split('/');
 let currentSegment = pathSegments[pathSegments.length - 2];
+let currentPostId = pathSegments[pathSegments.length - 5];
 
 let last_id = parseInt(currentSegment === 'current' ? 0 : currentSegment);
+let remembered_post_id = currentPostId;
 
-window.show = function (id, history_id) {
+window.show = function (id = null, history_id, compare = false) {
+    if (id) {
+        remembered_post_id = id;
+    } else {
+        id = remembered_post_id;
+    }
+
     const url = "/dashboard/posts/history/" + id + '/' + history_id;
+    let postElementId = '#first_post';
+
     history_id = history_id === 'current' ? 0 : history_id;
 
     if (last_id === history_id) {
         return;
     }
 
+    if (compare) {
+        postElementId = '#second_post';
+        document.querySelectorAll(".post__preview").forEach((el) => {
+            el.classList.add('post__compare');
+        });
+        document.querySelector(postElementId).style.display = 'block';
+        document.querySelector(".compact-history-list").style.display = 'none';
+        document.querySelector("header.header_post_edit .leave-compare").style.display = "block";
+    }
+
     const loading = document.querySelector(".loading");
-    const post_preview = document.querySelector(".post__preview");
+    const post_preview = document.querySelector(".post__preview" + postElementId);
 
     loading.classList.remove('hidden');
     post_preview.style.overflow = 'hidden';
@@ -42,13 +62,13 @@ window.show = function (id, history_id) {
             return response.json();
         })
         .then(data => {
-            const category = document.querySelector(".post__preview .post_container .info .category");
-            document.querySelector(".preview_title").innerHTML = data.title;
+            const category = document.querySelector(".post__preview" + postElementId + " .post_container .info .category");
+            document.querySelector(postElementId + " .preview_title").innerHTML = data.title;
             category.innerHTML = data.category.name;
             category.style.background = data.category.backgroundColor + 'CC';
             category.style.color = data.category.textColor;
 
-            const postInfo = document.querySelector(".post__preview .post_container .top .info");
+            const postInfo = document.querySelector(".post__preview" + postElementId + " .post_container .top .info");
             const readTime = postInfo.querySelector(".reading-info .reading-time");
             const readInfo = postInfo.querySelector(".reading-info");
 
@@ -82,24 +102,24 @@ window.show = function (id, history_id) {
                 year: "numeric",
             });
 
-            const author = document.querySelector(".post__preview .post_container .info .date").innerHTML.slice(10);
-            document.querySelector(".post__preview .post_container .info .date").innerHTML = formattedDate + author;
+            const author = document.querySelector(".post__preview" + postElementId + " .post_container .info .date").innerHTML.slice(10);
+            document.querySelector(".post__preview" + postElementId + " .post_container .info .date").innerHTML = formattedDate + author;
 
             const body =
                 '<div class="actions"><a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a><a>Następny post <i class="fa-solid fa-arrow-right"></i></a></div>';
 
-            document.querySelector(".post_body").innerHTML = data.body + body;
+            document.querySelector(postElementId + " .post_body").innerHTML = data.body + body;
 
-            const output = document.getElementById("output");
+            const output = document.querySelector(postElementId + " .output");
             output.src = data.image_path;
 
-            document.querySelector(".excerpt").innerHTML = data.excerpt;
+            document.querySelector(postElementId + " .excerpt").innerHTML = data.excerpt;
 
-            const visibility = document.querySelector("input[name=is_published]");
+            const visibility = document.querySelector(postElementId + " input[name=is_published]");
 
             visibility.checked = data.is_published === 1;
 
-            if (last_id !== history_id) {
+            if (last_id !== history_id && !compare) {
                 document.querySelector(".history_card.h_" + history_id).classList.add("active");
                 document.querySelector(".history_card.h_" + last_id).classList.remove("active");
 
@@ -115,11 +135,23 @@ window.show = function (id, history_id) {
                     lastActions.classList.add('hidden');
                 }
 
+                const compare = document.querySelector(".history_card.h_" + history_id + " .compare");
+
+                compare.classList.add('hidden');
+
+                const lastCompare = document.querySelector(".history_card.h_" + last_id + " .compare");
+
+                if (lastCompare) {
+                    lastCompare.classList.remove('hidden');
+                }
+
                 const history_id_string = history_id === 0 ? 'current' : history_id;
                 const newUrl = "/dashboard/posts/" + id + "/edit/history/" + history_id_string + "/show";
                 history.pushState(null, null, newUrl);
             }
-            last_id = history_id;
+            if (!compare) {
+                last_id = history_id;
+            }
         })
         .finally(() => {
             loading.classList.add('hidden');
@@ -132,6 +164,49 @@ window.show = function (id, history_id) {
             })
             console.error('There has been a problem with your fetch operation:', error);
         });
+};
+
+const firstPost = document.getElementById('first_post');
+const secondPost = document.getElementById('second_post');
+
+window.compare = function (event, id) {
+    event.stopPropagation();
+    const windowWidth = window.innerWidth;
+    if (windowWidth > 840) {
+    } else {
+        firstPost.style.display = "none";
+        document.querySelector(".switch-compare").style.display = 'block';
+    }
+    show(null, id, true);
+};
+
+window.leaveCompare = function () {
+    document.querySelector("#second_post").style.display = "none";
+    document.querySelectorAll(".post__preview").forEach((el) => {
+       el.classList.remove('post__compare');
+    });
+    document.querySelector(".compact-history-list").style.display = "block";
+    document.querySelector(".leave-compare").style.display = "none";
+}
+
+firstPost.addEventListener('scroll', function() {
+    secondPost.scrollTop = firstPost.scrollTop;
+});
+
+secondPost.addEventListener('scroll', function() {
+    firstPost.scrollTop = secondPost.scrollTop;
+});
+
+let show_first_post = false;
+window.switchShowCompare = function () {
+    if (show_first_post) {
+        firstPost.style.display = 'none';
+        secondPost.style.display = 'flex';
+    } else {
+        secondPost.style.display = 'none';
+        firstPost.style.display = 'flex';
+    }
+    show_first_post = !show_first_post;
 };
 
 window.revert = function (postId, historyId) {
