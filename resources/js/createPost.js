@@ -17,7 +17,7 @@ setInterval(() => {
 window.save = function(){
     const title = document.querySelector('input[name=title]').value;
     const excerpt = document.querySelector('textarea[name=excerpt]').value;
-    const body = $(".ql-editor").html();
+    const body = document.querySelector(".ql-editor").innerHTML;
     const image = document.querySelector('input[name=image]').files[0];
     const is_published = document.querySelector('input[name=is_published]').checked;
     const category = parseInt(document.querySelector('input[name=category_id]').value);
@@ -26,7 +26,7 @@ window.save = function(){
     const id = parseInt(document.querySelector('input[name=id_saved_post]').value);
 
     if(image || title !== '' || excerpt !== '' || body !== '<p><br></p>'){
-        var form = new FormData();
+        let form = new FormData();
         form.append('title', title);
         form.append('excerpt', excerpt);
         form.append('body', body);
@@ -35,59 +35,46 @@ window.save = function(){
         form.append('category_id', category);
         form.append('_token', token);
 
-        if(id === 0){
-            $.ajax({
-                type: "POST",
-                url: "/dashboard/posts-saved",
-                enctype: 'multipart/form-data',
-                data: form,
-                processData: false,
-                contentType: false,
-                cache: false,
-
-                success: function(data, status){
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Zapisano!'
-                    })
-                    document.querySelector('input[name=id_saved_post]').value = data.id;
-                    const newUrl = "/dashboard/posts/create?edit=" + data.id;
-                    history.pushState(null, null, newUrl);
-                },
-                error: function(textStatus){
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Niezapisano!'
-                    })
-                }
-            });
-        }else{
+        if(id !== 0){
             form.append('_method', 'PATCH');
-            $.ajax({
-                type: "POST",
-                url: "/dashboard/posts-saved/" + id,
-                enctype: 'multipart/form-data',
-                headers: {
-                    'X-CSRF-TOKEN': token
-                },
-                data: form,
-                processData: false,
-                contentType: false,
-                cache: false,
-
-                success: function(data, status){
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Zapisano!'
-                    })
-                },
-                error: function(textStatus){
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Niezapisano!'
-                    })
-                }
-            });
         }
+
+        fetch("/dashboard/posts-saved" + (id ? '/' + id : ''), {
+            method: "POST",
+            body: form,
+            headers: {
+                'enctype': 'multipart/form-data',
+                'X-CSRF-TOKEN': token,
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Zapisano!'
+                });
+                if(id === 0) {
+                    redirectToNewUrl(data);
+                }
+            })
+            .catch(error => {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Niezapisano!'
+                });
+                console.error('Fetch Error: ', error);
+            });
     }
+}
+
+function redirectToNewUrl(data) {
+    console.log(data);
+    document.querySelector('input[name=id_saved_post]').value = data.id;
+    const newUrl = "/dashboard/posts/create?edit=" + data.id;
+    history.pushState(null, null, newUrl);
 }

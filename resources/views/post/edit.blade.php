@@ -9,7 +9,7 @@
         <a href="{{ route('posts.index') }}"><i class="fa-solid fa-left-long"></i> Powrót</a>
         <div class="edit_post_actions">
             <a href="{{ route('history.index', $post->id) }}" class="history"><span class="text">Historia</span><span class="icon"><i class="fa-solid fa-timeline"></i></span></a>
-            <div class="submit" onClick="$('#form').submit();"><span class="text">Opublikuj</span><span class="icon"><i class="fa-solid fa-upload"></i></span></div>
+            <div class="submit" onClick="submitForm();"><span class="text">Opublikuj</span><span class="icon"><i class="fa-solid fa-upload"></i></span></div>
         </div>
         <div class="profile">
             <img src="{{ asset(Auth::user()->image_path) }}" alt="" class="profile_img">

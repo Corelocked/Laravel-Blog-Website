@@ -1,87 +1,75 @@
-$(document).ready(function(){
-    $(".js-select2").select2({
-        tags: true
-    });
-});
-$(".js-select2").change(function() {
-    $('#user').val($(".js-select2").val());
-});
-
-let maxHeight = $('.filtr_body').css('height');
-
 toggleHeight();
 
 function toggleHeight() {
     let e = document.querySelector('.filtr_body');
+    let button_collapse = document.querySelector(".button_collapse");
 
-    if(e.style.height != '0px') {
+    if (e.style.height !== '0px') {
         e.style.height = '0px';
-        $('.button_collapse').removeClass('fa-caret-up').addClass('fa-caret-down');
+        button_collapse.classList.remove('fa-caret-up');
+        button_collapse.classList.add('fa-caret-down');
     } else {
         e.style.height = 'auto';
-        $('.button_collapse').removeClass('fa-caret-down').addClass('fa-caret-up');
+        button_collapse.classList.remove('fa-caret-down');
+        button_collapse.classList.add('fa-caret-up');
     }
 }
 
-$('.filtr_collapse').click(function (){
+document.querySelector('.filtr_collapse').addEventListener('click', function () {
     toggleHeight();
 });
 
-function radioCheck(number){
-    for(let i = 1; i <= 4; i++){
-        if(number === i){
-            $(".rec_" + i).addClass("active");
-            $(".rec_" + i + " .dot").html('<i class="fa-solid fa-square-xmark"></i>');
-        }else{
-            $(".rec_" + i).removeClass("active");
-            $(".rec_" + i + " .dot").html('<i class="fa-regular fa-square"></i>');
+window.radioCheck = function(number){
+    for (let i = 1; i <= 4; i++) {
+        if (number === i) {
+            document.querySelector(".rec_" + i).classList.add("active");
+            document.querySelector(".rec_" + i + " .dot").innerHTML = '<i class="fa-solid fa-square-xmark"></i>';
+        } else {
+            document.querySelector(".rec_" + i).classList.remove("active");
+            document.querySelector(".rec_" + i + " .dot").innerHTML = '<i class="fa-regular fa-square"></i>';
         }
     }
-    switch(number){
+
+    const limit = document.querySelector('#limit');
+
+    switch (number) {
         case 1:
-            $('#limit').val("20");
+            limit.value = "20";
             break;
         case 2:
-            $('#limit').val("50");
+            limit.value = "50";
             break;
         case 3:
-            $('#limit').val('100');
+            limit.value = '100';
             break;
         case 4:
-            $('#limit').val('0');
+            limit.value = '0';
             break;
     }
 }
 
-function filterCheck(number){
-    if(number == 1){
-        $(".f_2").removeClass("active");
-        $(".f_2 .dot").html('<i class="fa-solid fa-circle-dot"></i>');
-        $('#order').val('desc');
-    }else{
-        $(".f_1").removeClass("active");
-        $(".f_1 .dot").html('<i class="fa-solid fa-circle-dot"></i>');
-        $('#order').val('asc');
+window.filterCheck = function(number) {
+    if (number === 1) {
+        document.querySelector(".f_2").classList.remove("active");
+        document.querySelector(".f_2 .dot").innerHTML = '<i class="fa-solid fa-circle-dot"></i>';
+        document.querySelector('#order').value = 'desc';
+    } else {
+        document.querySelector(".f_1").classList.remove("active");
+        document.querySelector(".f_1 .dot").innerHTML = '<i class="fa-solid fa-circle-dot"></i>';
+        document.querySelector('#order').value = 'asc';
     }
 
-    $(".f_" + number).addClass("active");
-    $(".f_" + number + " .dot").html('<i class="fa-solid fa-circle-check"></i>');
+    document.querySelector(".f_" + number).classList.add("active");
+    document.querySelector(".f_" + number + " .dot").innerHTML = '<i class="fa-solid fa-circle-check"></i>';
 }
 
-if($('#order').val() == 'desc'){
+if (document.querySelector('#order').value === 'desc') {
     filterCheck(1);
-}else{
+} else {
     filterCheck(2);
 }
 
-$(".f_1").click(function(){
-    filterCheck(1);
-});
-$(".f_2").click(function(){
-    filterCheck(2);
-});
-
-switch(parseInt($('#limit').val())){
+switch(parseInt(document.querySelector("#limit").value)){
     case 0:
         radioCheck(4);
         break;
@@ -96,21 +84,8 @@ switch(parseInt($('#limit').val())){
         break;
 }
 
-$(".rec_1").click(function(){
-    radioCheck(1);
-});
-$(".rec_2").click(function(){
-    radioCheck(2);
-});
-$(".rec_3").click(function(){
-    radioCheck(3);
-});
-$(".rec_4").click(function(){
-    radioCheck(4);
-});
-
-$('.show_results').click(function(){
-    $('#filter_form').submit();
+document.querySelector('.show_results').addEventListener('click', function () {
+    document.getElementById('filter_form').submit();
 });
 
 window.changeView = function(name, mode) {

@@ -1,16 +1,21 @@
-$(document).click(function (e){
-    if(e.target.className == "modal"){
-        if($('.modal').css('display', 'flex')){
-            $('.modal').css('display', 'none');
+document.addEventListener('click', function (e) {
+    const modal = document.querySelector('.modal');
+
+    if (e.target.classList.contains('modal')) {
+        if (modal.style.display === 'flex') {
+            modal.style.display = 'none';
         }
     }
 });
-$('.profile').on('click', function(){
-    $('.modal').css('display', 'flex');
+
+document.querySelector('.profile').addEventListener('click', function () {
+    document.querySelector('.modal').style.display = 'flex';
 });
-$('.close').on('click', function(){
-    $('.modal').css('display', 'none');
+
+document.querySelector('.close').addEventListener('click', function () {
+    document.querySelector('.modal').style.display = 'none';
 });
+
 startTime();
 function startTime() {
     const today = new Date();
@@ -25,6 +30,6 @@ function startTime() {
 }
 
 function checkTime(i) {
-    if (i < 10) {i = "0" + i};
+    if (i < 10) {i = "0" + i}
     return i;
 }

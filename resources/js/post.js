@@ -52,7 +52,9 @@ var quill = new Quill("#editor", {
     theme: "snow",
 });
 
-quill.pasteHTML($("#hiddenArea").val());
+let hiddenArea = document.getElementById('hiddenArea');
+
+quill.pasteHTML(hiddenArea.value);
 
 quill.getModule("toolbar").addHandler("image", () => {
     selectLocalImage();
@@ -76,52 +78,55 @@ window.selectLocalImage = function () {
 };
 
 window.imageHandler = function (image) {
-    var formData = new FormData();
+    const token = document.querySelector('input[name=_token]').value;
+    let formData = new FormData();
     formData.append("image", image);
-    formData.append("_token", $("input[name=_token]").val());
+    formData.append("_token", token);
 
-    var url = $("#content").data("imageUrl");
+    let url = document.getElementById("content").dataset.imageUrl;
 
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-            if (response.url) {
-                insertToEditor(response.url, quill);
-            }
+    fetch(url, {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRF-TOKEN": token,
         },
-    });
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.url) {
+                insertToEditor(data.url, quill);
+            }
+        })
+        .catch(error => console.error("Error:", error));
 };
 
 window.calculateReadTime = function () {
-    let form = new FormData();
-    const body = $(".ql-editor").html();
+    const body = document.querySelector(".ql-editor").innerHTML;
     const token = document.querySelector('input[name=_token]').value;
-    form.append('body', body);
-    form.append('_token', token);
 
-    $.ajax({
-        type: "POST",
-        url: "/dashboard/calculate-read-time",
-        enctype: 'multipart/form-data',
-        data: form,
-        processData: false,
-        contentType: false,
-        cache: false,
+    const formData = new FormData();
+    formData.append('body', body);
+    formData.append('_token', token);
 
-        success: function(data, status){
-            document.querySelector('.reading-time').innerHTML = data + " min";
+    fetch("/dashboard/calculate-read-time", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRF-TOKEN": token,
         },
-        error: function(textStatus){
+    })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.reading-time').innerHTML = data + " min";
+        })
+        .catch(error => {
+            console.error("Error:", error);
             Toast.fire({
                 icon: 'error',
                 title: 'Błąd!'
-            })
-        }
-    });
+            });
+        });
 };
 
 window.insertToEditor = function (url, editor) {
@@ -129,9 +134,15 @@ window.insertToEditor = function (url, editor) {
     editor.insertEmbed(range.index, "image", url);
 };
 
-$("#form").on("submit", function () {
-    $("#hiddenArea").val($(".ql-editor").html());
-});
+window.submitForm = function () {
+    let hiddenArea = document.getElementById("hiddenArea");
+    let qlEditor = document.querySelector(".ql-editor");
+
+    hiddenArea.value = qlEditor.innerHTML;
+
+    document.getElementById("form").submit();
+};
+
 document.querySelectorAll(".ql-picker").forEach((tool) => {
     tool.addEventListener("mousedown", function (event) {
         event.preventDefault();

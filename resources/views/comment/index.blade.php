@@ -1,7 +1,5 @@
 <x-admin-layout>
     @section('scripts')
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         @vite(['resources/js/filtr.js'])
     @endsection
 
@@ -25,11 +23,11 @@
                     <div class="sort">
                         <p class="name">Sortowanie</p>
                         <div class="buttons">
-                            <div class="filter-button f_1 active">
+                            <div class="filter-button f_1 active" onclick="filterCheck(1);">
                                 <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
                                 <p>Nowe komentarze</p>
                             </div>
-                            <div class="filter-button f_2">
+                            <div class="filter-button f_2" onclick="filterCheck(2);">
                                 <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
                                 <p>Stare komentarze</p>
                             </div>
@@ -38,19 +36,19 @@
                     <div class="records">
                         <p class="name">Rekordy</p>
                         <div class="buttons">
-                            <div class="filter-button rec_1">
+                            <div class="filter-button rec_1" onclick="radioCheck(1);">
                                 <span class="dot"><i class="fa-solid fa-square-xmark"></i></span>
                                 <p>20 rekordów</p>
                             </div>
-                            <div class="filter-button rec_2">
+                            <div class="filter-button rec_2" onclick="radioCheck(2);">
                                 <span class="dot"><i class="fa-regular fa-square"></i></span>
                                 <p>50 rekordów</p>
                             </div>
-                            <div class="filter-button rec_3">
+                            <div class="filter-button rec_3" onclick="radioCheck(3);">
                                 <span class="dot"><i class="fa-regular fa-square"></i></span>
                                 <p>100 rekordów</p>
                             </div>
-                            <div class="filter-button rec_4">
+                            <div class="filter-button rec_4" onclick="radioCheck(4);">
                                 <span class="dot"><i class="fa-regular fa-square"></i></span>
                                 <p>Max rekordów</p>
                             </div>

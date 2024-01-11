@@ -236,6 +236,8 @@ class PostAdminController extends Controller
             'is_published' => $request->is_published == 'on' ? true : false,
             'category_id' => $request->category_id,
             'read_time' => $this->calculateReadTime($request->body),
+            'change_user_id' => Auth::id(),
+            'changelog' => null,
         ]);
 
         if ($SavedPost) {

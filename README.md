@@ -32,7 +32,6 @@ I tried to add the best protection I could to this website. I'm referring to pro
 -   HTML 5
 -   CSS 3
 -   JavaScript
--   JQuery
 -   SweetAlert 2
 -   FontAwesome 6.5.1
 
@@ -106,7 +105,7 @@ Password: writer1234
 -   more filtering
 -   ~~better tiles in history~~
 -   ~~changelog for posts~~
--   remove jQuery
+-   ~~remove jQuery~~
 
 ## Acknowledgements
 

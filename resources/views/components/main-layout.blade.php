@@ -7,12 +7,11 @@
     <title>Blog</title>
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}" />
     <script src="https://kit.fontawesome.com/15901ecbea.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <x-header-navbar />
-    
+
     {{ $slot }}
 
     @if(Auth::User())

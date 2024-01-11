@@ -69,19 +69,20 @@
     </div>
 
     <script>
-        $('img:not(.profile_img)').addClass('img-enlargable').click(function(){
-            var src = $(this).attr('src');
-            $('<div>').css({
-                background: 'RGBA(0,0,0,.5) url('+src+') no-repeat center',
-                backgroundSize: 'contain',
-                width:'100%', height:'100%',
-                position:'fixed',
-                zIndex:'10000',
-                top:'0', left:'0',
-                cursor: 'zoom-out'
-            }).click(function(){
-                $(this).remove();
-            }).appendTo('body');
+        document.querySelectorAll('img:not(.profile_img)').forEach(function (img) {
+            img.classList.add('img-enlargable');
+            img.addEventListener('click', function () {
+                let src = img.getAttribute('src');
+
+                let overlay = document.createElement('div');
+                overlay.style.cssText = 'background: RGBA(0,0,0,.5) url(' + src + ') no-repeat center; background-size: contain; width: 100%; height: 100%; position: fixed; z-index: 10000; top: 0; left: 0; cursor: zoom-out;';
+
+                overlay.addEventListener('click', function () {
+                    overlay.remove();
+                });
+
+                document.body.appendChild(overlay);
+            });
         });
     </script>
 </x-main-layout>

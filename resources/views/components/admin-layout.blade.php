@@ -7,7 +7,6 @@
     <title>Dashboard</title>
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}" />
     <script src="https://kit.fontawesome.com/15901ecbea.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     @yield('scripts')
