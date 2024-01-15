@@ -7,6 +7,7 @@
         <p class="info">Dostępne akcje</p>
         <a href="{{ route('dashboard') }}" class="button"><i class="fa-solid fa-wrench"></i><p>Panel</p></a>
         <a href="{{ route('profile') }}" class="button"><i class="fa-solid fa-id-card"></i><p>Profil</p></a>
+        <div class="button toggle-mode" onClick="toggleMode();"><i class="fa-solid fa-moon"></i><p>Tryb Ciemny</p></div>
         <a href="{{ route('logout') }}" class="button"><i class="fa-solid fa-right-from-bracket"></i><p>Wyloguj</p></a>
         <p class="info">Szybkie akcje</p>
         @can('post-create')

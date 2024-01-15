@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="login-page">
-    
+
     <div class="login-form">
         <img src="{{ asset('images/picture3.jpg') }}">
         <form method="POST" action="{{ route('postlogin') }}">
@@ -17,7 +17,7 @@
             <div class="login-text">Zaloguj</div>
             @if(\Session::has('message'))
             <span class="error">
-                {{ \Session::get('message') }}  
+                {{ \Session::get('message') }}
             </span>
             @endif
             <label>Email</label>

@@ -18,7 +18,7 @@
                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" id="comment_delete_{{ $comment->id }}">
                         @method('DELETE')
                         @csrf
-                        <a type="submit" class="delete" onClick="document.getElementById('comment_delete_{{ $comment->id }}').submit()">Usuń</a>
+                        <div class="delete" onClick="document.getElementById('comment_delete_{{ $comment->id }}').submit()">Usuń</div>
                     </form>
                 @endcan
             @endif

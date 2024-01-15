@@ -6,14 +6,31 @@
     margin: 0;
     box-sizing: border-box;
 }
-:root {
+html[data-theme='light'] {
     --background-color: #fbf8f1;
     --bar-color: #fff;
     --text-color: #000;
     --shadow-color: #dfe4ea;
     --primary-color-light: #f6f5ff;
     --line-color: #d1d8e0;
+    --button: #f6f5ff;
+    --input: #fff;
+    --active-background: rgba(209, 209, 209 , 0.6);
+    --filtr-header-color: #4C4C4C;
 }
+html[data-theme='dark'] {
+    --background-color: #18191A;
+    --bar-color: #242526;
+    --text-color: #CCC;
+    --shadow-color: #1B1C1D;
+    --primary-color-light: #CCCCCC;
+    --line-color: #3A3B3C;
+    --button: #393A3B;
+    --input: #393A3B;
+    --active-background: rgba(57, 58, 59, 0.6);
+    --filtr-header-color: #b3b3b3;
+}
+
 body {
     background: var(--background-color);
     display: flex;
@@ -52,7 +69,7 @@ header a {
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    color: #000;
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
     font-size: 18px;
@@ -75,6 +92,7 @@ header.header_post_edit .leave-compare {
     cursor: pointer;
 }
 header.header_post_edit .info {
+    color: var(--text-color);
     font-family: "Poppins", sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -91,6 +109,7 @@ header .profile img {
     border-radius: 50%;
 }
 header .profile i {
+    color: var(--text-color);
     padding: 5px;
     transition: 0.1s ease all;
 }
@@ -101,6 +120,7 @@ header .profile:hover i {
 .filter {
     float: left;
     background: var(--bar-color);
+    color: var(--text-color);
     width: 20%;
     padding: 10px 0;
     font-family: "Poppins", sans-serif;
@@ -131,7 +151,7 @@ header .profile:hover i {
     color: #eb4d4b;
 }
 .filter .filtr_body .name{
-    color: #4C4C4C;
+    color: var(--filtr-header-color);
     font-size: 16px;
     font-weight: 700;
 }
@@ -145,7 +165,7 @@ header .profile:hover i {
     display: none;
     padding: 5px;
     margin: 2px 5px;
-    background-color: var(--primary-color-light);
+    background-color: var(--button);
     border-radius: 5px;
 }
 .filter p#filtr {
@@ -252,7 +272,8 @@ header .profile:hover i {
     margin: auto 10px;
 }
 .filter .filtr_body .show_results {
-    background: var(--primary-color-light);
+    background: var(--button);
+    color: var(--text-color);
     font-weight: 600;
     justify-content: center;
     padding: 5px;
@@ -274,6 +295,7 @@ header .profile:hover i {
     align-items: center;
     flex-direction: column;
     background: var(--bar-color);
+    color: var(--text-color);
     border-radius: 10px;
     /*padding: 20px;*/
     width: calc(100% - 20px);
@@ -337,7 +359,7 @@ header .profile:hover i {
     padding: 15px;
     margin: 5px;
     border-radius: 10px;
-    background: var(--primary-color-light);
+    background: var(--button);
     display: flex;
     flex-direction: row;
     cursor: pointer;
@@ -350,7 +372,7 @@ header .profile:hover i {
     -ms-user-select: none;
     user-select: none;
     text-decoration: none;
-    color: #000;
+    color: var(--text-color);
     flex-grow: 1;
 }
 .dashboard .actions_home .button i {
@@ -374,6 +396,7 @@ header .profile:hover i {
 }
 
 .head {
+    color: var(--text-color);
     text-align: center;
     font-size: 22px;
     font-weight: 800;
@@ -441,6 +464,7 @@ header .profile:hover i {
     box-shadow: 0px 0px 25px 5px var(--shadow-color);
 }
 .divided_minimal .posts .post .body {
+    color: var(--text-color);
     width: calc(100% - 128px - 150px);
     padding: 5px;
     display: flex;
@@ -607,7 +631,6 @@ table img {
     height: 48px;
     padding: 3px;
     border-radius: 50%;
-    background-color: #ecf0f1;
 }
 table {
     border: 1px solid #dfecf0;
@@ -625,8 +648,9 @@ table caption {
 }
 
 table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #dfecf0;
+    color: var(--text-color);
+    background: var(--bar-color);
+    border: 1px solid var(--line-color);
     padding: 0.35em;
 }
 table tr .box{
@@ -712,6 +736,7 @@ table td .show:hover {
     padding: 10px;
     border-radius: 10px;
     transition: 0.1s all ease;
+    color: var(--text-color);
 }
 .divided_minimal .comments .comment.tile {
     flex-direction: column;
@@ -1033,7 +1058,9 @@ form textarea {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid var(--line-color);
+    background: var(--bar-color);
+    color: var(--text-color);
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
@@ -1223,7 +1250,7 @@ input[type="submit"],
     width: 100%;
     justify-content: space-evenly;
     padding: 5px;
-    border: 1px solid #bdc3c7;
+    border: 1px solid var(--line-color);
     border-radius: 4px;
 }
 #create_user .body_form .mail p {
@@ -1411,7 +1438,7 @@ aside.post__preview .ql-size-huge {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid var(--line-color);
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
@@ -1438,7 +1465,7 @@ aside.post__preview .ql-size-huge {
     width: 100%;
     justify-content: space-evenly;
     padding: 5px;
-    border: 1px solid #bdc3c7;
+    border: 1px solid var(--line-color);
     border-radius: 4px;
     margin: 8px 0;
 }
@@ -1529,7 +1556,7 @@ aside.post__preview .ql-size-huge {
     -moz-box-shadow: 0px 0px 25px -6px var(--shadow-color);
     box-shadow: 0px 0px 25px -6px var(--shadow-color);
     /*margin-bottom: 20px;*/
-    transition: 0.2s ease background;
+    transition: 0.1s ease background;
     cursor: pointer;
 }
 .history-list .history_card:hover,
@@ -1550,6 +1577,7 @@ aside.post__preview .ql-size-huge {
     margin: 10px;
     align-items: flex-start;
     width: calc(100% - 20px);
+    color: var(--text-color);
 }
 .history-list .history_card .body .top-info,
 .compact-history-list .history_card .body .top-info {
@@ -1690,8 +1718,8 @@ aside.post__preview .ql-size-huge {
     width: 100%;
     margin: 5px auto;
     text-align: center;
-    color: #000;
-    background: var(--primary-color-light);
+    color: var(--text-color);
+    background: var(--button);
     transition: 0.1s ease all;
     cursor: pointer;
 }
@@ -1705,11 +1733,11 @@ aside.post__preview .ql-size-huge {
     -webkit-box-shadow: 0px 0px 25px -6px var(--shadow-color);
     -moz-box-shadow: 0px 0px 25px -6px var(--shadow-color);
     box-shadow: 0px 0px 25px -6px var(--shadow-color);
-    transition: 0.2s ease background;
+    transition: 0.1s ease background;
     cursor: pointer;
 }
 .compact-history-list .history_card.active {
-    background: rgba(209, 209, 209 , 0.6);
+    background: var(--active-background);
 }
 .compact-history-list .history_card .title {
     font-weight: 500;
@@ -1824,11 +1852,37 @@ aside.post__preview .ql-size-huge {
 .ql-toolbar.ql-snow,
 .ql-container.ql-snow {
     width: 100%;
+    border-color: var(--line-color);
 }
 .ql-container.ql-snow {
     height: 100%;
     min-height: 200px;
     overflow-y: auto;
+}
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+    border-color: var(--line-color);
+    background: var(--bar-color);
+}
+.ql-snow .ql-stroke,
+.ql-snow .ql-strike {
+    stroke: var(--text-color);
+}
+.ql-snow .ql-stroke:hover,
+.ql-snow .ql-strike:hover,
+.ql-snow.ql-toolbar .ql-strike.ql-active {
+    stroke: #06c;
+}
+.ql-snow .ql-fill,
+.ql-snow .ql-stroke.ql-fill {
+    fill: var(--text-color);
+}
+.ql-snow .ql-fill:hover,
+.ql-snow .ql-stroke.ql-fill:hover,
+.ql-snow.ql-toolbar .ql-strike.ql-active {
+    fill: #06c;
+}
+.ql-snow .ql-picker {
+    color: var(--text-color);
 }
 .post__create .post_container,
 .post__preview .post_container {
@@ -1858,8 +1912,9 @@ aside.post__preview .ql-size-huge {
     font-weight: 500;
     font-size: 20px;
     padding: 16px;
-    color: #404040;
-    background: rgba(255, 255, 255, 1);
+    /*color: #404040;*/
+    background: var(--bar-color);
+    color: var(--text-color);
     border-radius: 10px 0 10px 0;
     cursor: pointer;
 }
@@ -1915,7 +1970,8 @@ aside.post__preview .ql-size-huge {
     border: none;
     padding: 6px 10px;
     border-radius: 4px;
-    background: var(--primary-color-light);
+    background: var(--button);
+    color: var(--text-color);
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
@@ -2222,6 +2278,7 @@ form ul li {
 }
 .modal-profile {
     background: var(--bar-color);
+    color: var(--text-color);
     padding: 10px;
     width: 60%;
     max-width: 300px;
@@ -2286,9 +2343,10 @@ form ul li {
     width: 100%;
     margin: 5px;
     text-align: center;
-    color: #000;
-    background: var(--primary-color-light);
+    color: var(--text-color);
+    background: var(--button);
     transition: 0.1s ease all;
+    cursor: pointer;
 }
 .modal-profile .button i {
     width: 48px;
@@ -2350,6 +2408,29 @@ form ul li {
 
 .swal2-container {
     font-family: "Poppins", sans-serif;
+}
+.change-theme {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 20px;
+    border-radius: 50%;
+    background: var(--bar-color);
+    color: var(--text-color);
+    box-shadow: 4px 4px 17px 0px var(--shadow-color);
+    cursor: pointer;
+    z-index: 10;
+}
+.change-theme i {
+    display: block;
+    font-size: 20px;
+    margin: auto;
+    transition: .1s ease color;
+    text-align: center;
+    width: 20px;
+}
+.change-theme:hover i {
+    color: #eb4d4b;
 }
 
 @media only screen and (max-width: 1080px) {
@@ -2463,13 +2544,11 @@ form ul li {
     }
 
     table tr {
-        border-bottom: 3px solid var(--status-color);
         display: block;
         margin-bottom: 0.625em;
     }
 
     table td {
-        border-bottom: 1px solid var(--status-color);
         display: block;
         font-size: 0.8em;
         text-align: right;
@@ -2603,6 +2682,13 @@ form ul li {
     .filter .filtr_collapse,
     .filter .filtr_body {
         margin-left: 10px;
+    }
+    .divided_minimal .posts .post .body .user {
+        width: fit-content;
+        justify-content: center;
+    }
+    .divided_minimal .posts .post .body .user p {
+        text-align: left;
     }
 }
 @media only screen and (max-width: 430px) {

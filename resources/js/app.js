@@ -1,5 +1,6 @@
 import './bootstrap';
 import.meta.glob([ '../images/**', ]);
+import './theme';
 
 window.confirmDelete = function(id, name){
     Swal.fire({

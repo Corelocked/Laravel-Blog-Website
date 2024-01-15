@@ -101,7 +101,7 @@ Password: writer1234
 -   ~~probably tiles on the home page~~
 -   ~~categories~~
 -   ~~pinned post~~
--   dark mode
+-   ~~dark mode~~
 -   more filtering
 -   ~~better tiles in history~~
 -   ~~changelog for posts~~
