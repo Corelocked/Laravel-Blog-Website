@@ -42,6 +42,12 @@ class PostAdminController extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->input('q') !== null) {
+            $terms = $request->input('q');
+        } else {
+            $terms = '';
+        }
+
         if ($request->input('order') !== null) {
             $order = $request->input('order');
         } else {
@@ -101,7 +107,7 @@ class PostAdminController extends Controller
 
         if ($request->input('highlight') !== null && $request->input('highlight')[0] !== null) {
             $highlight = explode(',', $request->input('highlight')[0]);
-            if ($highlight[0] and $highlight[1]) {
+            if ($highlight[0] && $highlight[1]) {
             } else {
                 if ($highlight[0]) {
                     $posts->whereHas('highlightPosts');
@@ -128,6 +134,16 @@ class PostAdminController extends Controller
             $posts = $posts->where('highlight_posts', '=', true);
         }
 
+        if ($terms !== null && $terms !== '') {
+            $keywords = explode(' ', $terms);
+
+            $posts->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->orWhere('title', 'like', '%' . $keyword . '%');
+                }
+            });
+        }
+
         if (Auth::User()->hasRole('Admin')) {
             $countPosts = Post::all()->count();
         } else {
@@ -147,6 +163,7 @@ class PostAdminController extends Controller
             'users' => $users,
             'order' => $order,
             'limit' => $limit,
+            'terms' => $terms,
             'categories' => $categories,
             'selected_categories' => $selected_categories,
             'selected_categories_array' => $selected_categories_array,

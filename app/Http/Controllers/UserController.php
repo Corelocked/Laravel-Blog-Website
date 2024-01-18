@@ -29,12 +29,72 @@ class UserController extends Controller
      *
      * @return Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = User::orderBy('id', 'DESC')->get();
+        if ($request->input('q') !== null) {
+            $terms = $request->input('q');
+        } else {
+            $terms = '';
+        }
+
+        if ($request->input('order') !== null) {
+            $order = $request->input('order');
+        } else {
+            $order = 'desc';
+        }
+        if ($request->input('limit') !== null) {
+            $limit = $request->input('limit');
+        } else {
+            $limit = 20;
+        }
+
+        $users = User::orderBy('id', $order);
+
+        if ($terms !== null && $terms !== '') {
+            $keywords = explode(' ', $terms);
+
+            $users->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->orWhere('firstname', 'like', '%' . $keyword . '%')
+                        ->orWhere('lastname', 'like', '%' . $keyword . '%')
+                        ->orWhere('email', 'like', '%' . $keyword . '%');
+                }
+            });
+        }
+
+        if ($request->input('roles') !== null && $request->input('roles')[0] !== null) {
+            $selected_roles_array = $request->input('roles');
+            if (is_array($request->input('roles'))) {
+                $temp = explode(',', $selected_roles_array[0]);
+            } else {
+                $temp = explode(',', $selected_roles_array);
+            }
+            $selected_roles = $selected_roles_array[0];
+            $selected_roles_array = $temp;
+            $users = $users->whereHas('roles', function ($query) use ($temp) {
+                $query->whereIn('id', $temp);
+            });
+        } else {
+            $selected_roles = null;
+            $selected_roles_array = null;
+        }
+
+        if ($limit === 0) {
+            $users = $users->get();
+        } else {
+            $users = $users->paginate($limit);
+        }
+
+        $roles = Role::withCount('users')->get();
 
         return view('user.index', [
-            'data' => $data,
+            'users' => $users,
+            'roles' => $roles,
+            'terms' => $terms,
+            'order' => $order,
+            'limit' => $limit,
+            'selected_roles' => $selected_roles,
+            'selected_roles_array' => $selected_roles_array,
         ]);
     }
 

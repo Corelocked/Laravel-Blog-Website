@@ -19,6 +19,13 @@ document.querySelector('.filtr_collapse').addEventListener('click', function () 
     toggleHeight();
 });
 
+const searchTermInput = document.querySelector("input[name='term']");
+const searchFormInput = document.querySelector("#term");
+
+searchTermInput.addEventListener('keyup', function () {
+    searchFormInput.value = searchTermInput.value;
+});
+
 window.radioCheck = function(number){
     for (let i = 1; i <= 4; i++) {
         if (number === i) {
@@ -48,25 +55,39 @@ window.radioCheck = function(number){
     }
 }
 
-window.filterCheck = function(number) {
-    if (number === 1) {
-        document.querySelector(".f_2").classList.remove("active");
-        document.querySelector(".f_2 .dot").innerHTML = '<i class="fa-solid fa-circle-dot"></i>';
-        document.querySelector('#order').value = 'desc';
-    } else {
-        document.querySelector(".f_1").classList.remove("active");
-        document.querySelector(".f_1 .dot").innerHTML = '<i class="fa-solid fa-circle-dot"></i>';
-        document.querySelector('#order').value = 'asc';
-    }
+const filter_buttons = document.querySelectorAll(".buttons.sort_buttons .filter-button");
+console.log(filter_buttons.length);
 
-    document.querySelector(".f_" + number).classList.add("active");
-    document.querySelector(".f_" + number + " .dot").innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+window.filterCheck = function(number, order) {
+    let i = 1;
+    filter_buttons.forEach((button) => {
+        if (i === number){
+            button.classList.add("active");
+            button.querySelector(".dot").innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+        } else {
+            button.querySelector(".dot").innerHTML = '<i class="fa-solid fa-circle-dot"></i>';
+            button.classList.remove("active");
+        }
+        i++;
+    });
+    document.querySelector('#order').value = order;
 }
 
-if (document.querySelector('#order').value === 'desc') {
-    filterCheck(1);
-} else {
-    filterCheck(2);
+switch(document.querySelector('#order').value) {
+    case 'desc':
+        filterCheck(1, 'desc');
+        break;
+    case 'asc':
+        filterCheck(2, 'asc');
+        break;
+    case 'ascAlphabetical':
+        filterCheck(3, 'ascAlphabetical');
+        break;
+    case 'descAlphabetical':
+        filterCheck(4, 'descAlphabetical');
+        break;
+    default:
+        filterCheck(1, 'desc');
 }
 
 switch(parseInt(document.querySelector("#limit").value)){
@@ -213,4 +234,26 @@ window.selectHighlight = function (value) {
         highlightValue.classList.replace('fa-square-check', 'fa-square');
     }
 
+}
+
+let rolesArray = [];
+if (document.querySelector('#roles')) {
+    rolesArray = document.querySelector('#roles').value.split(',').map(Number);
+    rolesArray = rolesArray.filter(number => number !== 0);
+}
+
+window.selectRole = function (event, id) {
+    let role = document.querySelector(".checkbox[data-role-id='" + id + "'] .check i")
+    const inputRoles = document.querySelector('#roles');
+    if (rolesArray.includes(id)) {
+        role.classList.replace('fa-solid', 'fa-regular');
+        role.classList.replace('fa-square-check', 'fa-square');
+        rolesArray.splice(rolesArray.indexOf(id), 1);
+        inputRoles.value = rolesArray;
+    } else {
+        role.classList.replace('fa-regular', 'fa-solid');
+        role.classList.replace('fa-square', 'fa-square-check');
+        rolesArray.push(id);
+        inputRoles.value = rolesArray;
+    }
 }

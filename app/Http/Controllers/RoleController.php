@@ -26,12 +26,48 @@ class RoleController extends Controller
      *
      * @return Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::orderBy('id', 'DESC')->get();
+        if ($request->input('q') !== null) {
+            $terms = $request->input('q');
+        } else {
+            $terms = '';
+        }
+
+        if ($request->input('order') !== null) {
+            $order = $request->input('order');
+        } else {
+            $order = 'desc';
+        }
+        if ($request->input('limit') !== null) {
+            $limit = $request->input('limit');
+        } else {
+            $limit = 20;
+        }
+
+        $roles = Role::withCount('users')->orderBy('id', $order);
+
+        if ($terms !== null && $terms !== '') {
+            $keywords = explode(' ', $terms);
+
+            $roles->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->orWhere('name', 'like', '%' . $keyword . '%');
+                }
+            });
+        }
+
+        if ($limit === 0) {
+            $roles = $roles->get();
+        } else {
+            $roles = $roles->paginate($limit);
+        }
 
         return view('role.index', [
             'roles' => $roles,
+            'terms' => $terms,
+            'order' => $order,
+            'limit' => $limit,
         ]);
     }
 

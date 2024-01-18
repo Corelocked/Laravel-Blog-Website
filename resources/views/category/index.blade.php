@@ -1,14 +1,75 @@
-<?php
-function hexToRgba($hex, $alpha = 1){
-    list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-    return "rgba($r, $g, $b, $alpha)";
-}
-?>
 <x-admin-layout>
+    @section('scripts')
+        @vite(['resources/js/filtr.js'])
+    @endsection
+
     <x-dashboard-navbar route="{{ route('dashboard') }}"/>
 
     <div class="categories">
-        <p class="head">Kategorie</p>
+        <div class="filter">
+            <div class="filtr_collapse">
+                <p class="head">Kategorie</p>
+                <i class="fa-solid fa-caret-up button_collapse"></i>
+            </div>
+            <div class="filtr_body">
+                <div class="sort">
+                    <p class="name">Sortowanie</p>
+                    <div class="buttons sort_buttons">
+                        <div class="filter-button f_2" onclick="filterCheck(1, 'desc');">
+                            <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
+                            <p>ID malejąco</p>
+                        </div>
+                        <div class="filter-button f_1 active" onclick="filterCheck(2, 'asc');">
+                            <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
+                            <p>ID rosnąco</p>
+                        </div>
+                        <div class="filter-button f_3" onclick="filterCheck(3, 'ascAlphabetical');">
+                            <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
+                            <p>Alfabetycznie rosnąco</p>
+                        </div>
+                        <div class="filter-button f_4" onclick="filterCheck(4, 'descAlphabetical');">
+                            <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
+                            <p>Alfabetycznie malejąco</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="term">
+                    <p class="name">Wyszukaj</p>
+                    <div class="inputs">
+                        <input type="text" name="term" value="{{ $terms ?? '' }}">
+                    </div>
+                </div>
+                <div class="records">
+                    <p class="name">Rekordy</p>
+                    <div class="buttons">
+                        <div class="filter-button rec_1" onclick="radioCheck(1);">
+                            <span class="dot"><i class="fa-solid fa-square-xmark"></i></span>
+                            <p>20 rekordów</p>
+                        </div>
+                        <div class="filter-button rec_2" onclick="radioCheck(2);">
+                            <span class="dot"><i class="fa-regular fa-square"></i></span>
+                            <p>50 rekordów</p>
+                        </div>
+                        <div class="filter-button rec_3" onclick="radioCheck(3);">
+                            <span class="dot"><i class="fa-regular fa-square"></i></span>
+                            <p>100 rekordów</p>
+                        </div>
+                        <div class="filter-button rec_4" onclick="radioCheck(4);">
+                            <span class="dot"><i class="fa-regular fa-square"></i></span>
+                            <p>Max rekordów</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-button show_results">
+                    <p>Zastosuj filtry</p>
+                </div>
+                <form style="display: none" id="filter_form">
+                    <input type="text" id="term" name="q" value="{{ $terms ?? '' }}">
+                    <input type="text" id="order" name="order" value="{{ $order ?? 'desc' }}">
+                    <input type="text" id="limit" name="limit" value="{{ $limit ?? 20 }}">
+                </form>
+            </div>
+        </div>
         <div class="category_list">
             <table>
                 <thead>
@@ -29,7 +90,7 @@ function hexToRgba($hex, $alpha = 1){
                         <td data-label="Nazwa">{{ $category->name }}</td>
                         <td data-label="Tło">{{ $category->backgroundColor }} <span class="box" style="background: {{ $category->backgroundColor }};"> </span> </td>
                         <td data-label="Kolor">{{ $category->textColor }} <span class="box" style="background: {{ $category->textColor }};"> </span> </td>
-                        <td data-label="Podgląd"><span class="preview" style="background: <?php echo hexToRgba($category->backgroundColor, 0.80); ?>; color: {{ $category->textColor }};">{{ $category->name }} </span> </td>
+                        <td data-label="Podgląd"><span class="preview" style="background: {{ $category->backgroundColor }}CC; color: {{ $category->textColor }};">{{ $category->name }} </span> </td>
                         <td data-label="Ilość postów">{{ $category->posts_count }} </td>
                         <td data-label="Akcje">
                             @can('category-edit')
@@ -47,6 +108,11 @@ function hexToRgba($hex, $alpha = 1){
                 @endforeach
                 </tbody>
             </table>
+            {{ $categories->appends([
+                 'q' => $terms ?? '',
+                 'order' => $order ?? 'desc',
+                 'limit' => $limit ?? 20,
+            ])->links('pagination.default') }}
         </div>
     </div>
 </x-admin-layout>

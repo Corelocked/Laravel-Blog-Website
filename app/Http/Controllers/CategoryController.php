@@ -23,12 +23,53 @@ class CategoryController extends Controller
      *
      * @return Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::withCount('posts')->orderBy('id', 'DESC')->get();
+        if ($request->input('q') !== null) {
+            $terms = $request->input('q');
+        } else {
+            $terms = '';
+        }
+        if ($request->input('order') !== null) {
+            $order = $request->input('order');
+            $orderString = $order;
+            $orderVar = str_contains($order, "Alphabetical") ? 'name' : 'id';
+            $order = str_replace('Alphabetical', '', $order);
+        } else {
+            $order = 'desc';
+            $orderString = $order;
+            $orderVar = 'id';
+        }
+        if ($request->input('limit') !== null) {
+            $limit = $request->input('limit');
+        } else {
+            $limit = 20;
+        }
 
+        $categories = Category::withCount('posts')->orderBy($orderVar, $order);
+
+        if ($terms !== null && $terms !== '') {
+            $keywords = explode(' ', $terms);
+
+            $categories->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->orWhere('name', 'like', '%' . $keyword . '%')
+                        ->orWhere('backgroundColor', 'like', '%' . $keyword . '%')
+                        ->orWhere('textColor', 'like', '%' . $keyword . '%');
+                }
+            });
+        }
+
+        if ($limit === 0) {
+            $categories = $categories->get();
+        } else {
+            $categories = $categories->paginate($limit);
+        }
         return view('category.index', [
             'categories' => $categories,
+            'terms' => $terms,
+            'order' => $orderString,
+            'limit' => $limit,
         ]);
     }
 

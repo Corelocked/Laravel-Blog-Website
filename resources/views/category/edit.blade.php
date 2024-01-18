@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <x-dashboard-navbar route="{{ route('dashboard') }}"/>
+    <x-dashboard-navbar route="{{ route('categories.index') }}"/>
 
     <div class="dashboard">
         <form action="{{ route('categories.update', $category->id) }}" method="POST" id="edit_category">

@@ -27,6 +27,11 @@ class CommentController extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->input('q') !== null) {
+            $terms = $request->input('q');
+        } else {
+            $terms = '';
+        }
         if ($request->input('order') !== null) {
             $order = $request->input('order');
         } else {
@@ -68,6 +73,17 @@ class CommentController extends Controller
 
         $users = User::all();
 
+        if ($terms !== null && $terms !== '') {
+            $keywords = explode(' ', $terms);
+
+            $comments->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->orWhere('name', 'like', '%' . $keyword . '%')
+                            ->orWhere('body', 'like', '%' . $keyword . '%');
+                }
+            });
+        }
+
         if ((int)$limit === 0) {
             $comments = $comments->get();
         } else {
@@ -77,6 +93,7 @@ class CommentController extends Controller
         return view('comment.index', [
             'comments' => $comments,
             'users' => $users,
+            'terms' => $terms,
             'order' => $order,
             'limit' => $limit,
             'selected_users' => $selected_users,

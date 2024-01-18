@@ -22,15 +22,21 @@
                     </div>
                     <div class="sort">
                         <p class="name">Sortowanie</p>
-                        <div class="buttons">
-                            <div class="filter-button f_1 active" onclick="filterCheck(1);">
+                        <div class="buttons sort_buttons">
+                            <div class="filter-button f_1 active" onclick="filterCheck(1, 'desc');">
                                 <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
                                 <p>Nowe posty</p>
                             </div>
-                            <div class="filter-button f_2" onclick="filterCheck(2);">
+                            <div class="filter-button f_2" onclick="filterCheck(2, 'asc');">
                                 <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
                                 <p>Stare posty</p>
                             </div>
+                        </div>
+                    </div>
+                    <div class="term">
+                        <p class="name">Wyszukaj</p>
+                        <div class="inputs">
+                            <input type="text" name="term" value="{{ $terms ?? '' }}">
                         </div>
                     </div>
                     <div class="records">
@@ -117,8 +123,9 @@
                         <p>Zastosuj filtry</p>
                     </div>
                     <form style="display: none" id="filter_form">
-                        <input type="text" id="order" name="order" value="{{ $order ? $order : 'desc' }}">
-                        <input type="text" id="limit" name="limit" value="{{ $limit ? $limit : ($limit == 0 ? 0 : 20) }}">
+                        <input type="text" id="term" name="q" value="{{ $terms ?? '' }}">
+                        <input type="text" id="order" name="order" value="{{ $order ??'desc' }}">
+                        <input type="text" id="limit" name="limit" value="{{ $limit ?? 20 }}">
                         <input type="text" id="categories" name="categories[]" value="{{ is_array($selected_categories_array) ? implode(',', $selected_categories_array) : '' }}">
                         @role('Admin')
                             <input type="text" id="highlight" name="highlight[]" value="{{ $highlight ? implode(',', $highlight) : '' }}">
@@ -136,9 +143,21 @@
         </div>
         @if ((int)$limit !== 0)
             @role('Admin')
-                {{ $posts->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20), 'categories' => is_array($selected_categories_array) ? implode(',', $selected_categories_array) : [], 'users' => is_array($selected_users_array) ? $selected_users_array : '', 'highlight' => $highlight ? implode(',', $highlight) : '' ])->links('pagination.default') }}
+                {{ $posts->appends([
+                    'q' => $terms ?? '',
+                    'order' => $order ?? 'desc',
+                    'limit' => $limit ?? 20,
+                    'categories' => is_array($selected_categories_array) ? implode(',', $selected_categories_array) : [],
+                    'users' => is_array($selected_users_array) ? $selected_users_array : [],
+                    'highlight' => $highlight ? implode(',', $highlight) : ''
+                ])->links('pagination.default') }}
             @else
-                {{ $posts->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20), 'categories' => is_array($selected_categories_array) ? implode(',', $selected_categories_array) : []])->links('pagination.default') }}
+                {{ $posts->appends([
+                    'q' => $terms ?? '',
+                    'order' => $order ?? 'desc',
+                    'limit' => $limit ?? 20,
+                    'categories' => is_array($selected_categories_array) ? implode(',', $selected_categories_array) : []
+                ])->links('pagination.default') }}
             @endrole
         @endif
     </div>

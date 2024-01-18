@@ -2,7 +2,7 @@
 
 A straightforward blog page written in PHP/Laravel.
 
-![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/8221ef38-b163-4482-9864-e86c2a6df1da)
+![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/5a197c23-7ff0-4726-8361-52b06235350f)
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ Furthermore, the website is fully responsive.
 
 I tried to add the best protection I could to this website. I'm referring to prohibitions against deleting other people's posts besides the "Admin" account, deleting roles owned by others or the "Admin" role, deleting yourself, and even editing another person's account.
 
-![post](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/a460068f-e71e-4896-a433-b84594f87533)
+![post](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/009bd73d-e7b1-4504-af2b-8ece5a1f7b4a)
 
 ## Technologies
 
@@ -92,20 +92,28 @@ Password: writer1234
 ```
 
 ![dashboard](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/c3d756c1-fda3-4a91-93a6-102acbc32103)
-![dashboard_posts](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/a4b8fc70-4fed-4785-ad78-ee13e8a0d663)
-![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/c7e3ce79-7df2-48ea-92ff-b76fdbbbf0e7)
+![dashboard_posts](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/e434b5ad-4dc4-43f4-a4d9-fd9b1fb53d67)
+![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/77146227-071b-4385-9634-df5a676ded5a)
 
 ## Incoming Features
 
--   ~~version control of each post~~
--   ~~probably tiles on the home page~~
--   ~~categories~~
--   ~~pinned post~~
--   ~~dark mode~~
--   more filtering
--   ~~better tiles in history~~
--   ~~changelog for posts~~
--   ~~remove jQuery~~
+| Name                             | Status               | Date added |
+|----------------------------------|----------------------|------------|
+| Version control of each post     | &#9745; Finished     | 2023-05-10 |
+| Tiles on the home page           | &#9745; Finished     | 2023-12-03 |
+| Improve post creation/editing UI | &#9745; Finished     | 2023-12-06 |
+| Categories                       | &#9745; Finished     | 2023-12-09 |
+| Reading time                     | &#9745; Finished     | 2023-12-21 |
+| Pinned post                      | &#9745; Finished     | 2024-01-01 |
+| Better tiles in history          | &#9745; Finished     | 2024-01-04 |
+| Changelog for posts              | &#9745; Finished     | 2024-01-04 |
+| History post comparison          | &#9745; Finished     | 2024-01-10 |
+| Remove jQuery                    | &#9745; Finished     | 2024-01-11 |
+| Dark mode                        | &#9745; Finished     | 2024-01-15 |
+| More filtering                   | &#9745; Finished     | 2024-01-18 |
+| Auto-save editing post           | &#9744; To do        | -          |
+| Super-role                       | &#9744; To do        | -          |
+| Observer on main page            | &#9744; To do        | -          |
 
 ## Acknowledgements
 

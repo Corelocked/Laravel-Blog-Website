@@ -33,6 +33,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="term">
+                        <p class="name">Wyszukaj</p>
+                        <div class="inputs">
+                            <input type="text" name="term" value="{{ $terms ?? '' }}">
+                        </div>
+                    </div>
                     <div class="records">
                         <p class="name">Rekordy</p>
                         <div class="buttons">
@@ -78,8 +84,9 @@
                         <p>Zastosuj filtry</p>
                     </div>
                     <form style="display: none" id="filter_form">
-                        <input type="text" id="order" name="order" value="{{ $order ? $order : 'desc' }}">
-                        <input type="text" id="limit" name="limit" value="{{ $limit ? $limit : ($limit == 0 ? 0 : 20) }}">
+                        <input type="text" id="term" name="q" value="{{ $term ?? '' }}">
+                        <input type="text" id="order" name="order" value="{{ $order ?? 'desc' }}">
+                        <input type="text" id="limit" name="limit" value="{{ $limit ?? 20 }}">
                         @role('Admin')
                             <input type="text" id="users" name="users[]" value="{{ is_array($selected_users_array) ? implode(',', $selected_users_array) : '' }}">
                         @endrole

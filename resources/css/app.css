@@ -159,6 +159,7 @@ header .profile:hover i {
     max-width: none;
     max-height: 260px;
     margin: 0 5px 0 0;
+    object-fit: cover;
 }
 .article .highlighted .post .body .user {
     margin: 0 auto;
