@@ -111,7 +111,7 @@ Password: writer1234
 | Remove jQuery                    | &#9745; Finished     | 2024-01-11 |
 | Dark mode                        | &#9745; Finished     | 2024-01-15 |
 | More filtering                   | &#9745; Finished     | 2024-01-18 |
-| Auto-save editing post           | &#9744; To do        | -          |
+| Auto-save editing post           | &#9745; Finished     | 2024-01-23 |
 | Super-role                       | &#9744; To do        | -          |
 | Observer on main page            | &#9744; To do        | -          |
 

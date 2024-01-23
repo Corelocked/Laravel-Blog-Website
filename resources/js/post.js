@@ -45,7 +45,7 @@ var toolbarOptions = [
     [{ size: ["small", false, "large", "huge"] }],
 ];
 
-var quill = new Quill("#editor", {
+window.quill = new Quill("#editor", {
     modules: {
         toolbar: toolbarOptions,
     },
@@ -54,7 +54,7 @@ var quill = new Quill("#editor", {
 
 let hiddenArea = document.getElementById('hiddenArea');
 
-quill.pasteHTML(hiddenArea.value);
+quill.setContents(quill.clipboard.convert(hiddenArea.value));
 
 quill.getModule("toolbar").addHandler("image", () => {
     selectLocalImage();
@@ -134,7 +134,10 @@ window.insertToEditor = function (url, editor) {
     editor.insertEmbed(range.index, "image", url);
 };
 
+window.submitEdit = false;
+
 window.submitForm = function () {
+    window.submitEdit = true;
     let hiddenArea = document.getElementById("hiddenArea");
     let qlEditor = document.querySelector(".ql-editor");
 
@@ -157,12 +160,43 @@ change_image.addEventListener("click", function () {
 });
 
 window.loadFile = function (event) {
-    var reader = new FileReader();
-    reader.onload = function () {
-        var output = document.getElementById("output");
-        output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
+    const fileInput = event.target;
+
+    if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function () {
+            const output = document.getElementById("output");
+
+            const existingUl = document.querySelector('.post_container ul');
+            if (file.size > 10 * 1024 * 1024) {
+                if (!existingUl) {
+                    const ulElement = document.createElement('ul');
+                    const liElement = document.createElement('li');
+
+                    liElement.textContent = 'Obraz jest za duży. Maksymalny rozmiar pliku to 10MB!';
+
+                    ulElement.appendChild(liElement);
+
+                    const postContainer = document.querySelector('.post_container');
+
+                    postContainer.insertBefore(ulElement, postContainer.firstChild);
+                }
+                fileInput.value = '';
+                return;
+            } else {
+                if (existingUl) {
+                    existingUl.remove();
+                }
+            }
+
+            output.src = reader.result;
+            window.savePost(false);
+        };
+
+        reader.readAsDataURL(file);
+    }
 };
 
 window.changeToCategory = function (event, id) {

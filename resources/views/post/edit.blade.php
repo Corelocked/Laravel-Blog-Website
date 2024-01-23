@@ -3,6 +3,7 @@
         <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
         <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         @vite(['resources/js/post.js'])
+        @vite(['resources/js/editPost.js'])
     @endsection
 
     <header class="header_post_edit">
@@ -91,8 +92,15 @@
                     @endforeach
                 </div>
                 <input type="hidden" name="category_id" value="{{ isset($post) ? ($post->category ? $post->category->id : 0) : 0 }}"/>
+                <div class="auto-save-info">
+
+                </div>
             </div>
         </form>
-
     </div>
+    @if ($hasAutoSave)
+        <script type="module">
+            detectedAutoSave();
+        </script>
+    @endif
 </x-admin-layout>

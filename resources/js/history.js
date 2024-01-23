@@ -126,7 +126,9 @@ window.show = function (id = null, history_id, compare = false) {
                 const actions = document.querySelector(".history_card.h_" + history_id + " .actions");
 
                 if (history_id !== 0) {
-                    actions.classList.remove('hidden');
+                    if (actions) {
+                        actions.classList.remove('hidden');
+                    }
                 }
 
                 const lastActions = document.querySelector(".history_card.h_" + last_id + " .actions");

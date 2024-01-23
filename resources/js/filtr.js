@@ -56,7 +56,6 @@ window.radioCheck = function(number){
 }
 
 const filter_buttons = document.querySelectorAll(".buttons.sort_buttons .filter-button");
-console.log(filter_buttons.length);
 
 window.filterCheck = function(number, order) {
     let i = 1;

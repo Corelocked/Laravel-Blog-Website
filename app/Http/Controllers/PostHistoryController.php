@@ -109,6 +109,10 @@ class PostHistoryController extends Controller
 
         $historyPost = HistoryPost::findOrFail($historyid);
 
+        if ($historyPost->additional_info === 2) {
+            return redirect()->route('posts.edit', ['post' => $postid]);
+        }
+
         HistoryPost::create([
             'post_id' => $post->id,
             'title' => $post->title,
@@ -122,6 +126,8 @@ class PostHistoryController extends Controller
             'read_time' => $post->read_time,
             'change_user_id' => $post->change_user_id,
             'changelog' => $post->changelog,
+            'created_at' => $post->updated_at,
+            'updated_at' => $post->updated_at,
         ]);
 
         $post->update([

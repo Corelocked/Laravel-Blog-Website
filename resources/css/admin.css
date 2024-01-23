@@ -14,6 +14,7 @@ html[data-theme='light'] {
     --primary-color-light: #f6f5ff;
     --line-color: #d1d8e0;
     --button: #f6f5ff;
+    --button-hover: #DDDCE5;
     --input: #fff;
     --active-background: rgba(209, 209, 209 , 0.6);
     --filtr-header-color: #4C4C4C;
@@ -26,6 +27,7 @@ html[data-theme='dark'] {
     --primary-color-light: #CCCCCC;
     --line-color: #3A3B3C;
     --button: #393A3B;
+    --button-hover: #333435;
     --input: #393A3B;
     --active-background: rgba(57, 58, 59, 0.6);
     --filtr-header-color: #b3b3b3;
@@ -1531,6 +1533,10 @@ aside.post__preview .ql-size-huge {
     margin: 8px;
     cursor: pointer;
 }
+.post__create .post_options .auto-save-info{
+    margin-top: 20px;
+    font-size: 12px;
+}
 .history-list {
     display: flex;
     flex-direction: column;
@@ -2004,7 +2010,7 @@ aside.post__preview .ql-size-huge {
 }
 .post__create .post_container .info .reading-info button:hover,
 .post__preview .post_container .info .reading-info button:hover {
-    background: #DDDCE5;
+    background: var(--button-hover);
 }
 
 .post__create .post_container .info .date,

@@ -17,53 +17,89 @@
         <div class="compact-history-list">
             <div class="extend-history" onclick="extend_history();">Pokaż kompaktową historię</div>
             <div id="history_list" style="height: 0px; visibility: hidden;">
-                @if (count($historyPosts) > 0)
-                    @php($lastDate = $historyPosts[0]->updated_at->format('Y-m-d'))
-                @else
-                    @php($lastDate = $currentPost->updated_at->format('Y-m-d'))
-                @endif
-                @if ($lastDate === $currentPost->updated_at->format('Y-m-d') or $lastDate === null)
+                @php($autoSave = $historyPosts->where('additional_info', 2)->first())
+                @php($lastDate = $autoSave ? $autoSave->updated_at->format('Y-m-d') : null)
+                @if ($autoSave)
                     <div class="date">
                         Zmiany z {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
                         <div class="line-v"></div>
                     </div>
-                @endif
-                    <div onclick="show({{$currentPost->id}}, 'current');" class="history_card{{ $history_id === 'current' ? ' active' : '' }} h_0">
-                        <img src="{{ asset($currentPost->image_path) }}" alt="">
+                    <div class="history_card h_{{$autoSave->id}} {{(int)$history_id === $autoSave->id ? 'active' : ''}}" onclick="show({{$currentPost->id}}, {{$autoSave->id}});">
+                        <img src="{{ asset($autoSave->image_path) }}" alt="">
                         <div class="body">
                             <div class="top-info">
-                                @if ($currentPost->category)
-                                    <div class="category" style="background: {{ $currentPost->category->backgroundColor }}CC; color: {{ $currentPost->category->textColor }}">{{ $currentPost->category->name }}</div>
+                                @if ($autoSave->category)
+                                    <div class="category" style="background: {{ $autoSave->category->backgroundColor }}CC; color: {{ $autoSave->category->textColor }}">{{ $autoSave->category->name }}</div>
                                 @endif
-                                @if ($currentPost->read_time)
+                                @if ($autoSave->read_time)
                                     <i class="fa-solid fa-clock"></i>
-                                    <p class="reading-time">{{ $currentPost->read_time }} min</p>
+                                    <p class="reading-time">{{ $autoSave->read_time }} min</p>
                                 @endif
                             </div>
-                            <span class="title">{{ $currentPost->title }}</span>
+                            <span class="title">{{ $autoSave->title }}</span>
                             <div class="bottom-info">
-                                <span class="created"><i class="fa-regular fa-clock"></i> {{ $currentPost->updated_at->diffForHumans() }}, <span class="time">{{ $currentPost->updated_at->format('H:i') }}</span></span>
-                                <span class="additional_info"><i class="fa-solid fa-bolt"></i> Aktualny</span>
-                                <span class="additional_info">{!! $currentPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}</span>
+                                <span class="created"><i class="fa-regular fa-clock"></i> {{ $autoSave->updated_at->diffForHumans() }}, <span class="time">{{ $autoSave->updated_at->format('H:i') }}</span></span>
+                                <span class="additional_info"><i class="fa-solid fa-floppy-disk"></i> Autozapis</span>
                             </div>
-                            @if ($currentPost->changelog)
-                                <div class="changelog-info">
-                                    <span class="user"><i class="fa-solid fa-user"></i> {{ $currentPost->changeUser->firstname . ' ' . $currentPost->changeUser->lastname }}</span>
-                                    <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $currentPost->changelog }}</span></span>
-                                </div>
-                            @endif
-                            <span onclick="compare(event, 'current');" class="compare{{ $history_id === 'current' ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
+                            <span onclick="compare(event, {{ $autoSave->id }});" class="compare{{(int)$history_id === $autoSave->id ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
                         </div>
                     </div>
+                @endif
+                @if($lastDate != $currentPost->updated_at->format('Y-m-d'))
+                    @php($lastDate = $currentPost->updated_at->format('Y-m-d'))
+                    @if ($autoSave)
+                        <div class="date">
+                            <div class="line-v"></div>
+                            Zmiany z {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
+                            <div class="line-v"></div>
+                        </div>
+                    @else
+                        <div class="date">
+                            Zmiany z {{ \Carbon\Carbon::parse($currentPost->updated_at)->translatedFormat('d F, Y') }}
+                            <div class="line-v"></div>
+                        </div>
+                    @endif
+                @else
+                    <div class="margin-10"> </div>
+                @endif
+                <div onclick="show({{$currentPost->id}}, 'current');" class="history_card{{ $history_id === 'current' ? ' active' : '' }} h_0">
+                    <img src="{{ asset($currentPost->image_path) }}" alt="">
+                    <div class="body">
+                        <div class="top-info">
+                            @if ($currentPost->category)
+                                <div class="category" style="background: {{ $currentPost->category->backgroundColor }}CC; color: {{ $currentPost->category->textColor }}">{{ $currentPost->category->name }}</div>
+                            @endif
+                            @if ($currentPost->read_time)
+                                <i class="fa-solid fa-clock"></i>
+                                <p class="reading-time">{{ $currentPost->read_time }} min</p>
+                            @endif
+                        </div>
+                        <span class="title">{{ $currentPost->title }}</span>
+                        <div class="bottom-info">
+                            <span class="created"><i class="fa-regular fa-clock"></i> {{ $currentPost->updated_at->diffForHumans() }}, <span class="time">{{ $currentPost->updated_at->format('H:i') }}</span></span>
+                            <span class="additional_info"><i class="fa-solid fa-bolt"></i> Aktualny</span>
+                            <span class="additional_info">{!! $currentPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}</span>
+                        </div>
+                        @if ($currentPost->changelog)
+                            <div class="changelog-info">
+                                <span class="user"><i class="fa-solid fa-user"></i> {{ $currentPost->changeUser->firstname . ' ' . $currentPost->changeUser->lastname }}</span>
+                                <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $currentPost->changelog }}</span></span>
+                            </div>
+                        @endif
+                        <span onclick="compare(event, 'current');" class="compare{{ $history_id === 'current' ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
+                    </div>
+                </div>
                 @foreach($historyPosts as $historyPost)
                     @php($postDate = $historyPost->updated_at->format('Y-m-d'))
-                    @if($lastDate != $postDate)
+                    @if($lastDate != $postDate && $historyPost->additional_info != 2)
                         @php($lastDate = $postDate)
                         <div class="date">
                             <div class="line-v"></div>
                             Zmiany z {{ \Carbon\Carbon::parse($postDate)->translatedFormat('d F, Y') }}
                             <div class="line-v"></div>
                         </div>
+                    @elseif($historyPost->additional_info == 2)
+                        @continue
                     @else
                         <div class="margin-10"> </div>
                     @endif
@@ -91,9 +127,11 @@
                                     <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $historyPost->changelog }}</span></span>
                                 </div>
                             @endif
-                            <span class="actions{{(int)$history_id === $historyPost->id ? '' : ' hidden' }}">
-                                <span onClick="revert({{ $id }}, {{ $historyPost->id }});">Przywróć <i class="fa-solid fa-clock-rotate-left"></i></span>
-                            </span>
+                            @if ($historyPost->additional_info !== 2)
+                                <span class="actions{{(int)$history_id === $historyPost->id ? '' : ' hidden' }}">
+                                    <span onClick="revert({{ $id }}, {{ $historyPost->id }});">Przywróć <i class="fa-solid fa-clock-rotate-left"></i></span>
+                                </span>
+                            @endif
                             <span onclick="compare(event, {{ $historyPost->id }});" class="compare{{(int)$history_id === $historyPost->id ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
                         </div>
                     </div>

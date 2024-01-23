@@ -83,7 +83,7 @@
                 <input type="hidden" name="id_saved_post" value="{{ isset($post) ? ($post->id ? $post->id : 0) : 0 }}">
                 <div class="create_post_actions">
                     <input type="button" onClick="submitForm();" value="Opublikuj">
-                    <div class="save" onClick="save();">Zapisz</div>
+                    <div class="save" onClick="savePost();">Zapisz</div>
                 </div>
             </div>
         </form>

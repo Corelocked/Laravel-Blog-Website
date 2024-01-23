@@ -287,12 +287,15 @@ class PostAdminController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        $hasAutoSave = !empty(HistoryPost::where('post_id', $id)->where('additional_info', 2)->get()[0]);
+
         $categories = Category::all();
 
         $this->checkUserIdPost($post);
 
         return view('post.edit', [
             'post' => $post,
+            'hasAutoSave' => $hasAutoSave,
             'categories' => $categories,
             'editPost' => true,
         ]);
@@ -301,13 +304,24 @@ class PostAdminController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param PostUpdateFormRequest $request
+     * @param Request $request
      * @param int $id
-     * @return RedirectResponse
+     * @return RedirectResponse|JsonResponse
      */
-    public function update(PostUpdateFormRequest $request, int $id)
+    public function update(Request $request, int $id)
     {
-        $request->validated();
+        $validation = [
+            'title' => 'required|max:255|unique:posts,title,'.$id,
+            'excerpt' => 'required|max:510',
+            'body' => 'required',
+            'category_id' => 'required|numeric|min:1',
+        ];
+        if (isset($request->image)){
+            $validation += ['image' => 'mimes:png,jpg,jpeg|max:10248'];
+        } else {
+            $validation += ['image' => 'nullable'];
+        }
+        $request->validate($validation);
 
         $post = Post::where('id', $id);
 
@@ -341,36 +355,87 @@ class PostAdminController extends Controller
         $input['excerpt'] = $request->excerpt;
         $input['body'] = $request->body;
         $input['slug'] = Str::slug($request->title);
-        $input['is_published'] = $request->is_published == 'on' ? true : false;
+        $input['is_published'] = $request->is_published == 'on';
         $input['additional_info'] = 0;
         $input['category_id'] = $request->category_id;
         $input['read_time'] = $this->calculateReadTime($request->body);
         $input['change_user_id'] = Auth::id();
 
-        if ($request->image) {
-            $input['image_path'] = $this->storeImage($request);
-            $changelog[] = 'Obraz';
+        $method = $request->getMethod();
+
+        $autoSave = HistoryPost::where('post_id', $id)->where('additional_info', 2)->first();
+
+        if ($request->hasFile('image')) {
+            if ($method === "PUT" && !empty($autoSave)){
+                $imageExists = str_contains($autoSave->image_path, $request->image->getClientOriginalName());
+            } else {
+                $imageExists = str_contains($post->image_path, $request->image->getClientOriginalName());
+            }
+            if (!$imageExists) {
+                $input['image_path'] = $this->storeImage($request);
+                $changelog[] = 'Obraz';
+            }
+        } else {
+            if (!empty($autoSave) && $post->image_path !== $autoSave->image_path) {
+                $input['image_path'] = $autoSave->image_path;
+                $changelog[] = 'Obraz';
+            }
         }
 
-        $input['changelog'] = implode(", ", $changelog);;
+        $input['changelog'] = implode(", ", $changelog);
 
-        if (!empty($changelog)) {
-            HistoryPost::create([
-                'post_id' => $post->id,
-                'title' => $post->title,
-                'excerpt' => $post->excerpt,
-                'body' => $post->body,
-                'image_path' => $post->image_path,
-                'slug' => $post->slug,
-                'is_published' => $post->is_published,
-                'additional_info' => $post->additional_info,
-                'category_id' => $post->category_id,
-                'read_time' => $post->read_time,
-                'change_user_id' => $post->change_user_id,
-                'changelog' => $post->changelog,
-            ]);
+        if ($method === "PATCH") {
+            if (!empty($autoSave)) {
+                $autoSave->delete();
+            }
 
-            $post->update($input);
+            if (!empty($changelog)) {
+                HistoryPost::create([
+                    'post_id' => $post->id,
+                    'title' => $post->title,
+                    'excerpt' => $post->excerpt,
+                    'body' => $post->body,
+                    'image_path' => $post->image_path,
+                    'slug' => $post->slug,
+                    'is_published' => $post->is_published,
+                    'additional_info' => $post->additional_info,
+                    'category_id' => $post->category_id,
+                    'read_time' => $post->read_time,
+                    'change_user_id' => $post->change_user_id,
+                    'changelog' => $post->changelog,
+                    'created_at' => $post->updated_at,
+                    'updated_at' => $post->updated_at,
+                ]);
+
+                $post->update($input);
+            }
+
+            return redirect()->route('posts.index');
+
+        } elseif ($method === "PUT") {
+            if (!empty($autoSave)) {
+                $input['additional_info'] = 2;
+                $input['changelog'] = null;
+                $autoSave->update($input);
+            } else {
+                if (!empty($changelog)) {
+                    HistoryPost::create([
+                        'post_id' => $post->id,
+                        'title' => $request->title,
+                        'excerpt' => $request->excerpt,
+                        'body' => $request->body,
+                        'image_path' => $input['image_path'] ?? $post->image_path,
+                        'slug' => Str::slug($request->title),
+                        'is_published' => $request->is_published == 'on',
+                        'additional_info' => 2,
+                        'category_id' => $request->category_id,
+                        'read_time' => $this->calculateReadTime($request->body),
+                        'change_user_id' => Auth::id(),
+                        'changelog' => null,
+                    ]);
+                }
+            }
+            return response()->json('OK');
         }
 
         return redirect()->route('posts.index');
@@ -426,6 +491,42 @@ class PostAdminController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * Get the specified resource from storage.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function autoSave(int $id)
+    {
+        $post = HistoryPost::with('category')->where('post_id', $id)->where('additional_info', 2)->get();
+
+        if (empty($post[0])){
+            $post = null;
+        } else {
+            $post = $post[0];
+        }
+
+        return response()->json($post);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function reject(int $id)
+    {
+        $post = HistoryPost::with('category')->where('post_id', $id)->where('additional_info', 2)->get();
+
+        if (!empty($post[0])){
+            $post[0]->delete();
+        }
+
+        return response()->json('OK');
     }
 
     public function calculate(Request $request)

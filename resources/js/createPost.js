@@ -11,14 +11,14 @@ const Toast = Swal.mixin({
 })
 
 setInterval(() => {
-    save();
+    savePost(false);
 }, 60000);
 
-window.save = function(){
+window.savePost = function(submit = false){
     const title = document.querySelector('input[name=title]').value;
     const excerpt = document.querySelector('textarea[name=excerpt]').value;
     const body = document.querySelector(".ql-editor").innerHTML;
-    const image = document.querySelector('input[name=image]').files[0];
+    let image = document.querySelector('input[name=image]').files[0];
     const is_published = document.querySelector('input[name=is_published]').checked;
     const category = parseInt(document.querySelector('input[name=category_id]').value);
     const token = document.querySelector('input[name=_token]').value;
@@ -30,7 +30,9 @@ window.save = function(){
         form.append('title', title);
         form.append('excerpt', excerpt);
         form.append('body', body);
-        form.append('image', image);
+        if (image && !submit) {
+            form.append('image', image);
+        }
         form.append('is_published', is_published);
         form.append('category_id', category);
         form.append('_token', token);
@@ -43,6 +45,7 @@ window.save = function(){
             method: "POST",
             body: form,
             headers: {
+                'Accept': 'application/json',
                 'enctype': 'multipart/form-data',
                 'X-CSRF-TOKEN': token,
             },
@@ -58,6 +61,9 @@ window.save = function(){
                     icon: 'success',
                     title: 'Zapisano!'
                 });
+                if (image) {
+                    document.querySelector('input[name=image]').value = null;
+                }
                 if(id === 0) {
                     redirectToNewUrl(data);
                 }
@@ -73,8 +79,13 @@ window.save = function(){
 }
 
 function redirectToNewUrl(data) {
-    console.log(data);
     document.querySelector('input[name=id_saved_post]').value = data.id;
     const newUrl = "/dashboard/posts/create?edit=" + data.id;
     history.pushState(null, null, newUrl);
 }
+
+window.addEventListener('beforeunload', function (event) {
+    if (!window.submitEdit) {
+        window.savePost(true);
+    }
+});

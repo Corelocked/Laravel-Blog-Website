@@ -82,13 +82,13 @@ class PostSavedController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $SavedPost = SavedPost::where('id', $id);
+        $SavedPost = SavedPost::where('id', $id)->firstOrFail();
 
-        if ($SavedPost->get()->isEmpty()) {
-            abort(404);
-        }
+//        if ($SavedPost->isEmpty()) {
+//            abort(404);
+//        }
 
-        $this->checkUserIdPost($SavedPost->get()[0]);
+        $this->checkUserIdPost($SavedPost);
 
         $input['title'] = $request->title;
         $input['excerpt'] = $request->excerpt;
@@ -97,8 +97,11 @@ class PostSavedController extends Controller
         $input['category_id'] = $request->category_id ? $request->category_id : Null;
         $input['read_time'] = $this->calculateReadTime($request->body);
 
-        if ($request->image != 'undefined') {
-            $input['image_path'] = $this->storeImage($request);
+        if (isset($request->image) && $request->image !== 'undefined') {
+            $imageExists = str_contains($SavedPost->image_path, $request->image->getClientOriginalName());
+            if (!$imageExists) {
+                $input['image_path'] = $this->storeImage($request);
+            }
         }
 
         $SavedPost->update($input);

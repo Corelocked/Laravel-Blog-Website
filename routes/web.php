@@ -35,6 +35,8 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     // POSTS
     Route::resource('posts', PostAdminController::class, ['except' => 'show']);
     Route::get('posts/{id}/show', [PostAdminController::class, 'show'])->name('posts.show');
+    Route::get('posts/{id}/auto-save', [PostAdminController::class, 'autoSave'])->name('post.auto-save');
+    Route::delete('posts/{id}/reject', [PostAdminController::class, 'reject'])->name('post.reject');
     Route::post('posts/highlight', [PostAdminController::class, 'highlight'])->name('post.highlight');
 
     // CATEGORIES
