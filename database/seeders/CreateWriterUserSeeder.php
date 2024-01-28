@@ -19,7 +19,7 @@ class CreateWriterUserSeeder extends Seeder
             'firstname' => 'Pisarz',
             'lastname' => 'Pisarz',
             'email' => 'writer@db.com',
-            'image_path' => 'images/user.png',
+            'image_path' => '/images/user.png',
             'password' => bcrypt('writer1234'),
         ]);
 

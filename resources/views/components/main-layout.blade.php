@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Blog</title>
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}" />
     <script src="https://kit.fontawesome.com/15901ecbea.js" crossorigin="anonymous"></script>
@@ -15,6 +16,7 @@
             document.documentElement.setAttribute('data-theme', 'light');
         }
     </script>
+    @yield('scripts')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>

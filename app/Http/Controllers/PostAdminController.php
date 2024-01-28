@@ -106,7 +106,14 @@ class PostAdminController extends Controller
         }
 
         if ($request->input('highlight') !== null && $request->input('highlight')[0] !== null) {
-            $highlight = explode(',', $request->input('highlight')[0]);
+            try {
+                if (is_array($request->input('highlight'))) {
+                    $highlight = explode(',', $request->input('highlight')[0]);
+                } else {
+                    $highlight = explode(',', $request->input('highlight'));
+                }
+            } catch (\Exception $e) {
+            }
             if ($highlight[0] && $highlight[1]) {
             } else {
                 if ($highlight[0]) {

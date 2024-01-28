@@ -3,7 +3,9 @@ const toggle_button_icon = document.querySelector(".change-theme i") ?? document
 const button_text = document.querySelector(".toggle-mode p") ?? null;
 
 if (currentTheme === "dark") {
-    toggle_button_icon.classList.replace("fa-moon", "fa-sun");
+    if (toggle_button_icon) {
+        toggle_button_icon.classList.replace("fa-moon", "fa-sun");
+    }
     if (button_text) {
         button_text.innerHTML = "Tryb Jasny";
     }

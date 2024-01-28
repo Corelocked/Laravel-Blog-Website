@@ -1,4 +1,7 @@
 <x-main-layout>
+    @section('scripts')
+        @vite(['resources/js/loadPosts.js'])
+    @endsection
     <div class="article">
         <div class="image__container{{ $highlighted_posts->isEmpty() ? '' : ' highlighted' }}">
             @if($highlighted_posts->isEmpty())
@@ -46,6 +49,10 @@
                     <x-main-post-card :post="$post" />
                 @endforeach
             </div>
+            <div class="loading hidden">
+                <div class="loader"></div>
+            </div>
+            <div class="load-posts"></div>
         </div>
     </div>
     @if(!$highlighted_posts->isEmpty())

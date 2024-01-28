@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             CategoriesSeeder::class,
         ]);
 
-        \App\Models\Post::factory(20)->create();
+        \App\Models\Post::factory(50)->create();
 
         $this->call([
             HighlightPostSeeder::class,

@@ -20,7 +20,7 @@ class CreateAdminUserSeeder extends Seeder
             'firstname' => 'Admin',
             'lastname' => 'Administrator',
             'email' => 'admin@db.com',
-            'image_path' => 'images/user.png',
+            'image_path' => '/images/user.png',
             'password' => bcrypt('admin1234'),
         ]);
 
