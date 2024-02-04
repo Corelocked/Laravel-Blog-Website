@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\File;
 
 class PostSavedController extends Controller
 {
@@ -49,7 +49,7 @@ class PostSavedController extends Controller
             'title' => $request->title,
             'excerpt' => $request->excerpt,
             'body' => $request->body,
-            'image_path' => $request->image != 'undefined' ? $this->storeImage($request) : null,
+            'image_path' => (isset($request->image) && $request->image != 'undefined') ? $this->storeImage($request) : null,
             'is_published' => $request->is_published ? 1 : 0,
             'category_id' => $request->category_id ? $request->category_id : null,
             'read_time' => $this->calculateReadTime($request->body),
@@ -100,6 +100,10 @@ class PostSavedController extends Controller
         if (isset($request->image) && $request->image !== 'undefined') {
             $imageExists = str_contains($SavedPost->image_path, $request->image->getClientOriginalName());
             if (!$imageExists) {
+                $filePath = base_path('public' . $SavedPost->image_path);
+                if (File::exists($filePath)) {
+                    File::delete($filePath);
+                }
                 $input['image_path'] = $this->storeImage($request);
             }
         }
