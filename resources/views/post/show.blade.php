@@ -22,7 +22,7 @@
                     @if($post->is_published == false)
                         <p class="date">(Nie widoczne)</p>
                     @endif
-                    @role('Admin')
+                    @can('post-super-list')
                         <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edytuj</a>
                     @else
                         @if(Auth::User())
@@ -30,7 +30,7 @@
                                 <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edytuj</a>
                             @endif
                         @endif
-                    @endrole
+                    @endcan
                 </div>
             </div>
         </div>

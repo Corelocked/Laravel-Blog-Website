@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
-class CreateWriterUserSeeder extends Seeder
+class CreateModUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,22 +16,34 @@ class CreateWriterUserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'firstname' => 'Pisarz',
-            'lastname' => 'Pisarz',
-            'email' => 'writer@db.com',
+            'firstname' => 'Mod',
+            'lastname' => 'Moderator',
+            'email' => 'mod@db.com',
             'image_path' => '/images/user.png',
-            'password' => bcrypt('writer1234'),
+            'password' => bcrypt('mod1234'),
         ]);
 
-        $role = Role::create(['name' => 'Pisarz']);
+        $role = Role::create(['name' => 'Moderator']);
 
         $permissions = [
             '5' => 5,
             '6' => 6,
             '7' => 7,
             '8' => 8,
+            '9' => 9,
+            '10' => 10,
+            '11' => 11,
+            '12' => 12,
+            '13' => 13,
+            '14' => 14,
+            '15' => 15,
+            '16' => 16,
+            '17' => 17,
+            '18' => 18,
             '19' => 19,
+            '20' => 20,
             '21' => 21,
+            '22' => 22,
         ];
 
         $role->syncPermissions($permissions);

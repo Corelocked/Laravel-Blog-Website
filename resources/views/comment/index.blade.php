@@ -102,11 +102,11 @@
 {{--        @include('pagination.default', ['paginator' => $comments])--}}
 
         @if ((int)$limit !== 0)
-            @role('Admin')
+            @can('post-super-list')
                 {{ $comments->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20), 'users' => is_array($selected_users_array) ? $selected_users_array : ''])->links('pagination.default') }}
             @else
                 {{ $comments->appends(['order' => $order ? $order : 'desc', 'limit' => $limit ? $limit : ($limit == 0 ? 0 : 20)])->links('pagination.default') }}
-            @endrole
+            @endcan
         @endif
     </div>
     <script type="module">

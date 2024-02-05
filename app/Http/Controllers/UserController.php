@@ -176,6 +176,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
+        if ($user->id === Auth::id()) {
+            abort(403);
+        }
+
         if (! empty($user->roles[0])) {
             if ($user->roles[0]->name == 'Admin' && ! Auth::User()->hasRole('Admin')) {
                 abort(403);
@@ -183,10 +187,16 @@ class UserController extends Controller
         }
 
         $roles = Role::pluck('name', 'name')->all();
+
+        if (!Auth::User()->hasRole('Admin')) {
+            unset($roles['Admin']);
+            unset($roles[Auth::User()->roles[0]->name]);
+        }
+
         $userRole = $user->roles->pluck('name')->all();
 
         if (! $userRole) {
-            $userRole = $roles['Admin'];
+            $userRole = null;
         }
 
         return view('user.edit', [
@@ -219,6 +229,10 @@ class UserController extends Controller
             $user_id = explode('/', $path)[3];
 
             if ($user_id != $id) {
+                abort(403);
+            }
+
+            if ($user_id == Auth::id()) {
                 abort(403);
             }
 
@@ -270,6 +284,8 @@ class UserController extends Controller
         if (! $request->profile_update) {
             if (! empty($user->roles[0])) {
                 $oldRole = $user->roles[0]->name;
+            } else {
+                $oldRole = null;
             }
         }
 

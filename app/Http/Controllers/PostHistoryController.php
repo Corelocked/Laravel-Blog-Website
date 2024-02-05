@@ -150,7 +150,7 @@ class PostHistoryController extends Controller
     private function checkUserIdPost(Post $post = null): void
     {
         if ($post) {
-            if ($post->user_id != Auth::id() && !Auth::User()->hasRole('Admin')) {
+            if ($post->user_id != Auth::id() && !Auth::User()->hasPermissionTo('post-super-list')) {
                 abort(403);
             }
         }

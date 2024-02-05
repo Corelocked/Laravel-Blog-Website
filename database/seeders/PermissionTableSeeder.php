@@ -24,6 +24,8 @@ class PermissionTableSeeder extends Seeder
             'post-create',
             'post-edit',
             'post-delete',
+            'post-highlight',
+            'post-super-list',
             'category-list',
             'category-create',
             'category-edit',
@@ -35,6 +37,7 @@ class PermissionTableSeeder extends Seeder
             'comment-list',
             'comment-edit',
             'comment-delete',
+            'comment-super-list',
         ];
 
         foreach ($permissions as $permission) {

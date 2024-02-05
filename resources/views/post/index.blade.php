@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    @role('Admin')
+                    @can('post-super-list')
                         <div class="highlight">
                             <p class="name">Wyróżnione</p>
                             <div class="buttons">
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endrole
+                    @endcan
                     <div class="category">
                         <p class="name">Kategorie</p>
                         <div class="buttons">
@@ -99,7 +99,7 @@
                             @endforeach
                         </div>
                     </div>
-                    @role('Admin')
+                    @can('post-super-list')
                         <div class="user">
                             <p class="name">Użytkownik</p>
                             <div class="buttons">
@@ -118,7 +118,7 @@
                                 @endforeach
                             </div>
                         </div>
-                    @endrole
+                    @endcan
                     <div class="filter-button show_results">
                         <p>Zastosuj filtry</p>
                     </div>
@@ -127,10 +127,10 @@
                         <input type="text" id="order" name="order" value="{{ $order ??'desc' }}">
                         <input type="text" id="limit" name="limit" value="{{ $limit ?? 20 }}">
                         <input type="text" id="categories" name="categories[]" value="{{ is_array($selected_categories_array) ? implode(',', $selected_categories_array) : '' }}">
-                        @role('Admin')
+                        @can('post-super-list')
                             <input type="text" id="highlight" name="highlight[]" value="{{ $highlight ? implode(',', $highlight) : '' }}">
                             <input type="text" id="users" name="users[]" value="{{ is_array($selected_users_array) ? implode(',', $selected_users_array) : '' }}">
-                        @endrole
+                        @endcan
                     </form>
                 </div>
             </div>
@@ -142,7 +142,7 @@
 
         </div>
         @if ((int)$limit !== 0)
-            @role('Admin')
+            @can('post-super-list')
                 {{ $posts->appends([
                     'q' => $terms ?? '',
                     'order' => $order ?? 'desc',
@@ -158,7 +158,7 @@
                     'limit' => $limit ?? 20,
                     'categories' => is_array($selected_categories_array) ? implode(',', $selected_categories_array) : []
                 ])->links('pagination.default') }}
-            @endrole
+            @endcan
         @endif
     </div>
     <script type="module">

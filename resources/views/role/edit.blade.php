@@ -29,7 +29,7 @@
                         @endphp
                     @endif
 
-                    <label class="container">{{ $label[1] }}
+                    <label class="container">{{ $label[1] }}{{ isset($label[2]) ? '-' . $label[2] : '' }}
                     @if(in_array($permission->id, $rolePermissions))
                         <input type="checkbox" name="permission[]" value="{{ $permission->id }}" checked>
                     @else

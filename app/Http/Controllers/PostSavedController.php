@@ -84,10 +84,6 @@ class PostSavedController extends Controller
     {
         $SavedPost = SavedPost::where('id', $id)->firstOrFail();
 
-//        if ($SavedPost->isEmpty()) {
-//            abort(404);
-//        }
-
         $this->checkUserIdPost($SavedPost);
 
         $input['title'] = $request->title;
@@ -140,7 +136,7 @@ class PostSavedController extends Controller
 
     private function checkUserIdPost(SavedPost $SavedPost): void
     {
-        if ($SavedPost->user_id != Auth::id() && ! Auth::User()->hasRole('Admin')) {
+        if ($SavedPost->user_id != Auth::id() && ! Auth::User()->hasPermissionTo('post-super-list')) {
             abort(403);
         }
     }

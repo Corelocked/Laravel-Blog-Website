@@ -29,22 +29,22 @@
             </form>
             <button onClick="confirmDelete({{ $post->id }}, 'post')" class="delete">Usuń <i class="fa-solid fa-trash"></i></button>
         @endcan
-        @if($post->is_highlighted)
-            <form action="{{ route('post.highlight') }}" method="POST" id="highlight_{{ $post->id }}">
-        {{--            @method('PATCH')--}}
-                @csrf
-                <input type="hidden" name="id" value="{{ $post->id }}">
-            </form>
-            <button onClick="document.getElementById('highlight_{{ $post->id }}').submit();" class="highlight deselect">Odznacz <i class="fa-solid fa-star"></i></button>
-        @else
-            @if($countHighlighted < 3)
+        @can('post-highlight')
+            @if($post->is_highlighted)
                 <form action="{{ route('post.highlight') }}" method="POST" id="highlight_{{ $post->id }}">
-                    {{--            @method('PATCH')--}}
                     @csrf
                     <input type="hidden" name="id" value="{{ $post->id }}">
                 </form>
-                <button onClick="document.getElementById('highlight_{{ $post->id }}').submit();" class="highlight">Wyróżnij <i class="fa-solid fa-star"></i></button>
+                <button onClick="document.getElementById('highlight_{{ $post->id }}').submit();" class="highlight deselect">Odznacz <i class="fa-solid fa-star"></i></button>
+            @else
+                @if($countHighlighted < 3)
+                    <form action="{{ route('post.highlight') }}" method="POST" id="highlight_{{ $post->id }}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $post->id }}">
+                    </form>
+                    <button onClick="document.getElementById('highlight_{{ $post->id }}').submit();" class="highlight">Wyróżnij <i class="fa-solid fa-star"></i></button>
+                @endif
             @endif
-        @endif
+        @endcan
     </div>
 </div>

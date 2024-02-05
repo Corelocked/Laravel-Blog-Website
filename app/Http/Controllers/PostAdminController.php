@@ -62,7 +62,7 @@ class PostAdminController extends Controller
         $posts = Post::with('category')
             ->select('posts.*', \DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
             ->orderBy('id', $order);
-        if (Auth::User()->hasRole('Admin')) {
+        if (Auth::User()->hasPermissionTo('post-super-list')) {
             if ($request->input('users') !== null && $request->input('users')[0] !== null) {
                 if (isset($request->input('users')[1])) {
                     $temp = $request->input('users');
@@ -89,7 +89,7 @@ class PostAdminController extends Controller
                 $temp = explode(',', $request->input('categories'));
             }
             $posts->whereIn('category_id', $temp);
-            if (Auth::user()->hasRole('Admin')) {
+            if (Auth::User()->hasPermissionTo('post-super-list')) {
                 $selected_categories = Category::whereIn('id', $temp)->withCount('posts')->get()->toArray();
             } else {
                 $selected_categories = Category::whereIn('id', $temp)
@@ -129,7 +129,7 @@ class PostAdminController extends Controller
 
         $users = User::withCount('posts')->get();
 
-        if (Auth::User()->hasRole('Admin')) {
+        if (Auth::User()->hasPermissionTo('post-super-list')) {
             $categories = Category::withCount('posts')->get();
         } else {
             $categories = Category::withCount(['posts' => function ($query) {
@@ -151,7 +151,7 @@ class PostAdminController extends Controller
             });
         }
 
-        if (Auth::User()->hasRole('Admin')) {
+        if (Auth::User()->hasPermissionTo('post-super-list')) {
             $countPosts = Post::all()->count();
         } else {
             $countPosts = Auth::user()->posts()->count();
@@ -473,7 +473,7 @@ class PostAdminController extends Controller
      */
     public function highlight(Request $request)
     {
-        if (! Auth::User()->hasRole('Admin')) {
+        if (! Auth::User()->hasPermissionTo('post-highlight')) {
             abort(403);
         }
 
@@ -554,12 +554,12 @@ class PostAdminController extends Controller
     private function checkUserIdPost(Post $post = null, SavedPost $savedPost = null): void
     {
         if ($post) {
-            if ($post->user_id != Auth::id() && ! Auth::User()->hasRole('Admin')) {
+            if ($post->user_id != Auth::id() && ! Auth::User()->hasPermissionTo('post-super-list')) {
                 abort(403);
             }
         }
         if ($savedPost) {
-            if ($savedPost->user_id != Auth::id() && ! Auth::User()->hasRole('Admin')) {
+            if ($savedPost->user_id != Auth::id() && ! Auth::User()->hasPermissionTo('post-super-list')) {
                 abort(403);
             }
         }

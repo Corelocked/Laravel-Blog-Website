@@ -37,7 +37,7 @@
                             $last_label = $label[0];
                         @endphp
                     @endif
-                    <label class="container">{{ $label[1] }}
+                    <label class="container">{{ $label[1] }}{{ isset($label[2]) ? '-' . $label[2] : '' }}
                     <input type="checkbox" name="permission[]" value="{{ $permission->id }}">
                     <span class="checkmark"></span>
                     </label>

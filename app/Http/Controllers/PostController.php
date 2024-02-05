@@ -26,7 +26,9 @@ class PostController extends Controller
             ->limit(20)
             ->orderBy('id', 'desc')->get();
 
-        $highlighted_posts = HighlightPost::all();
+        $highlighted_posts = HighlightPost::whereHas('post', function ($query) {
+            $query->where('is_published', 1);
+        })->get();
 
         return view('welcome', [
             'posts' => $posts,
@@ -51,7 +53,7 @@ class PostController extends Controller
 
         if (!$post->is_published) {
             if (Auth::User()) {
-                if (Auth::User() == $user || Auth::User()->hasRole('Admin')) {
+                if (Auth::User() == $user || Auth::User()->hasPermissionTo('post-super-list')) {
                 } else {
                     abort(404);
                 }

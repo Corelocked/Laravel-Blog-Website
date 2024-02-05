@@ -55,7 +55,7 @@ class CommentController extends Controller
             $selected_users_array = null;
         }
 
-        if (Auth::User()->hasRole('Admin')) {
+        if (Auth::User()->hasPermissionTo('comment-super-list')) {
             if ($selected_users_array) {
                 $comments = Comment::join('posts', 'posts.id', '=', 'comments.post_id')
                     ->whereIn('posts.user_id', $selected_users_array)
@@ -200,9 +200,9 @@ class CommentController extends Controller
         return redirect()->back();
     }
 
-    private function checkUserIdPost(Post $Post): void
+    private function checkUserIdPost(Post $post): void
     {
-        if ($Post->user_id != Auth::id() && ! Auth::User()->hasRole('Admin')) {
+        if ($post->user_id != Auth::id() && ! Auth::User()->hasPermissionTo('comment-super-list')) {
             abort(403);
         }
     }

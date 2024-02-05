@@ -24,7 +24,7 @@
                 <select name="roles">
                     @isset($roles)
                         @foreach ($roles as $role)
-                            @if($userRole[0] == $role)
+                            @if(isset($userRole[0]) && $userRole[0] == $role)
                                 <option value="{{ $role }}" selected>{{ $role }}</option>
                             @else
                                 <option value="{{ $role }}">{{ $role }}</option>

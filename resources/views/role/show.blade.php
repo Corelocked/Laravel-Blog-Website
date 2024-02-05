@@ -27,7 +27,7 @@
                         @endphp
                     @endif
 
-                    {{ $label[1] }},
+                    {{ $label[1] }}{{ isset($label[2]) ? '-' . $label[2] : '' }},
 
                 @endforeach
             </div>
