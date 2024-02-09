@@ -10,7 +10,7 @@
     <div class="post__create">
         <form action="{{ route('posts.store') }}" method="POST" id="form" enctype="multipart/form-data">
             @csrf
-            <div id="content" data-image-url="{{route('image.store')}}">
+            <div id="content" data-image-url="{{route('images.store')}}">
             <div class="post_container">
                 @if(count($errors) > 0)
                     <ul>

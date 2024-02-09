@@ -57,12 +57,20 @@ window.radioCheck = function(number){
 
 const filter_buttons = document.querySelectorAll(".buttons.sort_buttons .filter-button");
 
-window.filterCheck = function(number, order) {
+window.filterCheck = function(number = null, order = null) {
     let i = 1;
     filter_buttons.forEach((button) => {
+        if (number === null) {
+            if (order !== null && order === button.dataset.order) {
+                number = i;
+            }
+        }
         if (i === number){
             button.classList.add("active");
             button.querySelector(".dot").innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            if (order === null) {
+                order = button.dataset.order;
+            }
         } else {
             button.querySelector(".dot").innerHTML = '<i class="fa-solid fa-circle-dot"></i>';
             button.classList.remove("active");
@@ -72,22 +80,7 @@ window.filterCheck = function(number, order) {
     document.querySelector('#order').value = order;
 }
 
-switch(document.querySelector('#order').value) {
-    case 'desc':
-        filterCheck(1, 'desc');
-        break;
-    case 'asc':
-        filterCheck(2, 'asc');
-        break;
-    case 'ascAlphabetical':
-        filterCheck(3, 'ascAlphabetical');
-        break;
-    case 'descAlphabetical':
-        filterCheck(4, 'descAlphabetical');
-        break;
-    default:
-        filterCheck(1, 'desc');
-}
+filterCheck(null, document.querySelector('#order').value);
 
 switch(parseInt(document.querySelector("#limit").value)){
     case 0:
@@ -255,4 +248,86 @@ window.selectRole = function (event, id) {
         rolesArray.push(id);
         inputRoles.value = rolesArray;
     }
+}
+
+let directoriesArray = [];
+if (document.querySelector('#directories')) {
+    directoriesArray = document.querySelector('#directories').value.split(',').filter(function(directories) {
+        return directories.trim() !== '';
+    });
+}
+
+window.selectDirectory = function (event, name) {
+    let directory = document.querySelector(".checkbox[data-directory-name='" + name + "'] .check i")
+    const inputDirectories = document.querySelector('#directories');
+    if (directoriesArray.includes(name)) {
+        directory.classList.replace('fa-solid', 'fa-regular');
+        directory.classList.replace('fa-square-check', 'fa-square');
+        directoriesArray.splice(directoriesArray.indexOf(name), 1);
+        inputDirectories.value = directoriesArray;
+    } else {
+        directory.classList.replace('fa-regular', 'fa-solid');
+        directory.classList.replace('fa-square', 'fa-square-check');
+        directoriesArray.push(name);
+        inputDirectories.value = directoriesArray;
+    }
+}
+
+let extensionsArray = [];
+if (document.querySelector('#extensions')) {
+    extensionsArray = document.querySelector('#extensions').value.split(',').filter(function(extension) {
+        return extension.trim() !== '';
+    });
+}
+
+window.selectExtension = function (event, name) {
+    let extension = document.querySelector(".checkbox[data-extension-name='" + name + "'] .check i")
+    const inputExtensions = document.querySelector('#extensions');
+    if (extensionsArray.includes(name)) {
+        extension.classList.replace('fa-solid', 'fa-regular');
+        extension.classList.replace('fa-square-check', 'fa-square');
+        extensionsArray.splice(extensionsArray.indexOf(name), 1);
+        inputExtensions.value = extensionsArray;
+    } else {
+        extension.classList.replace('fa-regular', 'fa-solid');
+        extension.classList.replace('fa-square', 'fa-square-check');
+        extensionsArray.push(name);
+        inputExtensions.value = extensionsArray;
+    }
+}
+
+let searchForDuplicates = false;
+let searchForNotDuplicates = false;
+if (document.querySelector('#duplicates')) {
+    const inputDuplicates = document.querySelector('#duplicates');
+    const cleanedValue = inputDuplicates.value;
+    let arrayValue = cleanedValue.split(',');
+    let numericArray = arrayValue.map(Number);
+
+    searchForDuplicates = numericArray[0] === 1;
+    searchForNotDuplicates = numericArray[1] === 1;
+}
+window.selectDuplicates = function (value) {
+    let duplicateValue = document.querySelector(".checkbox[data-duplicates='" + value + "'] .check i");
+    const inputDuplicates = document.querySelector('#duplicates');
+    let select;
+
+    if (value === "yes") {
+        searchForDuplicates = !searchForDuplicates;
+        select = searchForDuplicates;
+    } else {
+        searchForNotDuplicates = !searchForNotDuplicates;
+        select = searchForNotDuplicates;
+    }
+
+    inputDuplicates.value = [searchForDuplicates ? 1 : 0, searchForNotDuplicates ? 1 : 0];
+
+    if (select) {
+        duplicateValue.classList.replace('fa-regular', 'fa-solid');
+        duplicateValue.classList.replace('fa-square', 'fa-square-check');
+    } else {
+        duplicateValue.classList.replace('fa-solid', 'fa-regular');
+        duplicateValue.classList.replace('fa-square-check', 'fa-square');
+    }
+
 }

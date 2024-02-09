@@ -66,8 +66,14 @@
                         <i class="fa-solid fa-toolbox"></i>
                         <p>Przeglądaj role</p>
                     </a>
-                </div>
                 @endcan
+            </div>
+            @can('image-list')
+                <a href="{{ route('images.index') }}" class="button">
+                    <i class="fa-solid fa-image"></i>
+                    <p>Przeglądaj obrazy</p>
+                </a>
+            @endcan
         </div>
     </div>
 </x-admin-layout>

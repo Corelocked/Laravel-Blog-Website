@@ -28,7 +28,7 @@ class PostFactory extends Factory
             'title' => $title,
             'excerpt' => $this->faker->sentence(40),
             'body' => '<p>'.$body.'</p>',
-            'image_path' => $this->faker->randomElement(['/images/picture2.jpg', '/images/picture.jpg']),
+            'image_path' => $this->faker->randomElement(['/images/posts/picture2.jpg', '/images/posts/picture.jpg']),
             'slug' => Str::slug($title),
             'is_published' => true,
             'user_id' => 1,

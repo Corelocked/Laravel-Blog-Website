@@ -22,7 +22,7 @@
         <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data" id="form">
             @csrf
             @method('PATCH')
-            <div id="content" data-image-url="{{route('image.store')}}">
+            <div id="content" data-image-url="{{route('images.store')}}">
             <div class="post_container">
                 @if(count($errors) > 0)
                     <ul>

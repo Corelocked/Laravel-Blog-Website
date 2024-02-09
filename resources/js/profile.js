@@ -12,7 +12,7 @@ document.querySelector('.profile').addEventListener('click', function () {
     document.querySelector('.modal').style.display = 'flex';
 });
 
-document.querySelector('.close').addEventListener('click', function () {
+document.querySelector('.close.close-modal').addEventListener('click', function () {
     document.querySelector('.modal').style.display = 'none';
 });
 

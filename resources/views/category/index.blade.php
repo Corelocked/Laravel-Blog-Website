@@ -15,19 +15,19 @@
                 <div class="sort">
                     <p class="name">Sortowanie</p>
                     <div class="buttons sort_buttons">
-                        <div class="filter-button f_2" onclick="filterCheck(1, 'desc');">
+                        <div class="filter-button" onclick="filterCheck(1);" data-order="desc">
                             <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
                             <p>ID malejąco</p>
                         </div>
-                        <div class="filter-button f_1 active" onclick="filterCheck(2, 'asc');">
+                        <div class="filter-button active" onclick="filterCheck(2);"  data-order="asc">
                             <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
                             <p>ID rosnąco</p>
                         </div>
-                        <div class="filter-button f_3" onclick="filterCheck(3, 'ascAlphabetical');">
+                        <div class="filter-button" onclick="filterCheck(3);" data-order="ascAlphabetical">
                             <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
                             <p>Alfabetycznie rosnąco</p>
                         </div>
-                        <div class="filter-button f_4" onclick="filterCheck(4, 'descAlphabetical');">
+                        <div class="filter-button" onclick="filterCheck(4);" data-order="descAlphabetical">
                             <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
                             <p>Alfabetycznie malejąco</p>
                         </div>

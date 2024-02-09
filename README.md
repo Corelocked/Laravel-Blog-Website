@@ -91,11 +91,11 @@ Email: writer@db.com
 Password: writer1234
 ```
 
-![dashboard](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/c3d756c1-fda3-4a91-93a6-102acbc32103)
+![dashboard](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/ea2a36a9-0be9-46bb-bdbb-08358ad2d4aa)
 ![dashboard_posts](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/e434b5ad-4dc4-43f4-a4d9-fd9b1fb53d67)
 ![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/77146227-071b-4385-9634-df5a676ded5a)
 
-## Incoming Features
+## Features
 
 | Name                             | Status               | Date added |
 |----------------------------------|----------------------|------------|
@@ -114,6 +114,7 @@ Password: writer1234
 | Auto-save editing post           | &#9745; Finished     | 2024-01-23 |
 | Observer on main page            | &#9745; Finished     | 2024-01-28 |
 | Super-permissions                | &#9745; Finished     | 2024-02-05 |
+| Image Browser                    | &#9745; Finished     | 2024-02-09 |
 
 ## Acknowledgements
 

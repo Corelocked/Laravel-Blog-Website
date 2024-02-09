@@ -19,7 +19,7 @@ class CreateModUserSeeder extends Seeder
             'firstname' => 'Mod',
             'lastname' => 'Moderator',
             'email' => 'mod@db.com',
-            'image_path' => '/images/user.png',
+            'image_path' => '/images/avatars/user.png',
             'password' => bcrypt('mod1234'),
         ]);
 

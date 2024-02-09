@@ -546,9 +546,9 @@ class PostAdminController extends Controller
     private function storeImage(Request $request)
     {
         $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
-        $request->image->move(public_path('images'), $newImageName);
+        $request->image->move(public_path('images\posts'), $newImageName);
 
-        return '/images/'.$newImageName;
+        return '/images/posts/'.$newImageName;
     }
 
     private function checkUserIdPost(Post $post = null, SavedPost $savedPost = null): void

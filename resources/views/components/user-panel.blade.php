@@ -1,7 +1,7 @@
 <div class="modal">
     <div class="modal-profile">
         <span>Witaj!</span>
-        <i class="fa-solid fa-circle-xmark close"></i>
+        <i class="fa-solid fa-circle-xmark close close-modal"></i>
         <p class="name">{{ Auth::User() ? Auth::User()->firstname . ' ' . Auth::User()->lastname : '' }}</p>
         <p class="role_profile">{{ Auth::User() ? Auth::User()->roles[0]->name : '' }}</p>
         <p class="info">Dostępne akcje</p>

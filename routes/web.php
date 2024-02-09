@@ -3,11 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PostAdminController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostHistoryController;
-use App\Http\Controllers\PostImageController;
 use App\Http\Controllers\PostSavedController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -50,7 +50,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     Route::post('/calculate-read-time', [PostAdminController::class, 'calculate'])->name('post.readTime');
 
     // UPLOAD IMAGE (THROUGH THE QUILL) ROUTE
-    Route::post('/image-upload-post', [PostImageController::class, 'store'])->name('image.store');
+    // Route::post('/image-upload-post', [PostImageController::class, 'store'])->name('image.store');
 
     // COMMENTS
     Route::resource('comments', CommentController::class, ['except' => 'store']);
@@ -66,6 +66,11 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     Route::get('posts/{id}/edit/history/{history_id}/show', [PostHistoryController::class, 'show'])->name('history.show');
     Route::get('posts/history/{id}/{history_id}', [PostHistoryController::class, 'showJson'])->name('history.showJson');
     Route::get('posts/history/{post}/{history}/revert', [PostHistoryController::class, 'revert'])->name('history.revert');
+
+    // IMAGES
+    Route::resource('images', ImageController::class, ['except' => ['create', 'show', 'edit', 'update', 'destroy']]);
+    Route::get('images/{directory}/{name}', [ImageController::class, 'show'])->name('images.show');
+    Route::delete('images/{directory}/{name}', [ImageController::class, 'destroy'])->name('images.destroy');
 });
 
 // Store Comment Route

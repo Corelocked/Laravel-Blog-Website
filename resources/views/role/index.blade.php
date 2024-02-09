@@ -15,11 +15,11 @@
                 <div class="sort">
                     <p class="name">Sortowanie</p>
                     <div class="buttons sort_buttons">
-                        <div class="filter-button f_1 active" onclick="filterCheck(1, 'desc');">
+                        <div class="filter-button active" onclick="filterCheck(1);" data-order="desc">
                             <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
                             <p>Najnowsze</p>
                         </div>
-                        <div class="filter-button f_2" onclick="filterCheck(2, 'asc');">
+                        <div class="filter-button" onclick="filterCheck(2);" data-order="asc">
                             <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
                             <p>Najstarsze</p>
                         </div>

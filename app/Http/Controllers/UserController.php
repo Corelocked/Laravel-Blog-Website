@@ -387,8 +387,8 @@ class UserController extends Controller
     private function storeImage(Request $request)
     {
         $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
-        $request->image->move(public_path('images'), $newImageName);
+        $request->image->move(public_path('images\avatars'), $newImageName);
 
-        return '/images/'.$newImageName;
+        return '/images/avatars/'.$newImageName;
     }
 }
