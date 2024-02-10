@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SavedPost;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -49,8 +50,8 @@ class PostSavedController extends Controller
             'title' => $request->title,
             'excerpt' => $request->excerpt,
             'body' => $request->body,
-            'image_path' => (isset($request->image) && $request->image != 'undefined') ? $this->storeImage($request) : null,
-            'is_published' => $request->is_published ? 1 : 0,
+            'image_path' => $request->image ?? null,
+            'is_published' => $request->is_published == 'on',
             'category_id' => $request->category_id ? $request->category_id : null,
             'read_time' => $this->calculateReadTime($request->body),
         ]);
@@ -89,19 +90,12 @@ class PostSavedController extends Controller
         $input['title'] = $request->title;
         $input['excerpt'] = $request->excerpt;
         $input['body'] = $request->body;
-        $input['is_published'] = $request->is_published ? 1 : 0;
+        $input['is_published'] = $request->is_published == 'on';
         $input['category_id'] = $request->category_id ? $request->category_id : Null;
         $input['read_time'] = $this->calculateReadTime($request->body);
 
-        if (isset($request->image) && $request->image !== 'undefined') {
-            $imageExists = str_contains($SavedPost->image_path, $request->image->getClientOriginalName());
-            if (!$imageExists) {
-                $filePath = base_path('public' . $SavedPost->image_path);
-                if (File::exists($filePath)) {
-                    File::delete($filePath);
-                }
-                $input['image_path'] = $this->storeImage($request);
-            }
+        if (!empty($request->image)) {
+            $input['image_path'] = $request->image;
         }
 
         $SavedPost->update($input);
@@ -124,14 +118,6 @@ class PostSavedController extends Controller
         $SavedPost->delete();
 
         return redirect()->back();
-    }
-
-    private function storeImage(Request $request)
-    {
-        $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
-        $request->image->move(public_path('images\posts'), $newImageName);
-
-        return '/images/posts/'.$newImageName;
     }
 
     private function checkUserIdPost(SavedPost $SavedPost): void

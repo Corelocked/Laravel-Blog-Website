@@ -39,7 +39,7 @@ window.savePost = function(submit = false) {
     let title = document.querySelector('input[name=title]').value,
         excerpt = document.querySelector('textarea[name=excerpt]').value,
         body = document.querySelector(".ql-editor").innerHTML,
-        image = document.querySelector('input[name=image]').files[0],
+        image = document.querySelector('input[name=image]'),
         is_published = document.querySelector('input[name=is_published]').checked ? 'on' : null,
         category = parseInt(document.querySelector('input[name=category_id]').value),
         token = document.querySelector('input[name=_token]').value;
@@ -48,8 +48,8 @@ window.savePost = function(submit = false) {
     form.append('title', title);
     form.append('excerpt', excerpt);
     form.append('body', body);
-    if (image && !submit) {
-        form.append('image', image);
+    if (image && image.length !== 0 && !submit) {
+        form.append('image', image.value);
     }
     form.append('is_published', is_published);
     form.append('category_id', category);

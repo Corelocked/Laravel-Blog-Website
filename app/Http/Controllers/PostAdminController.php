@@ -230,7 +230,11 @@ class PostAdminController extends Controller
             'title' => 'required|max:255|unique:posts,title',
             'excerpt' => 'required|max:510',
             'body' => 'required',
-            'category_id' => 'required',
+            'category_id' => [
+                'required',
+                'integer',
+                'min:1'
+            ]
         ];
 
         if (! isset($request->image)) {
@@ -238,12 +242,12 @@ class PostAdminController extends Controller
                 $request['image_path'] = $SavedPost->image_path;
                 $request->except('image');
 
-                $validation += ['image_path' => 'required'];
+                $validation += ['image_path' => 'required|string'];
             } else {
-                $validation += ['image' => 'required|mimes:png,jpg,jpeg|max:10248'];
+                $validation += ['image' => 'required|string'];
             }
         } else {
-            $validation += ['image' => 'required|mimes:png,jpg,jpeg|max:10248'];
+            $validation += ['image' => 'required|string'];
         }
 
         $request->validate(
@@ -255,9 +259,9 @@ class PostAdminController extends Controller
             'title' => $request->title,
             'excerpt' => $request->excerpt,
             'body' => $request->body,
-            'image_path' => isset($request->image_path) ? $request->image_path : $this->storeImage($request),
+            'image_path' => $request->image ?? $request->image_path,
             'slug' => Str::slug($request->title),
-            'is_published' => $request->is_published == 'on' ? true : false,
+            'is_published' => $request->is_published == 'on',
             'category_id' => $request->category_id,
             'read_time' => $this->calculateReadTime($request->body),
             'change_user_id' => Auth::id(),
@@ -323,8 +327,8 @@ class PostAdminController extends Controller
             'body' => 'required',
             'category_id' => 'required|numeric|min:1',
         ];
-        if (isset($request->image)){
-            $validation += ['image' => 'mimes:png,jpg,jpeg|max:10248'];
+        if (!empty($request->image)) {
+            $validation += ['image' => 'required|string'];
         } else {
             $validation += ['image' => 'nullable'];
         }
@@ -372,21 +376,13 @@ class PostAdminController extends Controller
 
         $autoSave = HistoryPost::where('post_id', $id)->where('additional_info', 2)->first();
 
-        if ($request->hasFile('image')) {
-            if ($method === "PUT" && !empty($autoSave)){
-                $imageExists = str_contains($autoSave->image_path, $request->image->getClientOriginalName());
-            } else {
-                $imageExists = str_contains($post->image_path, $request->image->getClientOriginalName());
-            }
-            if (!$imageExists) {
-                $input['image_path'] = $this->storeImage($request);
-                $changelog[] = 'Obraz';
-            }
-        } else {
-            if (!empty($autoSave) && $post->image_path !== $autoSave->image_path) {
-                $input['image_path'] = $autoSave->image_path;
-                $changelog[] = 'Obraz';
-            }
+        if (!empty($request->image)) {
+            $input['image_path'] = $request->image;
+            $changelog[] = 'Obraz';
+        }
+        if (!empty($autoSave) && empty($request->image) && $post->image_path !== $autoSave->image_path) {
+            $input['image_path'] = $autoSave->image_path;
+            $changelog[] = 'Obraz';
         }
 
         $input['changelog'] = implode(", ", $changelog);
@@ -541,14 +537,6 @@ class PostAdminController extends Controller
         $readingTime = $this->calculateReadTime($request->get('body'));
 
         return response()->json($readingTime);
-    }
-
-    private function storeImage(Request $request)
-    {
-        $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
-        $request->image->move(public_path('images\posts'), $newImageName);
-
-        return '/images/posts/'.$newImageName;
     }
 
     private function checkUserIdPost(Post $post = null, SavedPost $savedPost = null): void

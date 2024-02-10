@@ -233,6 +233,25 @@ class ImageController extends Controller
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
+    public function get(Request $request) {
+        $offset = $request->input('offset', 0);
+        $directoryPath = public_path("images\posts");
+        $files = File::allFiles($directoryPath);
+        $fileList = [];
+
+        $files = array_slice($files, $offset, 20);
+
+        foreach ($files as $file) {
+            $fileName = $file->getFilename();
+
+            $fileList[] = [
+                'path' => "/images/posts/$fileName",
+            ];
+        }
+
+        return response()->json($fileList);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -470,7 +489,8 @@ class ImageController extends Controller
 
     private function storeImage(Request $request)
     {
-        $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
+        $imageName = str_replace(' ', '-', $request->image->getClientOriginalName());
+        $newImageName = uniqid().'-'.$imageName;
         $request->image->move(public_path('images\posts'), $newImageName);
 
         return '/images/posts/'.$newImageName;

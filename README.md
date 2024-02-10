@@ -9,7 +9,7 @@ A straightforward blog page written in PHP/Laravel.
 -   [General Info](#general-info)
 -   [Technologies](#technologies)
 -   [Setup](#setup)
--   [Incoming Features](#incoming-features)
+-   [Features](#features)
 -   [Acknowledgements](#acknowledgements)
 -   [Contact](#contact)
 
@@ -115,6 +115,7 @@ Password: writer1234
 | Observer on main page            | &#9745; Finished     | 2024-01-28 |
 | Super-permissions                | &#9745; Finished     | 2024-02-05 |
 | Image Browser                    | &#9745; Finished     | 2024-02-09 |
+| Enhance image selection          | &#9745; Finished     | 2024-02-10 |
 
 ## Acknowledgements
 

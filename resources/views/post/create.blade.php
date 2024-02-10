@@ -22,7 +22,7 @@
                 <div class="top">
                     <div class="image">
                         <img src="{{ isset($post) ? ($post->image_path ? asset($post->image_path) : asset('images/picture3.jpg')) : asset('images/picture3.jpg') }}" id="output" alt="image">
-                        <input id="image" type="file" name="image" accept="image/*" onchange="loadFile(event)" style="display: none;">
+                        <input id="image" type="hidden" name="image">
                         <div class="change_image"><i class="fa-solid fa-image"></i> Zmień</div>
                     </div>
                     <div class="info">
@@ -87,5 +87,6 @@
                 </div>
             </div>
         </form>
+        <x-select-image />
     </div>
 </x-admin-layout>

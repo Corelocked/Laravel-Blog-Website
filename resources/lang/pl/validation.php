@@ -205,6 +205,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'category_id' => [
+            'min' => 'Nie wybrano kategorii.',
+        ],
     ],
 
     /*

@@ -84,7 +84,7 @@ function drawModal(data) {
         } else {
             usageDiv.classList.add('post');
             usageDiv.innerHTML = `
-                    <img src="${item.thumbnail}" alt="">
+                    ${item.thumbnail ? `<img src="${item.thumbnail}" alt="">` : ''}
                     <div class="info">
                         <div class="type">${item.type}</div>
                         <div class="location${item.location === 'Ciało' ? ' body': ''}">${item.location}</div>

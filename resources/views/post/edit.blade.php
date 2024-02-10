@@ -34,7 +34,7 @@
                 <div class="top">
                     <div class="image">
                         <img src="{{ asset($post->image_path) }}" id="output" alt="image">
-                        <input id="image" type="file" name="image" accept="image/*" onchange="loadFile(event)" style="display: none;">
+                        <input id="image" type="hidden" name="image">
                         <div class="change_image"><i class="fa-solid fa-image"></i> Zmień</div>
                     </div>
                     <div class="info">
@@ -97,6 +97,7 @@
                 </div>
             </div>
         </form>
+        <x-select-image />
     </div>
     @if ($hasAutoSave)
         <script type="module">

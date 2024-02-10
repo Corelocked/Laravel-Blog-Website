@@ -1714,6 +1714,103 @@ aside.post__preview .ql-size-huge {
     margin-top: 20px;
     font-size: 12px;
 }
+.post__create .select-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.post__create .select-image .option {
+    display: flex;
+    /*display: none;*/
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--bar-color);
+    border-radius: 10px;
+    margin: 0 10px;
+    color: #808080;
+    width: 220px;
+    height: 250px;
+    -webkit-box-shadow: 0px 0px 17px -3px var(--shadow-color);
+    -moz-box-shadow: 0px 0px 17px -3px var(--shadow-color);
+    box-shadow: 0px 0px 17px -3px var(--shadow-color);
+    cursor: pointer;
+    transition: 0.2s ease all;
+}
+.post__create .select-image .option:hover{
+    transform: scale(1.05);
+}
+.post__create .select-image .option:hover i,
+.post__create .select-image .option:hover p {
+    color: #06c;
+}
+.post__create .select-image .option i {
+    font-size: 48px;
+    margin: 10px 0;
+    transition: 0.1s ease all;
+}
+.post__create .select-image .option p {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 10px 0;
+    transition: 0.1s ease all;
+}
+.post__create .select-image .browse-images {
+    width: calc(100% - 100px);
+    height: calc(100% - 100px);
+    background: var(--bar-color);
+    border-radius: 10px;
+    padding: 20px;
+}
+.post__create .select-image .browse-images .back {
+    color: var(--text-color);
+    font-size: 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.post__create .select-image .image-list {
+    overflow: auto;
+    height: calc(100% - 36px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: flex-start;
+}
+.post__create .select-image .image-list .loading {
+    position: relative;
+    background: transparent;
+    backdrop-filter: none;
+    width: 100%;
+    height: auto;
+}
+.post__create .select-image .image-list img {
+    object-fit: cover;
+    width: 300px;
+    height: 200px;
+    margin: 8px;
+    border-radius: 5px;
+    transition: 0.2s ease all;
+    cursor: pointer;
+}
+.post__create .select-image .image-list img:hover {
+    transform: scale(1.05);
+}
+.post__create .select-image .browse-images .load-images {
+    width: 100%;
+    height: 5px;
+}
+
 .history-list {
     display: flex;
     flex-direction: column;
@@ -2878,6 +2975,12 @@ form ul li {
     }
     .dashboard .actions_home {
         width: 95%;
+    }
+    .post__create .select-image {
+        flex-direction: column;
+    }
+    .post__create .select-image .option {
+        margin: 10px 0;
     }
 }
 @media only screen and (max-width: 650px) {
