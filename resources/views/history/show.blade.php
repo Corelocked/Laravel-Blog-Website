@@ -10,6 +10,7 @@
         <div class="profile">
             <img src="{{ asset(Auth::user()->image_path) }}" alt="" class="profile_img">
             <i class="fa-solid fa-angles-down"></i>
+            <span class="notifications_count">{{ $unreadNotifications }}</span>
         </div>
     </header>
 
@@ -188,7 +189,7 @@
         <aside class="post__preview" id="second_post" style="display: none;">
             <div class="post_container">
                 <div class="top">
-                    <img src="{{ asset('images/picture.jpg') }}" class="output" alt="image">
+                    <img src="{{ asset('images/posts/picture.jpg') }}" class="output" alt="image">
                     <div class="info">
                         <p class="preview_title"></p>
                         <div class="category"></div>

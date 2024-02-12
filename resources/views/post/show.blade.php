@@ -22,7 +22,7 @@
                     @if($post->is_published == false)
                         <p class="date">(Nie widoczne)</p>
                     @endif
-                    @can('post-super-list')
+                    @can(['post-super-list', 'post-edit'])
                         <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edytuj</a>
                     @else
                         @if(Auth::User())

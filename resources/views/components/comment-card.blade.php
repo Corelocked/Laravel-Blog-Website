@@ -10,7 +10,7 @@
                 <i class="fa-solid fa-circle"></i>
                 <a href="{{ route('comments.edit', $comment->id) }}" class="edit">Edytuj</a>
             @endcan
-            @if($post->user_id == Auth::id() OR Auth::User()->hasPermissionTo('comment-super-list'))
+            @if(Auth::Check() && ($post->user_id == Auth::id() OR Auth::User()->hasPermissionTo('comment-super-list')))
                 @can('comment-delete')
                     <i class="fa-solid fa-circle"></i>
                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" id="comment_delete_{{ $comment->id }}">

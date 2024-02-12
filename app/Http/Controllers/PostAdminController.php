@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\SavedPost;
 use App\Models\HistoryPost;
+use App\Notifications\PostNotification;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -272,6 +273,8 @@ class PostAdminController extends Controller
             $SavedPost->delete();
         }
 
+        Auth::User()->notify(new PostNotification('SUKCES', 'Utworzono post!', "/post/$post->slug"));
+
         return redirect()->route('posts.index');
     }
 
@@ -410,6 +413,10 @@ class PostAdminController extends Controller
                     'updated_at' => $post->updated_at,
                 ]);
 
+                if (Auth::Id() !== $post->user_id) {
+                    $post->user->notify(new PostNotification('INFO', 'Nastąpiła edycja posta przez '.Auth::User()->firstname.' '. Auth::User()->lastname. '.', "/dashboard/posts/$post->id/edit/history/current/show"));
+                }
+
                 $post->update($input);
             }
 
@@ -458,6 +465,10 @@ class PostAdminController extends Controller
 
         $post->delete();
 
+        if (Auth::Id() !== $post->user_id) {
+            $post->user->notify(new PostNotification('INFO', 'Nastąpiło usunięcie posta przez '.Auth::User()->firstname.' '. Auth::User()->lastname. '.'));
+        }
+
         return redirect()->route('posts.index');
     }
 
@@ -491,6 +502,10 @@ class PostAdminController extends Controller
             HighlightPost::create([
                 'post_id' => $post->id,
             ]);
+
+            if (Auth::Id() !== $post->user_id) {
+                $post->user->notify(new PostNotification('INFO', 'Wyróźniono post.', "/post/$post->slug"));
+            }
         }
 
         return redirect()->back();

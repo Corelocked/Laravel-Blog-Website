@@ -100,6 +100,7 @@ header.header_post_edit .info {
     font-weight: 600;
 }
 header .profile {
+    position: relative;
     float: right;
     display: flex;
     align-items: center;
@@ -119,6 +120,23 @@ header .profile:hover i {
     color: #3498db;
     transform: scale(1.05);
 }
+header .profile .notifications_count {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    top: -4px;
+    position: absolute;
+    left: -4px;
+    background: #eb4d4b;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
 .filter {
     float: left;
     background: var(--bar-color);
@@ -2581,7 +2599,8 @@ form ul li {
     z-index: 999;
     font-family: "Poppins", sans-serif;
 }
-.modal-profile {
+.modal-profile,
+.modal-notifications {
     background: var(--bar-color);
     color: var(--text-color);
     padding: 10px;
@@ -2597,6 +2616,11 @@ form ul li {
     -webkit-box-shadow: -8px 2px 25px -6px var(--shadow-color);
     -moz-box-shadow: -8px 2px 25px -6px var(--shadow-color);
     box-shadow: -8px 2px 25px -6px var(--shadow-color);
+    overflow: auto;
+}
+.modal-profile.hidden,
+.modal-notifications.hidden {
+    display: none;
 }
 .modal-profile span {
     padding: 15px;
@@ -2610,6 +2634,16 @@ form ul li {
     font-size: 18px;
     top: 15px;
     left: 15px;
+    cursor: pointer;
+}
+.modal-profile .notifications {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #eb4d4b;
+    color: #fff;
+    padding: 0 10px;
+    border-radius: 4px;
     cursor: pointer;
 }
 .modal-profile .name {
@@ -2637,7 +2671,8 @@ form ul li {
     color: #bdc3c7;
     text-shadow: 4px 4px 12px rgba(189, 195, 199, 1);
 }
-.modal-profile .button {
+.modal-profile .button,
+.modal-notifications .back {
     display: flex;
     flex-direction: row;
     font-family: "Poppins", sans-serif;
@@ -2645,32 +2680,111 @@ form ul li {
     text-decoration: none;
     padding: 8px;
     border-radius: 10px;
-    width: 100%;
-    margin: 5px;
+    width: calc(100% - 10px);
+    margin: 5px 0;
     text-align: center;
     color: var(--text-color);
     background: var(--button);
     transition: 0.1s ease all;
     cursor: pointer;
 }
-.modal-profile .button i {
+.modal-notifications .back {
+    width: 100%;
+}
+.modal-profile .button i,
+.modal-notifications .back i {
     width: 48px;
     margin: auto;
     font-size: 18px;
     transition: 0.1s all ease;
 }
-.modal-profile .button:hover i {
+.modal-profile .button:hover i,
+.modal-notifications .back:hover i {
     color: #3498db;
 }
-.modal-profile .button p {
+.modal-profile .button p,
+.modal-notifications .back p {
     width: calc(100% - 48px);
     font-family: "Poppins", sans-serif;
     font-size: 17px;
     text-align: center;
 }
-.modal-profile .button:hover {
+.modal-profile .button:hover,
+.modal-notifications .back:hover {
     /* background: #ecf0f1; */
     font-weight: 600;
+}
+.modal-notifications {
+    align-items: flex-start;
+}
+.modal-notifications .date {
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 12px;
+}
+.modal-notifications .date:not(:nth-of-type(1)) {
+    margin-top: 4px;
+}
+.modal-notifications .notification {
+    margin-left: 10px;
+    margin-bottom: 8px;
+    width: calc(100% - 10px);
+}
+.modal-notifications .notification.action {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+}
+.modal-notifications .notification.action .clear_notifications {
+    margin-top: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+}
+.modal-notifications .notification.action .clear_notifications:hover{
+    font-weight: 600;
+}
+.modal-notifications .notification .empty {
+    margin: 6px 0;
+    text-align: center;
+}
+.modal-notifications .notification .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+.modal-notifications .notification.success .header {
+    color: #2ECC71;
+}
+.modal-notifications .notification.info .header {
+    color: #3498DB;
+}
+.modal-notifications .notification.warning .header {
+    color: #f1c40f;
+}
+.modal-notifications .notification.error {
+    text-align: left;
+}
+.modal-notifications .notification .header .fa-circle {
+    font-size: 4px;
+    margin: 0 12px;
+    color: #ccc;
+}
+.modal-notifications .notification .message {
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 16px;
+    margin: 2px 0;
+}
+.modal-notifications .notification .link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: #3498DB;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 ::-webkit-scrollbar {
@@ -3062,9 +3176,12 @@ form ul li {
     }
 }
 @media only screen and (max-width: 430px) {
-    .modal-profile {
+    .modal-profile,
+    .modal-notifications {
         width: 100%;
         max-width: 100%;
+        border-radius: 0;
+        border: none;
     }
 }
 @media only screen and (max-width: 425px) {
@@ -3138,6 +3255,11 @@ form ul li {
     }
     .ql-toolbar.ql-snow {
         top: 56px;
+    }
+    header .profile .notifications_count {
+        font-size: 10px;
+        width: 16px;
+        height: 16px;
     }
 }
 @media only screen and (max-width: 390px) {

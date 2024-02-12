@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HistoryPost;
 use App\Models\Post;
+use App\Notifications\PostNotification;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -143,6 +144,10 @@ class PostHistoryController extends Controller
             'change_user_id' => $historyPost->change_user_id,
             'changelog' => null,
         ]);
+
+        if (Auth::Id() !== $post->user_id) {
+            $post->user->notify(new PostNotification('INFO', 'Nastąpiła edycja posta przez '.Auth::User()->firstname.' '. Auth::User()->lastname. '. Post został przywrócony z historii.', "/dashboard/posts/$post->id/edit/history/current/show"));
+        }
 
         return redirect()->route('posts.edit', ['post' => $postid]);
     }

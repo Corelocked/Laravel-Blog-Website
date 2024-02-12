@@ -2,7 +2,7 @@
 
 A straightforward blog page written in PHP/Laravel.
 
-![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/5a197c23-7ff0-4726-8361-52b06235350f)
+![main](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/0968c8ef-77cd-4e7f-ba4b-76e1a8e4388d)
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ Furthermore, the website is fully responsive.
 
 I tried to add the best protection I could to this website. I'm referring to prohibitions against deleting other people's posts besides the "Admin" account, deleting roles owned by others or the "Admin" role, deleting yourself, and even editing another person's account.
 
-![post](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/009bd73d-e7b1-4504-af2b-8ece5a1f7b4a)
+![post](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/e332038e-05bf-4818-b32d-968a45692d84)
 
 ## Technologies
 
@@ -91,9 +91,9 @@ Email: writer@db.com
 Password: writer1234
 ```
 
-![dashboard](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/ea2a36a9-0be9-46bb-bdbb-08358ad2d4aa)
-![dashboard_posts](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/e434b5ad-4dc4-43f4-a4d9-fd9b1fb53d67)
-![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/77146227-071b-4385-9634-df5a676ded5a)
+![dashboard](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/ab2cbc89-b149-4770-9f90-46fa6287fd8b)
+![dashboard_posts](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/4c295832-b21c-4f64-bc7f-8da7e73ed3de)
+![posts_create](https://github.com/Mati822456/Laravel-Blog-Website/assets/103435077/579c241a-48ee-48fc-8654-f366a3a5f490)
 
 ## Features
 
@@ -116,6 +116,7 @@ Password: writer1234
 | Super-permissions                | &#9745; Finished     | 2024-02-05 |
 | Image Browser                    | &#9745; Finished     | 2024-02-09 |
 | Enhance image selection          | &#9745; Finished     | 2024-02-10 |
+| Notifications                    | &#9745; Finished     | 2024-02-12 |
 
 ## Acknowledgements
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\RoleNotification;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -304,6 +306,9 @@ class UserController extends Controller
                 if ($oldRole != $user->roles[0]->name) {
                     $changes['rola'] = $user->roles[0]->name;
                     $data['rola'] = $user->roles[0]->name;
+                    if (Auth::Id() !== $user->id) {
+                        $user->notify(new RoleNotification('INFO', 'Przyznano nową role '. $user->roles[0]->name . '.'));
+                    }
                 }
             }
         }
@@ -384,9 +389,28 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
+    public function readNotifications(Request $request)
+    {
+        $date = Carbon::createFromTimestamp($request->input('date') / 1000);
+        Auth::user()->unreadNotifications->where('created_at', '<=', $date)->markAsRead();
+        return response()->json('OK');
+    }
+
+    public function clearNotifications()
+    {
+        $notifications = Auth::user()->notifications;
+
+        foreach ($notifications as $notification) {
+            $notification->delete();
+        }
+        return response()->json('OK');
+    }
+
+
     private function storeImage(Request $request)
     {
-        $newImageName = uniqid().'-'.$request->image->getClientOriginalName();
+        $imageName = str_replace(' ', '-', $request->image->getClientOriginalName());
+        $newImageName = uniqid().'-'.$imageName;
         $request->image->move(public_path('images\avatars'), $newImageName);
 
         return '/images/avatars/'.$newImageName;

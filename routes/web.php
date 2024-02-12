@@ -79,6 +79,10 @@ Route::post('/comment/store', [CommentController::class, 'store'])->name('commen
 // Send Mail Route
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/send', [MailController::class, 'index'])->name('mail.send');
+
+    // NOTIFICATIONS
+    Route::patch('read-notifications', [UserController::class, 'readNotifications'])->name('read.notifications');
+    Route::delete('clear-notifications', [UserController::class, 'clearNotifications'])->name('clear.notifications');
 });
 
 // Profile Route

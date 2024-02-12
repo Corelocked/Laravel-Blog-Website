@@ -5,6 +5,7 @@
         <div class="profile">
             <img src="{{ asset(Auth::user()->image_path) }}" alt="" class="profile_img">
             <i class="fa-solid fa-angles-down"></i>
+            <span class="notifications_count">{{ $unreadNotifications }}</span>
         </div>
     </header>
     <div class="history-list">

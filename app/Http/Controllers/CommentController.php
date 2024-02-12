@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use App\Notifications\CommentNotification;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -124,6 +125,13 @@ class CommentController extends Controller
             'body' => $request->body,
             'post_id' => $post->id,
         ]);
+
+        if (Auth::check() && Auth::Id() !== $post->user_id) {
+            $post->user->notify(new CommentNotification('INFO', 'Pojawił się nowy komentarz.', "/post/$post_slug"));
+        } elseif (!Auth::check()) {
+            $post->user->notify(new CommentNotification('INFO', 'Pojawił się nowy komentarz.', "/post/$post_slug"));
+        }
+
 
         return redirect()->back();
     }
