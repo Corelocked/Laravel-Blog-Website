@@ -56,7 +56,8 @@ class CommentController extends Controller
             $selected_users_array = null;
         }
 
-        if (Auth::User()->hasPermissionTo('comment-super-list')) {
+        $user = Auth::user();
+        if ($user && $user->hasPermissionTo('comment-super-list')) {
             if ($selected_users_array) {
                 $comments = Comment::join('posts', 'posts.id', '=', 'comments.post_id')
                     ->whereIn('posts.user_id', $selected_users_array)
@@ -127,11 +128,10 @@ class CommentController extends Controller
         ]);
 
         if (Auth::check() && Auth::Id() !== $post->user_id) {
-            $post->user->notify(new CommentNotification('INFO', 'Pojawił się nowy komentarz.', "/post/$post_slug"));
+            $post->user->notify(new CommentNotification('INFO', 'A new comment has appeared.', "/post/$post_slug"));
         } elseif (!Auth::check()) {
-            $post->user->notify(new CommentNotification('INFO', 'Pojawił się nowy komentarz.', "/post/$post_slug"));
+            $post->user->notify(new CommentNotification('INFO', 'A new comment has appeared.', "/post/$post_slug"));
         }
-
 
         return redirect()->back();
     }
@@ -209,9 +209,10 @@ class CommentController extends Controller
     }
 
     private function checkUserIdPost(Post $post): void
-    {
-        if ($post->user_id != Auth::id() && ! Auth::User()->hasPermissionTo('comment-super-list')) {
-            abort(403);
-        }
+{
+    $user = Auth::user();
+    if ($post->user_id != Auth::id() && (! $user || ! $user->hasPermissionTo('comment-super-list'))) {
+        abort(403);
     }
+}
 }

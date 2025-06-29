@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -22,7 +23,7 @@ class PostController extends Controller
     {
         $posts = Post::with('category')
             ->where('is_published', true)
-            ->select('posts.*', \DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
+            ->select('posts.*', DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
             ->limit(20)
             ->orderBy('id', 'desc')->get();
 
@@ -44,7 +45,6 @@ class PostController extends Controller
      */
     public function show(string $slug)
     {
-        // $post = Post::findOrFail($id);
         $post = Post::where('slug', $slug)->firstOrFail();
 
         $nextPost = Post::where('id', '>', $post->id)->first();
@@ -52,8 +52,9 @@ class PostController extends Controller
         $user = User::find($post->user_id);
 
         if (!$post->is_published) {
-            if (Auth::User()) {
-                if (Auth::User() == $user || Auth::User()->hasPermissionTo('post-super-list')) {
+            if (Auth::user()) {
+                if (Auth::id() == $user->id || Auth::user()->hasPermissionTo('post-super-list')) {
+                    // allow
                 } else {
                     abort(404);
                 }
@@ -86,7 +87,7 @@ class PostController extends Controller
                     },
                 ])
                 ->where('is_published', true)
-                ->select('posts.*', \DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
+                ->select('posts.*', DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
                 ->offset($offset)
                 ->limit(20)
                 ->orderBy('id', 'desc')->get()

@@ -8,52 +8,52 @@
     <div class="users">
         <div class="filter">
             <div class="filtr_collapse">
-                <p class="head">Użytkownicy</p>
+                <p class="head">Users</p>
                 <i class="fa-solid fa-caret-up button_collapse"></i>
             </div>
             <div class="filtr_body">
                 <div class="sort">
-                    <p class="name">Sortowanie</p>
+                    <p class="name">Sorting</p>
                     <div class="buttons sort_buttons">
                         <div class="filter-button active" onclick="filterCheck(1);" data-order="desc">
                             <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
-                            <p>Najnowsze</p>
+                            <p>Newest</p>
                         </div>
                         <div class="filter-button" onclick="filterCheck(2);" data-order="asc">
                             <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
-                            <p>Najstarsze</p>
+                            <p>Oldest</p>
                         </div>
                     </div>
                 </div>
                 <div class="term">
-                    <p class="name">Wyszukaj</p>
+                    <p class="name">Search</p>
                     <div class="inputs">
                         <input type="text" name="term" value="{{ $terms ?? '' }}">
                     </div>
                 </div>
                 <div class="records">
-                    <p class="name">Rekordy</p>
+                    <p class="name">Records</p>
                     <div class="buttons">
                         <div class="filter-button rec_1" onclick="radioCheck(1);">
                             <span class="dot"><i class="fa-solid fa-square-xmark"></i></span>
-                            <p>20 rekordów</p>
+                            <p>20 records</p>
                         </div>
                         <div class="filter-button rec_2" onclick="radioCheck(2);">
                             <span class="dot"><i class="fa-regular fa-square"></i></span>
-                            <p>50 rekordów</p>
+                            <p>50 records</p>
                         </div>
                         <div class="filter-button rec_3" onclick="radioCheck(3);">
                             <span class="dot"><i class="fa-regular fa-square"></i></span>
-                            <p>100 rekordów</p>
+                            <p>100 records</p>
                         </div>
                         <div class="filter-button rec_4" onclick="radioCheck(4);">
                             <span class="dot"><i class="fa-regular fa-square"></i></span>
-                            <p>Max rekordów</p>
+                            <p>Max records</p>
                         </div>
                     </div>
                 </div>
                 <div class="roles_filtr">
-                    <p class="name">Rola</p>
+                    <p class="name">Role</p>
                     <div class="buttons">
                         @foreach ($roles as $role)
                             @if (isset($selected_roles_array) && in_array($role->id, $selected_roles_array))
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="filter-button show_results">
-                    <p>Zastosuj filtry</p>
+                    <p>Apply filters</p>
                 </div>
                 <form style="display: none" id="filter_form">
                     <input type="text" id="term" name="q" value="{{ $terms ?? '' }}">
@@ -86,34 +86,34 @@
                 <thead>
                     <tr>
                         <th scope="col">IMG</th>
-                        <th scope="col">Imię</th>
-                        <th scope="col">Nazwisko</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Rola</th>
-                        <th scope="col" style="width:125px;">Akcje</th>
+                        <th scope="col">Role</th>
+                        <th scope="col" style="width:125px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="body_user_list">
                     @foreach ($users as $key => $user)
                         <tr>
                             <td data-label="IMG"><img src="{{ asset($user->image_path) }}" alt="{{ $user->firstname }}"></td>
-                            <td data-label="Imię">{{ $user->firstname }}</td>
-                            <td data-label="Nazwisko">{{ $user->lastname }}</td>
+                            <td data-label="First Name">{{ $user->firstname }}</td>
+                            <td data-label="Last Name">{{ $user->lastname }}</td>
                             <td data-label="Email">{{ $user->email }}</td>
-                            <td data-label="Rola">
+                            <td data-label="Role">
                                 @if(!empty($user->getRoleNames()))
                                     @foreach($user->getRoleNames() as $v)
                                         <span>{{ $v }}</span>
                                     @endforeach
                                 @endif
                             </td>
-                            <td data-label="Akcje">
+                            <td data-label="Actions">
                                 @can('user-edit')
                                     <a href="{{ route('users.edit', $user->id) }}" class="edit"><i class="fa-solid fa-pen-to-square"></i></a>
                                 @endcan
                                 @can('user-delete')
                                     @if(Auth::id() == $user->id)
-                                        <button class="delete" onClick="cannot('Nie można usunąć swojego konta!')"><i class="fa-solid fa-trash"></i></a>
+                                        <button class="delete" onClick="cannot('You cannot delete your own account!')"><i class="fa-solid fa-trash"></i></a>
                                         @else
                                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" id="user_{{ $user->id }}">
                                             @method('DELETE')

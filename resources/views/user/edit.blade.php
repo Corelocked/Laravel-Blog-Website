@@ -5,7 +5,7 @@
         <form action="{{ route('users.update', $user->id) }}" method="POST" id="create_user">
             @csrf
             @method('PATCH')
-            <div class="welcome-2">Edytuj użytkownika</div>
+            <div class="welcome-2">Edit User</div>
             <div class="body_form">
                 @if(count($errors) > 0)
                     <ul>
@@ -14,13 +14,13 @@
                         @endforeach
                     </ul>
                 @endif
-                <label>Imię</label>
+                <label>First Name</label>
                 <input type="text" name="firstname" autocomplete="off" value="{{ $user->firstname }}">
-                <label>Nazwisko</label>
+                <label>Last Name</label>
                 <input type="text" name="lastname" autocomplete="off" value="{{ $user->lastname }}">
                 <label>Email</label>
                 <input type="email" name="email" autocomplete="off" value="{{ $user->email }}">
-                <label>Uprawnienia</label>
+                <label>Role</label>
                 <select name="roles">
                     @isset($roles)
                         @foreach ($roles as $role)
@@ -32,14 +32,14 @@
                         @endforeach
                     @endisset
                 </select>
-                <label>Hasło</label>
+                <label>Password</label>
                 <div id="password_gen">
                     <input type="text" name="password" autocomplete="off">
-                    <div class="button" onClick="generatePassword();">Generuj</div>
+                    <div class="button" onClick="generatePassword();">Generate</div>
                 </div>
-                <label>Mail</label>
+                <label>Email</label>
                 <div class="mail">
-                    <p>Wyślij email po edycji konta</p>
+                    <p>Send email after editing account</p>
                     <label class="switch">
                         <input type="checkbox" name="send_mail" checked>
                         <span class="slider round"></span>

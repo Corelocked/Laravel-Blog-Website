@@ -146,7 +146,11 @@ class PostHistoryController extends Controller
         ]);
 
         if (Auth::Id() !== $post->user_id) {
-            $post->user->notify(new PostNotification('INFO', 'Nastąpiła edycja posta przez '.Auth::User()->firstname.' '. Auth::User()->lastname. '. Post został przywrócony z historii.', "/dashboard/posts/$post->id/edit/history/current/show"));
+            $post->user->notify(new PostNotification(
+                'INFO',
+                'The post was edited by ' . Auth::User()->firstname . ' ' . Auth::User()->lastname . '. The post has been restored from history.',
+                "/dashboard/posts/$post->id/edit/history/current/show"
+            ));
         }
 
         return redirect()->route('posts.edit', ['post' => $postid]);

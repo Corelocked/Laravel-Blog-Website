@@ -55,7 +55,7 @@ window.show = function (id = null, history_id, compare = false) {
             if (!response.ok) {
                 Toast.fire({
                     icon: 'error',
-                    title: 'Nie można wczytać!'
+                    title: 'Cannot load!'
                 })
                 throw new Error('Network response was not ok');
             }
@@ -83,7 +83,7 @@ window.show = function (id = null, history_id, compare = false) {
             } else {
                 const readTimeTextElement = document.createElement('p');
                 readTimeTextElement.className = 'reading-text';
-                readTimeTextElement.textContent = 'Czas czytania: ';
+                readTimeTextElement.textContent = 'Reading time: ';
 
                 const watchIcon = document.createElement('i');
                 watchIcon.className = 'fa-solid fa-clock';
@@ -96,7 +96,7 @@ window.show = function (id = null, history_id, compare = false) {
             }
 
             const date = new Date(data.created_at);
-            const formattedDate = date.toLocaleDateString("pl-PL", {
+            const formattedDate = date.toLocaleDateString("en-GB", {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
@@ -106,7 +106,7 @@ window.show = function (id = null, history_id, compare = false) {
             document.querySelector(".post__preview" + postElementId + " .post_container .info .date").innerHTML = formattedDate + author;
 
             const body =
-                '<div class="actions"><a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a><a>Następny post <i class="fa-solid fa-arrow-right"></i></a></div>';
+                '<div class="actions"><a><i class="fa-solid fa-arrow-left"></i> Back to main page</a><a>Next post <i class="fa-solid fa-arrow-right"></i></a></div>';
 
             document.querySelector(postElementId + " .post_body").innerHTML = data.body + body;
 
@@ -162,7 +162,7 @@ window.show = function (id = null, history_id, compare = false) {
         .catch(error => {
             Toast.fire({
                 icon: 'error',
-                title: 'Nie można wczytać!'
+                title: 'Cannot load!'
             })
             console.error('There has been a problem with your fetch operation:', error);
         });
@@ -213,14 +213,14 @@ window.switchShowCompare = function () {
 
 window.revert = function (postId, historyId) {
     Swal.fire({
-        title: "Czy jesteś pewien?",
-        html: "Czy na pewno chcesz przywrócić?<p style='font-size: 15px; font-weight: 400; margin-top: 5px;'>Informacja:<br>Po przywróceniu post zostanie zaktualizowany, będzie można dodatkowo edytować.</p>",
+        title: "Are you sure?",
+        html: "Are you sure you want to revert?<p style='font-size: 15px; font-weight: 400; margin-top: 5px;'>Info:<br>After reverting, the post will be updated and you will be able to edit it further.</p>",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Tak, przywróć!",
-        cancelButtonText: "Anuluj",
+        confirmButtonText: "Yes, revert!",
+        cancelButtonText: "Cancel",
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href =
@@ -240,11 +240,11 @@ window.extend_history = function () {
     if (history_list.style.height === '0px') {
         history_list.style.height = 'auto';
         history_list.style.visibility = 'visible';
-        extend_history.innerHTML = "Ukryj kompaktową historię";
+        extend_history.innerHTML = "Hide compact history";
     } else {
         history_list.style.height = '0px';
         history_list.style.visibility = 'hidden';
-        extend_history.innerHTML = "Pokaż kompaktową historię";
+        extend_history.innerHTML = "Show compact history";
     }
 
 }

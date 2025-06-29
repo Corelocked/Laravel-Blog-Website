@@ -8,7 +8,7 @@
                     <input type="hidden" value="1" name="new">
                     <button type="submit"><i class="fa-regular fa-square-plus"></i></button>
                 </form>
-                <p>Nowy</p>
+                <p>New</p>
             </div>
             @foreach ($posts as $post)
                 <x-saved-post-card :post="$post" />

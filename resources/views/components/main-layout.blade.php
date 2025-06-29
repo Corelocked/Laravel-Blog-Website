@@ -33,7 +33,9 @@
     @endif
 
     <footer>
-        <p>Mateusz Zaborski ● 2023</p>
+        <p>Patrick Miguel Babala ● 2025</p>
+        <p>Christian Denzon ● 2025</p>
+        <p>Cedric Joshua Palapuz ● 2025</p>
     </footer>
 
 </body>

@@ -8,7 +8,7 @@
         <div class="comment_actions">
             @can('comment-edit')
                 <i class="fa-solid fa-circle"></i>
-                <a href="{{ route('comments.edit', $comment->id) }}" class="edit">Edytuj</a>
+                <a href="{{ route('comments.edit', $comment->id) }}" class="edit">Edit</a>
             @endcan
             @if(Auth::Check() && ($post->user_id == Auth::id() OR Auth::User()->hasPermissionTo('comment-super-list')))
                 @can('comment-delete')
@@ -16,7 +16,7 @@
                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" id="comment_delete_{{ $comment->id }}">
                         @method('DELETE')
                         @csrf
-                        <div class="delete" onClick="document.getElementById('comment_delete_{{ $comment->id }}').submit()">Usuń</div>
+                        <div class="delete" onClick="document.getElementById('comment_delete_{{ $comment->id }}').submit()">Delete</div>
                     </form>
                 @endcan
             @endif

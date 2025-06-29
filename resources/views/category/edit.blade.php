@@ -5,7 +5,7 @@
         <form action="{{ route('categories.update', $category->id) }}" method="POST" id="edit_category">
             @csrf
             @method('PATCH')
-            <div class="welcome-2">Edytuj kategorię</div>
+            <div class="welcome-2">Edit category</div>
             <div class="body_form">
                 @if(count($errors) > 0)
                     <ul>
@@ -14,13 +14,13 @@
                         @endforeach
                     </ul>
                 @endif
-                <label>Nazwa</label>
+                <label>Name</label>
                 <input type="text" name="name" autocomplete="off" value="{{ $category->name }}">
-                <label>Tło</label>
+                <label>Background</label>
                 <input type="text" name="backgroundColor" autocomplete="off" value="{{ $category->backgroundColor }}">
-                <label>Kolor</label>
+                <label>Color</label>
                 <input type="text" name="textColor" autocomplete="off" value="{{ $category->textColor }}">
-                <input type="submit" value="Edytuj">
+                <input type="submit" value="Edit">
             </div>
         </form>
     </div>

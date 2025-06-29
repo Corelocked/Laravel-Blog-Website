@@ -3,7 +3,7 @@
 
     <div class="dashboard">
         <form action="{{ route('roles.store') }}" method="POST" id="create_role">
-            <div class="welcome-2">Dodaj role</div>
+            <div class="welcome-2">Add Role</div>
             @if(count($errors) > 0)
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -13,7 +13,7 @@
             @endif
             <div class="body_form">
                 @csrf
-                <label>Nazwa</label>
+                <label>Name</label>
                 <input type="text" name="name" autocomplete="off">
                 @php
                     $last_label = '';
@@ -43,7 +43,7 @@
                     </label>
                 @endforeach
                 </div>
-                <input type="submit" value="Utwórz">
+                <input type="submit" value="Create">
             </div>
         </form>
     </div>

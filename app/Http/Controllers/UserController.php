@@ -141,7 +141,7 @@ class UserController extends Controller
         $input['send_mail'] = $request->send_mail == 'on' ? true : false;
 
         if ($input['send_mail']) {
-            $data['subject'] = 'Zostało założone konto na Blogu!';
+            $data['subject'] = 'An account has been created on the Blog!';
             $data['user'] = $request->firstname.' '.$request->lastname;
             $data['rola'] = $request->roles;
             $data['login'] = $request->email;
@@ -307,7 +307,7 @@ class UserController extends Controller
                     $changes['rola'] = $user->roles[0]->name;
                     $data['rola'] = $user->roles[0]->name;
                     if (Auth::Id() !== $user->id) {
-                        $user->notify(new RoleNotification('INFO', 'Przyznano nową role '. $user->roles[0]->name . '.'));
+                        $user->notify(new RoleNotification('INFO', 'A new role '. $user->roles[0]->name . ' has been assigned.'));
                     }
                 }
             }
@@ -347,7 +347,7 @@ class UserController extends Controller
         $input['send_mail'] = $request->send_mail == 'on' ? true : false;
 
         if ($changes) {
-            $data['subject'] = 'Zostały wprowadzone zmiany na koncie.';
+            $data['subject'] = 'Changes have been made to the account.';
             $data['user'] = $oldName;
             if ($input['send_mail']) {
                 return redirect()->route('mail.send', [

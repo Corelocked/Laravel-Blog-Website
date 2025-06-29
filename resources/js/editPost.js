@@ -16,14 +16,14 @@ document.addEventListener("DOMContentLoaded", function() {
 window.detectedAutoSave = function () {
     clearInterval(myTimer);
     Swal.fire({
-        title: 'Wykryto auto-zapis!',
-        text: "Czy chcesz wczytać zapis, czy odrzucić?",
+        title: 'Auto-save detected!',
+        text: "Do you want to load the save or reject it?",
         icon: 'info',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Wczytaj',
-        cancelButtonText: 'Odrzuć',
+        confirmButtonText: 'Load',
+        cancelButtonText: 'Reject',
         allowOutsideClick: false
     }).then((result) => {
         if (result.isConfirmed) {
@@ -75,7 +75,7 @@ window.savePost = function(submit = false) {
             if (image) {
                 document.querySelector('input[name=image]').value = null;
             }
-            document.querySelector(".post__create .post_options .auto-save-info").innerHTML = '<i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Zapisano: ' + getCurrentTime();
+            document.querySelector(".post__create .post_options .auto-save-info").innerHTML = '<i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Saved: ' + getCurrentTime();
         })
         .catch(error => {
             console.error('Fetch Error: ', error.message);
@@ -88,7 +88,7 @@ function loadAutoSave() {
             if (!response.ok) {
                 Toast.fire({
                     icon: 'error',
-                    title: 'Nie można wczytać!'
+                    title: 'Cannot load!'
                 })
                 throw new Error('Network response was not ok');
             }
@@ -117,7 +117,7 @@ function loadAutoSave() {
             } else {
                 const readTimeTextElement = document.createElement('p');
                 readTimeTextElement.className = 'reading-text';
-                readTimeTextElement.textContent = 'Czas czytania: ';
+                readTimeTextElement.textContent = 'Reading time: ';
 
                 const watchIcon = document.createElement('i');
                 watchIcon.className = 'fa-solid fa-clock';

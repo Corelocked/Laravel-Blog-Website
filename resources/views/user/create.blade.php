@@ -4,7 +4,7 @@
     <div class="dashboard">
         <form action="{{ route('users.store') }}" method="POST" id="create_user">
             @csrf
-            <div class="welcome-2">Dodaj użytkownika</div>
+            <div class="welcome-2">Create User</div>
             @if(count($errors) > 0)
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -13,13 +13,13 @@
                 </ul>
             @endif
             <div class="body_form">
-                <label>Imię</label>
+                <label>First Name</label>
                 <input type="text" name="firstname" autocomplete="off">
-                <label>Nazwisko</label>
+                <label>Last Name</label>
                 <input type="text" name="lastname" autocomplete="off">
                 <label>Email</label>
                 <input type="email" name="email" autocomplete="off">
-                <label>Uprawnienia</label>
+                <label>Role</label>
                 <select name="roles">
                     @isset($roles)
                         @foreach ($roles as $role)
@@ -27,20 +27,20 @@
                         @endforeach
                     @endisset
                 </select>
-                <label>Hasło</label>
+                <label>Password</label>
                 <div id="password_gen">
                     <input type="text" name="password" autocomplete="off">
-                    <div class="button" onClick="generatePassword();">Generuj</div>
+                    <div class="button" onClick="generatePassword();">Generate</div>
                 </div>
-                <label>Mail</label>
+                <label>Email</label>
                 <div class="mail">
-                    <p>Wyślij email po założeniu konta</p>
+                    <p>Send email after creating account</p>
                     <label class="switch">
                         <input type="checkbox" name="send_mail" checked>
                         <span class="slider round"></span>
                     </label>
                 </div>
-                <input type="submit" value="Utwórz">
+                <input type="submit" value="Create">
             </div>
         </form>
     </div>

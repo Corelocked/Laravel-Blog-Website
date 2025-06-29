@@ -70,7 +70,7 @@ window.readNotifications = function () {
                 }
             })
             .catch(error => {
-                console.error('Wystąpił błąd podczas przetwarzania zapytania:', error);
+                console.error('An error occurred while processing the request:', error);
             });
     }
 }
@@ -102,13 +102,13 @@ window.clearNotifications = function () {
 
                 const paragraph = document.createElement('p');
                 paragraph.classList.add('empty');
-                paragraph.textContent = 'Brak powiadomień';
+                paragraph.textContent = 'No notifications';
                 notificationDiv.appendChild(paragraph);
                 notificationModal.appendChild(notificationDiv);
             }
         })
         .catch(error => {
-            console.error('Wystąpił błąd podczas przetwarzania zapytania:', error);
+            console.error('An error occurred while processing the request:', error);
         });
 }
 

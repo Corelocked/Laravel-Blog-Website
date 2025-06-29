@@ -71,7 +71,7 @@ function drawModal(data) {
 
     data.used.forEach(item => {
         const usageDiv = document.createElement('div');
-        if (item.type === "Użytkownik") {
+        if (item.type === "User") {
             usageDiv.classList.add('user');
             usageDiv.innerHTML = `
                     <img src="${item.thumbnail}" alt="">
@@ -87,7 +87,7 @@ function drawModal(data) {
                     ${item.thumbnail ? `<img src="${item.thumbnail}" alt="">` : ''}
                     <div class="info">
                         <div class="type">${item.type}</div>
-                        <div class="location${item.location === 'Ciało' ? ' body': ''}">${item.location}</div>
+                        <div class="location${item.location === 'Body' ? ' body': ''}">${item.location}</div>
                         <div class="title">${item.title}</div>
                     </div>
                 `;
@@ -110,14 +110,14 @@ window.closeModal = function () {
 
 window.deleteImage = function (event) {
     Swal.fire({
-        title: "Czy jesteś pewien?",
-        html: "Czy na pewno chcesz usunąć?<p style='font-size: 15px; font-weight: 400; margin-top: 5px;'>Informacja:<br>Ta akcja nie jest zalecana.</p>",
+        title: "Are you sure?",
+        html: "Are you sure you want to delete?<p style='font-size: 15px; font-weight: 400; margin-top: 5px;'>Info:<br>This action is not recommended.</p>",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Potwiedzam, usuń!",
-        cancelButtonText: "Anuluj",
+        confirmButtonText: "Confirm, delete!",
+        cancelButtonText: "Cancel",
     }).then((result) => {
         if (result.isConfirmed) {
             const imageName = event.target.dataset.name;

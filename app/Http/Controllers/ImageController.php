@@ -12,6 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class ImageController extends Controller
 {
@@ -397,8 +398,8 @@ class ImageController extends Controller
                 $postTypes = ['posts', 'saved_posts', 'history_posts'];
 
                 foreach ($postTypes as $postType) {
-                    $contents = \DB::table($postType)->pluck('body');
-                    $imagePaths = \DB::table($postType)->pluck('image_path');
+                    $contents = DB::table($postType)->pluck('body');
+                    $imagePaths = DB::table($postType)->pluck('image_path');
 
                     foreach ($contents as $content) {
                         preg_match_all('/<img[^>]+src="([^"]+)"/', $content, $matches);
@@ -414,7 +415,7 @@ class ImageController extends Controller
                     }
                 }
             } elseif ($directory === "avatars") {
-                $imagePaths = \DB::table('users')->pluck('image_path');
+                $imagePaths = DB::table('users')->pluck('image_path');
 
                 foreach ($imagePaths as $imagePath) {
                     $imageUsageCounts[$imagePath] = isset($imageUsageCounts[$imagePath]) ? $imageUsageCounts[$imagePath] + 1 : 1;
@@ -430,17 +431,17 @@ class ImageController extends Controller
         $imageName = "/images/$directory/$imageName";
 
         if ($directory === "avatars") {
-            $users = \DB::table('users')->get(['id', 'firstname', 'lastname', 'image_path']);
+            $users = DB::table('users')->get(['id', 'firstname', 'lastname', 'image_path']);
             foreach ($users as $user) {
                 $imagePath = $user->image_path;
                 if (str_contains($imagePath, $imageName)) {
                     $imageUsageInfo[] = [
-                        'type' => 'Użytkownik',
+                        'type' => 'User',
                         'id' => $user->id,
                         'firstname' => $user->firstname,
                         'lastname' => $user->lastname,
                         'thumbnail' => $user->image_path,
-                        'location' => 'Awatar'
+                        'location' => 'Avatar'
                     ];
                 }
             }
@@ -449,12 +450,12 @@ class ImageController extends Controller
 
         $postTypes = [
             'posts' => 'Post',
-            'saved_posts' => 'Zapisany post',
-            'history_posts' => 'Historia'
+            'saved_posts' => 'Saved post',
+            'history_posts' => 'History'
         ];
 
         foreach ($postTypes as $table => $type) {
-            $posts = \DB::table($table)->get(['id', 'title', 'body', 'image_path']);
+            $posts = DB::table($table)->get(['id', 'title', 'body', 'image_path']);
 
             foreach ($posts as $post) {
                 $thumbnailPath = $post->image_path;
@@ -464,7 +465,7 @@ class ImageController extends Controller
                         'id' => $post->id,
                         'title' => $post->title,
                         'thumbnail' => $post->image_path,
-                        'location' => 'Miniaturka'
+                        'location' => 'Thumbnail'
                     ];
                 }
 
@@ -476,7 +477,7 @@ class ImageController extends Controller
                                 'id' => $post->id,
                                 'title' => $post->title,
                                 'thumbnail' => $post->image_path,
-                                'location' => 'Ciało'
+                                'location' => 'Body'
                             ];
                         }
                     }

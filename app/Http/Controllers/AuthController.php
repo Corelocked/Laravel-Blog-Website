@@ -25,7 +25,7 @@ class AuthController extends Controller
             return redirect('/');
         }
 
-        return redirect('/login')->with('message', 'Dane się nie zgadzają!');
+        return redirect('/login')->with('message', 'The data does not match!');
     }
 
     public function logout(Request $request)

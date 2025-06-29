@@ -28,26 +28,14 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->input('q') !== null) {
-            $terms = $request->input('q');
-        } else {
-            $terms = '';
-        }
+        $terms = $request->input('q') ?? '';
 
-        if ($request->input('order') !== null) {
-            $order = $request->input('order');
-        } else {
-            $order = 'desc';
-        }
-        if ($request->input('limit') !== null) {
-            $limit = $request->input('limit');
-        } else {
-            $limit = 20;
-        }
+        $order = $request->input('order') ?? 'desc';
+        $limit = $request->input('limit') ?? 20;
 
         $roles = Role::withCount('users')->orderBy('id', $order);
 
-        if ($terms !== null && $terms !== '') {
+        if ($terms !== '') {
             $keywords = explode(' ', $terms);
 
             $roles->where(function ($query) use ($keywords) {

@@ -1,7 +1,7 @@
 <x-admin-layout>
     <header class="header_post_edit">
-        <a href="{{ route('posts.edit', $id) }}"><i class="fa-solid fa-left-long"></i> Powrót</a>
-        <span class="info">Historia posta</span>
+        <a href="{{ route('posts.edit', $id) }}"><i class="fa-solid fa-left-long"></i> Back</a>
+        <span class="info">Post history</span>
         <div class="profile">
             <img src="{{ asset(Auth::user()->image_path) }}" alt="" class="profile_img">
             <i class="fa-solid fa-angles-down"></i>
@@ -13,7 +13,7 @@
         @php($lastDate = $autoSave ? $autoSave->updated_at->format('Y-m-d') : null)
         @if ($autoSave)
             <div class="date">
-                Zmiany z {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
+                Changes from {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
                 <div class="line-v"></div>
             </div>
             <a href="{{ route('history.show', [$id, $autoSave->id]) }}">
@@ -33,7 +33,7 @@
                         <span class="excerpt">{{ $autoSave->excerpt }}</span>
                         <div class="bottom-info">
                             <span class="created"><i class="fa-regular fa-clock"></i> {{ $autoSave->updated_at->diffForHumans() }}, <span class="time">{{ $autoSave->updated_at->format('H:i') }}</span></span>
-                            <span class="additional_info"><i class="fa-solid fa-floppy-disk"></i> Autozapis</span>
+                            <span class="additional_info"><i class="fa-solid fa-floppy-disk"></i> Autosave</span>
                         </div>
                         @if ($autoSave->changelog)
                             <div class="changelog-info">
@@ -50,12 +50,12 @@
             @if ($autoSave)
                 <div class="date">
                     <div class="line-v"></div>
-                    Zmiany z {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
+                    Changes from {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
                     <div class="line-v"></div>
                 </div>
             @else
                 <div class="date">
-                    Zmiany z {{ \Carbon\Carbon::parse($currentPost->updated_at)->translatedFormat('d F, Y') }}
+                    Changes from {{ \Carbon\Carbon::parse($currentPost->updated_at)->translatedFormat('d F, Y') }}
                     <div class="line-v"></div>
                 </div>
             @endif
@@ -79,8 +79,8 @@
                     <span class="excerpt">{{ $currentPost->excerpt }}</span>
                     <div class="bottom-info">
                         <span class="created"><i class="fa-regular fa-clock"></i> {{ $currentPost->updated_at->diffForHumans() }}, <span class="time">{{ $currentPost->updated_at->format('H:i') }}</span></span>
-                        <span class="additional_info"><i class="fa-solid fa-bolt"></i> Aktualny</span>
-                        <span class="additional_info">{!! $currentPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}</span>
+                        <span class="additional_info"><i class="fa-solid fa-bolt"></i> Current</span>
+                        <span class="additional_info">{!! $currentPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Restored' : '' !!}</span>
                     </div>
                     @if ($currentPost->changelog)
                         <div class="changelog-info">
@@ -99,7 +99,7 @@
                     @php($lastDate = $postDate)
                     <div class="date">
                         <div class="line-v"></div>
-                        Zmiany z {{ \Carbon\Carbon::parse($postDate)->translatedFormat('d F, Y') }}
+                        Changes from {{ \Carbon\Carbon::parse($postDate)->translatedFormat('d F, Y') }}
                         <div class="line-v"></div>
                     </div>
                 @elseif($post->additional_info == 2)
@@ -125,7 +125,7 @@
                             <div class="bottom-info">
                                 <span class="created"><i class="fa-regular fa-clock"></i> {{ $post->updated_at->diffForHumans() }}, <span class="time">{{ $post->updated_at->format('H:i') }}</span></span>
                                 @if($post->additional_info)
-                                    <span class="additional_info">{!! $post->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}</span>
+                                    <span class="additional_info">{!! $post->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Restored' : '' !!}</span>
                                 @endif
                             </div>
                             @if ($post->changelog)

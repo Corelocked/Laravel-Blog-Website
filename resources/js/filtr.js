@@ -160,13 +160,13 @@ window.categoriesToggle = function () {
             category.classList.remove("show");
         })
         visibleCategories = false;
-        toggleButton.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Pokaż więcej';
+        toggleButton.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Show more';
     } else {
         categories_hidden.forEach((category) => {
             category.classList.add("show");
         })
         visibleCategories = true;
-        toggleButton.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Ukryj';
+        toggleButton.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Hide';
     }
 }
 
@@ -329,5 +329,4 @@ window.selectDuplicates = function (value) {
         duplicateValue.classList.replace('fa-solid', 'fa-regular');
         duplicateValue.classList.replace('fa-square-check', 'fa-square');
     }
-
 }

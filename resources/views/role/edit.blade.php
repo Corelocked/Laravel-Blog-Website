@@ -3,8 +3,8 @@
 
     <div class="dashboard">
         <div class="role">
-            <div class="welcome-2">Rola: {{ $role->name }}</div>
-            <p class="role_label_2">Uprawnienia</p>
+            <div class="welcome-2">Role: {{ $role->name }}</div>
+            <p class="role_label_2">Permissions</p>
             <form action="{{ route('roles.update', $role->id) }}" method="POST" class="role_list">
                 @csrf
                 @method('PATCH')
@@ -41,7 +41,7 @@
                 @endforeach
                 </div>
                 <input type="hidden" name="name" value="{{ $role->name }}">
-                <input type="submit" value="Edytuj">
+                <input type="submit" value="Edit">
             </form>
         </div>
     </div>

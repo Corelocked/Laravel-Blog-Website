@@ -10,24 +10,24 @@
                     @endif
                     @if ($post->read_time)
                         <div class="reading-info">
-                            <p class="reading-text">Czas czytania: </p>
+                            <p class="reading-text">Reading time: </p>
                             <i class="fa-solid fa-clock"></i>
                             <p class="reading-time">{{ $post->read_time }} min</p>
                         </div>
                     @endif
                     <p class="date">{{ $post->created_at->format('d.m.Y') }} by {{ $post->user->firstname . ' ' . $post->user->lastname }}</p>
                     @if($post->created_at != $post->updated_at)
-                        <p class="date">Zaktualizowano: {{ $post->updated_at->format('d.m.Y') }}</p>
+                        <p class="date">Updated: {{ $post->updated_at->format('d.m.Y') }}</p>
                     @endif
                     @if($post->is_published == false)
-                        <p class="date">(Nie widoczne)</p>
+                        <p class="date">(Not visible)</p>
                     @endif
                     @can(['post-super-list', 'post-edit'])
-                        <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edytuj</a>
+                        <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edit</a>
                     @else
                         @if(Auth::User())
                             @if(Auth::User()->id == $post->user_id AND Auth::User()->can('post-edit'))
-                                <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edytuj</a>
+                                <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edit</a>
                             @endif
                         @endif
                     @endcan
@@ -40,23 +40,23 @@
 
             <div class="actions">
                 @isset($nextPost)
-                    <a href="{{ route('home') }}"><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
-                    <a href="{{ route('post.show', $nextPost->slug) }}">Następny post <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="{{ route('home') }}"><i class="fa-solid fa-arrow-left"></i> Back to home page</a>
+                    <a href="{{ route('post.show', $nextPost->slug) }}">Next post <i class="fa-solid fa-arrow-right"></i></a>
                 @else
-                    <a href="{{ route('home') }}" style="width: 100%"><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
+                    <a href="{{ route('home') }}" style="width: 100%"><i class="fa-solid fa-arrow-left"></i> Back to home page</a>
                 @endisset
             </div>
         </div>
         <div class="comments">
-            <p class="info">Komentarze ({{ count($post->comments) }})</p>
+            <p class="info">Comments ({{ count($post->comments) }})</p>
             <div class="add__comment">
                 <form action="{{ route('comments.store') }}" method="POST">
                     @csrf
-                    <label>Imię i/lub Nazwisko</label>
+                    <label>First and/or Last Name</label>
                     <input type="text" name="name" autocomplete="off" value="{{ Auth::User() ? Auth::User()->firstname . ' ' . Auth::User()->lastname : '' }}">
-                    <label>Tekst</label>
+                    <label>Text</label>
                     <textarea name="body"></textarea>
-                    <input type="submit" value="Dodaj">
+                    <input type="submit" value="Add">
                 </form>
             </div>
             <div class="line-1"></div>

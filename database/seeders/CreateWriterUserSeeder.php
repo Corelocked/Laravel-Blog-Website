@@ -16,14 +16,14 @@ class CreateWriterUserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'firstname' => 'Pisarz',
-            'lastname' => 'Pisarz',
+            'firstname' => 'Cedric Joshua',
+            'lastname' => 'Palapuz',
             'email' => 'writer@db.com',
             'image_path' => '/images/avatars/user.png',
             'password' => bcrypt('writer1234'),
         ]);
 
-        $role = Role::create(['name' => 'Pisarz']);
+        $role = Role::create(['name' => 'Writer']);
 
         $permissions = [
             '5' => 5,

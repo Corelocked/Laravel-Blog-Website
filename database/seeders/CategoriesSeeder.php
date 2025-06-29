@@ -16,21 +16,21 @@ class CategoriesSeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name' => 'Technologia', 'backgroundColor' => '#3498db', 'textColor' => '#ffffff'],
-            ['name' => 'Podróże', 'backgroundColor' => '#2ecc71', 'textColor' => '#ffffff'],
-            ['name' => 'Kulinaria', 'backgroundColor' => '#e74c3c', 'textColor' => '#ffffff'],
-            ['name' => 'Moda', 'backgroundColor' => '#9b59b6', 'textColor' => '#ffffff'],
-            ['name' => 'Zdrowie i Fitness', 'backgroundColor' => '#27ae60', 'textColor' => '#ffffff'],
-            ['name' => 'Nauka', 'backgroundColor' => '#3498db', 'textColor' => '#ffffff'],
-            ['name' => 'Rozrywka', 'backgroundColor' => '#e67e22', 'textColor' => '#ffffff'],
-            ['name' => 'Styl życia', 'backgroundColor' => '#f39c12', 'textColor' => '#ffffff'],
-            ['name' => 'Biznes i Finanse', 'backgroundColor' => '#34495e', 'textColor' => '#ffffff'],
-            ['name' => 'Edukacja', 'backgroundColor' => '#16a085', 'textColor' => '#ffffff'],
+            ['name' => 'Technology', 'backgroundColor' => '#3498db', 'textColor' => '#ffffff'],
+            ['name' => 'Travel', 'backgroundColor' => '#2ecc71', 'textColor' => '#ffffff'],
+            ['name' => 'Culinary', 'backgroundColor' => '#e74c3c', 'textColor' => '#ffffff'],
+            ['name' => 'Fashion', 'backgroundColor' => '#9b59b6', 'textColor' => '#ffffff'],
+            ['name' => 'Health and Fitness', 'backgroundColor' => '#27ae60', 'textColor' => '#ffffff'],
+            ['name' => 'Science', 'backgroundColor' => '#3498db', 'textColor' => '#ffffff'],
+            ['name' => 'Entertainment', 'backgroundColor' => '#e67e22', 'textColor' => '#ffffff'],
+            ['name' => 'Lifestyle', 'backgroundColor' => '#f39c12', 'textColor' => '#ffffff'],
+            ['name' => 'Business and Finance', 'backgroundColor' => '#34495e', 'textColor' => '#ffffff'],
+            ['name' => 'Education', 'backgroundColor' => '#16a085', 'textColor' => '#ffffff'],
             ['name' => 'Sport', 'backgroundColor' => '#e74c3c', 'textColor' => '#ffffff'],
-            ['name' => 'Muzyka', 'backgroundColor' => '#2980b9', 'textColor' => '#ffffff'],
-            ['name' => 'Sztuka i Design', 'backgroundColor' => '#8e44ad', 'textColor' => '#ffffff'],
+            ['name' => 'Music', 'backgroundColor' => '#2980b9', 'textColor' => '#ffffff'],
+            ['name' => 'Arts and Design', 'backgroundColor' => '#8e44ad', 'textColor' => '#ffffff'],
             ['name' => 'DIY', 'backgroundColor' => '#d35400', 'textColor' => '#ffffff'],
-            ['name' => 'Gry', 'backgroundColor' => '#c0392b', 'textColor' => '#ffffff'],
+            ['name' => 'Games', 'backgroundColor' => '#c0392b', 'textColor' => '#ffffff'],
         ];
 
         foreach ($categories as $category) {

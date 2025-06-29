@@ -7,6 +7,6 @@
             <p class="uniqid"><i class="fa-solid fa-hashtag"></i> {{ $image['uniqid'] }}</p>
         @endif
         <p class="size"><i class="fa-solid fa-database"></i> {!! formatBytes($image['size']) !!}</p>
-        <p class="usage_count"><i class="fa-solid fa-recycle"></i> Użyto: <span>{{ $image['usage_count'] }}</span></p>
+        <p class="usage_count"><i class="fa-solid fa-recycle"></i> Used: <span>{{ $image['usage_count'] }}</span></p>
     </div>
 </div>

@@ -3,7 +3,7 @@ const title_length = document.querySelector("p.info_title_length");
 
 title.addEventListener("input", (event) => {
     title_length.innerHTML =
-        "Maksymalnie 255 znaków. <span class='current_title_length'>" +
+        "Maximum 255 characters. <span class='current_title_length'>" +
         title.value.length +
         "/255</span>";
     if (title.value.length >= 255) {
@@ -20,7 +20,7 @@ const excerpt_length = document.querySelector("p.excerpt_length");
 
 excerpt.addEventListener("input", (event) => {
     excerpt_length.innerHTML =
-        "Maksymalnie 510 znaków. <span class='current_excerpt_length'>" +
+        "Maximum 510 characters. <span class='current_excerpt_length'>" +
         excerpt.value.length +
         "/510</span>";
     if (excerpt.value.length >= 510) {
@@ -214,7 +214,7 @@ window.selectLocalImage = function () {
                     insertToEditor(url, quill);
                 }
             } else {
-                console.warn("You could only upload images.");
+                console.warn("You can only upload images.");
             }
 
             hideImageModal();
@@ -232,7 +232,7 @@ window.selectLocalImage = function () {
                 imageInput.value = url;
                 window.savePost(false);
             } else {
-                console.warn("You could only upload images.");
+                console.warn("You can only upload images.");
             }
 
             hideImageModal();
@@ -250,7 +250,7 @@ async function imageHandler(image) {
             const ulElement = document.createElement('ul');
             const liElement = document.createElement('li');
 
-            liElement.textContent = 'Obraz jest za duży. Maksymalny rozmiar pliku to 10MB!';
+            liElement.textContent = 'Image is too large. Maximum file size is 10MB!';
             ulElement.appendChild(liElement);
 
             const postContainer = document.querySelector('.post_container');
@@ -320,7 +320,7 @@ window.calculateReadTime = function () {
             console.error("Error:", error);
             Toast.fire({
                 icon: 'error',
-                title: 'Błąd!'
+                title: 'Error!'
             });
         });
 };
@@ -374,10 +374,10 @@ window.categoriesToggle = function () {
 
     if (visibleCategories) {
         visibleCategories = false;
-        toggleButton.innerHTML = 'Rozwiń <i class="fa-solid fa-chevron-down"></i>';
+        toggleButton.innerHTML = 'Expand <i class="fa-solid fa-chevron-down"></i>';
     } else {
         visibleCategories = true;
-        toggleButton.innerHTML = 'Ukryj <i class="fa-solid fa-chevron-up"></i>';
+        toggleButton.innerHTML = 'Hide <i class="fa-solid fa-chevron-up"></i>';
     }
 
     categories.classList.toggle('active');

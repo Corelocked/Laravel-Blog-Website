@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostUpdateFormRequest;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class PostAdminController extends Controller
 {
@@ -61,7 +62,7 @@ class PostAdminController extends Controller
         }
 
         $posts = Post::with('category')
-            ->select('posts.*', \DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
+            ->select('posts.*', DB::raw('(SELECT COUNT(*) FROM highlight_posts WHERE post_id = posts.id) > 0 AS is_highlighted'))
             ->orderBy('id', $order);
         if (Auth::User()->hasPermissionTo('post-super-list')) {
             if ($request->input('users') !== null && $request->input('users')[0] !== null) {
@@ -273,7 +274,7 @@ class PostAdminController extends Controller
             $SavedPost->delete();
         }
 
-        Auth::User()->notify(new PostNotification('SUKCES', 'Utworzono post!', "/post/$post->slug"));
+        Auth::User()->notify(new PostNotification('SUCCESS', 'Post has been created!', "/post/$post->slug"));
 
         return redirect()->route('posts.index');
     }
@@ -350,19 +351,19 @@ class PostAdminController extends Controller
         $changelog = [];
 
         if ($post->title !== $request->title) {
-            $changelog[] = 'Tytuł';
+            $changelog[] = 'Title';
         }
         if ($post->excerpt !== $request->excerpt) {
-            $changelog[] = 'Krótki opis';
+            $changelog[] = 'Excerpt';
         }
         if ($post->body !== $request->body) {
-            $changelog[] = 'Ciało';
+            $changelog[] = 'Body';
         }
         if ($post->is_published !== ($request->is_published == 'on' ? 1 : 0)) {
-            $changelog[] = 'Widoczność';
+            $changelog[] = 'Visibility';
         }
         if ($post->category_id !== (int)$request->category_id) {
-            $changelog[] = 'Kategoria';
+            $changelog[] = 'Category';
         }
 
         $input['title'] = $request->title;
@@ -414,7 +415,7 @@ class PostAdminController extends Controller
                 ]);
 
                 if (Auth::Id() !== $post->user_id) {
-                    $post->user->notify(new PostNotification('INFO', 'Nastąpiła edycja posta przez '.Auth::User()->firstname.' '. Auth::User()->lastname. '.', "/dashboard/posts/$post->id/edit/history/current/show"));
+                    $post->user->notify(new PostNotification('INFO', 'The post was edited by '.Auth::User()->firstname.' '. Auth::User()->lastname. '.', "/dashboard/posts/$post->id/edit/history/current/show"));
                 }
 
                 $post->update($input);
@@ -466,7 +467,7 @@ class PostAdminController extends Controller
         $post->delete();
 
         if (Auth::Id() !== $post->user_id) {
-            $post->user->notify(new PostNotification('INFO', 'Nastąpiło usunięcie posta przez '.Auth::User()->firstname.' '. Auth::User()->lastname. '.'));
+            $post->user->notify(new PostNotification('INFO', 'The post was deleted by '.Auth::User()->firstname.' '. Auth::User()->lastname. '.'));
         }
 
         return redirect()->route('posts.index');
@@ -504,7 +505,7 @@ class PostAdminController extends Controller
             ]);
 
             if (Auth::Id() !== $post->user_id) {
-                $post->user->notify(new PostNotification('INFO', 'Wyróźniono post.', "/post/$post->slug"));
+                $post->user->notify(new PostNotification('INFO', 'The post has been highlighted.', "/post/$post->slug"));
             }
         }
 

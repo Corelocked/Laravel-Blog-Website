@@ -9,60 +9,60 @@
         <div class="comments">
             <div class="filter">
                 <div class="filtr_collapse">
-                    <p class="head">Komentarze</p>
+                    <p class="head">Comments</p>
                     <i class="fa-solid fa-caret-up button_collapse"></i>
                 </div>
                 <div class="filtr_body">
                     <div class="view">
-                        <p class="name">Widok</p>
+                        <p class="name">View</p>
                         <div class="buttons view">
                             <div class="view_button list active" onclick="changeView('list', 'comment');"><i class="fa-solid fa-bars"></i></div>
                             <div class="view_button tiles" onclick="changeView('tile', 'comment');"><i class='bx bxs-grid-alt'></i></div>
                         </div>
                     </div>
                     <div class="sort">
-                        <p class="name">Sortowanie</p>
+                        <p class="name">Sorting</p>
                         <div class="buttons sort_buttons">
                             <div class="filter-button active" onclick="filterCheck(1);" data-order="desc">
                                 <div class="dot"><i class="fa-solid fa-circle-check"></i></div>
-                                <p>Nowe komentarze</p>
+                                <p>Newest comments</p>
                             </div>
                             <div class="filter-button" onclick="filterCheck(2);" data-order="asc">
                                 <div class="dot"><i class="fa-solid fa-circle-dot"></i></div>
-                                <p>Stare komentarze</p>
+                                <p>Oldest comments</p>
                             </div>
                         </div>
                     </div>
                     <div class="term">
-                        <p class="name">Wyszukaj</p>
+                        <p class="name">Search</p>
                         <div class="inputs">
                             <input type="text" name="term" value="{{ $terms ?? '' }}">
                         </div>
                     </div>
                     <div class="records">
-                        <p class="name">Rekordy</p>
+                        <p class="name">Records</p>
                         <div class="buttons">
                             <div class="filter-button rec_1" onclick="radioCheck(1);">
                                 <span class="dot"><i class="fa-solid fa-square-xmark"></i></span>
-                                <p>20 rekordów</p>
+                                <p>20 records</p>
                             </div>
                             <div class="filter-button rec_2" onclick="radioCheck(2);">
                                 <span class="dot"><i class="fa-regular fa-square"></i></span>
-                                <p>50 rekordów</p>
+                                <p>50 records</p>
                             </div>
                             <div class="filter-button rec_3" onclick="radioCheck(3);">
                                 <span class="dot"><i class="fa-regular fa-square"></i></span>
-                                <p>100 rekordów</p>
+                                <p>100 records</p>
                             </div>
                             <div class="filter-button rec_4" onclick="radioCheck(4);">
                                 <span class="dot"><i class="fa-regular fa-square"></i></span>
-                                <p>Max rekordów</p>
+                                <p>Max records</p>
                             </div>
                         </div>
                     </div>
                     @role('Admin')
                         <div class="user">
-                            <p class="name">Posty użytkownika</p>
+                            <p class="name">User's posts</p>
                             <div class="buttons">
                                 @foreach ($users as $user)
                                     @if (isset($selected_users) && in_array($user->toArray(), $selected_users))
@@ -81,7 +81,7 @@
                         </div>
                     @endrole
                     <div class="filter-button show_results">
-                        <p>Zastosuj filtry</p>
+                        <p>Apply filters</p>
                     </div>
                     <form style="display: none" id="filter_form">
                         <input type="text" id="term" name="q" value="{{ $term ?? '' }}">

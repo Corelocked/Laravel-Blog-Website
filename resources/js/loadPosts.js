@@ -68,7 +68,7 @@ function addPostTiles(data) {
         if (isHighlighted) {
             const highlightedIcon = document.createElement("div");
             highlightedIcon.className = "highlighted_icon";
-            highlightedIcon.textContent = "Wyróżnione ";
+            highlightedIcon.textContent = "Highlighted ";
 
             const starIcon = document.createElement("i");
             starIcon.className = "fa-solid fa-star";
@@ -83,7 +83,7 @@ function addPostTiles(data) {
 
         const readDiv = document.createElement("div");
         readDiv.className = "read";
-        readDiv.innerHTML = `<i class="fa-solid fa-angles-right" aria-hidden="true"></i>Przeczytaj`;
+        readDiv.innerHTML = `<i class="fa-solid fa-angles-right" aria-hidden="true"></i>Read`;
 
         const bodyContainer = document.createElement("div");
         bodyContainer.className = "body";

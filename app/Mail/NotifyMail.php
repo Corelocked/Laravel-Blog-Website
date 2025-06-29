@@ -33,7 +33,7 @@ class NotifyMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('mateusz.zaborski1@gmail.com', 'Mateusz Zaborski'),
+            from: new Address('cedricjoshua.palapuz@gmail.com', 'Cedric Joshua Palapuz'),
             subject: $this->data['subject'],
         );
     }

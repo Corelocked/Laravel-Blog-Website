@@ -3,20 +3,20 @@
 
     <div class="dashboard main">
         <img src="{{ asset('images/moon.jpg') }}" id="dashboard__image" alt="dashboard">
-        <p class="welcome">Witaj w Panelu Administracyjnym!</p>
+        <p class="welcome">Welcome to the Admin Panel!</p>
         <p class="name_profile">{{ Auth::User()->firstname . ' ' . Auth::User()->lastname }}</p>
         <div class="actions_home">
             <div class="connected">
                 @can('post-create')
                     <a href="{{ route('posts.create') }}" class="button">
                         <i class="fa-solid fa-plus"></i>
-                        <p>Dodaj post</p>
+                        <p>Add post</p>
                     </a>
                 @endcan
                 @can('post-list')
                     <a href="{{ route('posts.index') }}" class="button">
                         <i class="fa-solid fa-newspaper"></i>
-                        <p>Przeglądaj posty</p>
+                        <p>Browse posts</p>
                     </a>
                 @endcan
             </div>
@@ -24,13 +24,13 @@
                 @can('category-create')
                     <a href="{{ route('categories.create') }}" class="button">
                         <i class="fa-solid fa-square-plus"></i>
-                        <p>Dodaj kategorię</p>
+                        <p>Add category</p>
                     </a>
                 @endcan
                 @can('category-list')
                     <a href="{{ route('categories.index') }}" class="button">
                         <i class="fa-solid fa-layer-group"></i>
-                        <p>Przeglądaj kategorie</p>
+                        <p>Browse categories</p>
                     </a>
                 @endcan
             </div>
@@ -38,40 +38,40 @@
                 @can('user-create')
                     <a href="{{ route('users.create') }}" class="button">
                         <i class="fa-solid fa-user-plus"></i>
-                        <p>Dodaj użytkownika</p>
+                        <p>Add user</p>
                     </a>
                 @endcan
                 @can('user-list')
                     <a href="{{ route('users.index') }}" class="button">
                         <i class="fa-solid fa-user-gear"></i>
-                        <p>Zarządzaj użytkownikami</p>
+                        <p>Manage users</p>
                     </a>
                 @endcan
             </div>
             @can('comment-list')
                 <a href="{{ route('comments.index') }}" class="button">
                     <i class="fa-solid fa-comments"></i>
-                    <p>Przeglądaj komentarze</p>
+                    <p>Browse comments</p>
                 </a>
             @endcan
             <div class="connected">
                 @can('role-create')
                     <a href="{{ route('roles.create') }}" class="button">
                         <i class="fa-solid fa-wrench"></i>
-                        <p>Dodaj role</p>
+                        <p>Add role</p>
                     </a>
                 @endcan
                 @can('role-list')
                     <a href="{{ route('roles.index') }}" class="button">
                         <i class="fa-solid fa-toolbox"></i>
-                        <p>Przeglądaj role</p>
+                        <p>Browse roles</p>
                     </a>
                 @endcan
             </div>
             @can('image-list')
                 <a href="{{ route('images.index') }}" class="button">
                     <i class="fa-solid fa-image"></i>
-                    <p>Przeglądaj obrazy</p>
+                    <p>Browse images</p>
                 </a>
             @endcan
         </div>

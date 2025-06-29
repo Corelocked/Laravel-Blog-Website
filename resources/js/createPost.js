@@ -59,7 +59,7 @@ window.savePost = function(submit = false){
             .then(data => {
                 Toast.fire({
                     icon: 'success',
-                    title: 'Zapisano!'
+                    title: 'Saved!'
                 });
                 if (image) {
                     document.querySelector('input[name=image]').value = null;
@@ -71,7 +71,7 @@ window.savePost = function(submit = false){
             .catch(error => {
                 Toast.fire({
                     icon: 'error',
-                    title: 'Niezapisano!'
+                    title: 'Not saved!'
                 });
                 console.error('Fetch Error: ', error);
             });

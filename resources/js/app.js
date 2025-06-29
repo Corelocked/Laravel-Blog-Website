@@ -4,14 +4,14 @@ import './theme';
 
 window.confirmDelete = function(id, name){
     Swal.fire({
-        title: 'Czy jesteś pewien?',
-        text: "Nie będziesz mógł tego przywrócić!",
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Tak, usuń!',
-        cancelButtonText: 'Anuluj'
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById(name + '_' + id).submit();
@@ -21,7 +21,7 @@ window.confirmDelete = function(id, name){
 
 window.cannot = function(message){
     Swal.fire(
-        'Błąd',
+        'Error',
         message,
         'error'
     )

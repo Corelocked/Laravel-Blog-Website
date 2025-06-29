@@ -18,16 +18,16 @@
 {{--        <p class="date">{{ $post->updated_at->format('d.m.Y') }} by {{ $post->user->firstname . ' ' . $post->user->lastname }}</p>--}}
     </div>
     <div class="actions">
-        <a href="{{ route('post.show', $post->slug) }}" class="read_more">Przejdź <i class="fa-solid fa-angles-right"></i></a>
+        <a href="{{ route('post.show', $post->slug) }}" class="read_more">Go to <i class="fa-solid fa-angles-right"></i></a>
         @can('post-edit')
-            <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edytuj <i class="fa-solid fa-pen-to-square"></i></a>
+            <a href="{{ route('posts.edit', $post->id) }}" class="edit">Edit <i class="fa-solid fa-pen-to-square"></i></a>
         @endcan
         @can('post-delete')
             <form action="{{ route('posts.destroy', $post->id) }}" method="POST" id="post_{{ $post->id }}">
                 @method('DELETE')
                 @csrf
             </form>
-            <button onClick="confirmDelete({{ $post->id }}, 'post')" class="delete">Usuń <i class="fa-solid fa-trash"></i></button>
+            <button onClick="confirmDelete({{ $post->id }}, 'post')" class="delete">Delete <i class="fa-solid fa-trash"></i></button>
         @endcan
         @can('post-highlight')
             @if($post->is_highlighted)
@@ -35,14 +35,14 @@
                     @csrf
                     <input type="hidden" name="id" value="{{ $post->id }}">
                 </form>
-                <button onClick="document.getElementById('highlight_{{ $post->id }}').submit();" class="highlight deselect">Odznacz <i class="fa-solid fa-star"></i></button>
+                <button onClick="document.getElementById('highlight_{{ $post->id }}').submit();" class="highlight deselect">Unmark <i class="fa-solid fa-star"></i></button>
             @else
                 @if($countHighlighted < 3)
                     <form action="{{ route('post.highlight') }}" method="POST" id="highlight_{{ $post->id }}">
                         @csrf
                         <input type="hidden" name="id" value="{{ $post->id }}">
                     </form>
-                    <button onClick="document.getElementById('highlight_{{ $post->id }}').submit();" class="highlight">Wyróżnij <i class="fa-solid fa-star"></i></button>
+                    <button onClick="document.getElementById('highlight_{{ $post->id }}').submit();" class="highlight">Highlight <i class="fa-solid fa-star"></i></button>
                 @endif
             @endif
         @endcan

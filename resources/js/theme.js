@@ -7,7 +7,7 @@ if (currentTheme === "dark") {
         toggle_button_icon.classList.replace("fa-moon", "fa-sun");
     }
     if (button_text) {
-        button_text.innerHTML = "Tryb Jasny";
+        button_text.innerHTML = "Light Mode";
     }
 }
 
@@ -15,14 +15,14 @@ window.toggleMode = function (){
     if (currentTheme === 'light') {
         currentTheme = 'dark'
         if (button_text){
-             button_text.innerHTML = "Tryb Jasny";
+             button_text.innerHTML = "Light Mode";
         }
         toggle_button_icon.classList.replace("fa-moon", "fa-sun");
         document.documentElement.setAttribute('data-theme', 'dark');
     } else {
         currentTheme = 'light'
         if (button_text){
-            button_text.innerHTML = "Tryb Ciemny";
+            button_text.innerHTML = "Dark Mode";
         }
         document.documentElement.setAttribute('data-theme', 'light');
         toggle_button_icon.classList.replace("fa-sun", "fa-moon");

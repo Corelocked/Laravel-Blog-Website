@@ -4,9 +4,9 @@
     @endsection
 
     <header class="header_post_edit">
-        <a href="{{ route('history.index', $id) }}"><i class="fa-solid fa-left-long"></i> Powrót</a>
-        <span class="leave-compare" onclick="leaveCompare();">Opuść porównanie</span>
-        <span class="info">Historia posta</span>
+        <a href="{{ route('history.index', $id) }}"><i class="fa-solid fa-left-long"></i> Back</a>
+        <span class="leave-compare" onclick="leaveCompare();">Leave compare</span>
+        <span class="info">Post history</span>
         <div class="profile">
             <img src="{{ asset(Auth::user()->image_path) }}" alt="" class="profile_img">
             <i class="fa-solid fa-angles-down"></i>
@@ -16,13 +16,13 @@
 
     <div class="post__history">
         <div class="compact-history-list">
-            <div class="extend-history" onclick="extend_history();">Pokaż kompaktową historię</div>
+            <div class="extend-history" onclick="extend_history();">Show compact history</div>
             <div id="history_list" style="height: 0px; visibility: hidden;">
                 @php($autoSave = $historyPosts->where('additional_info', 2)->first())
                 @php($lastDate = $autoSave ? $autoSave->updated_at->format('Y-m-d') : null)
                 @if ($autoSave)
                     <div class="date">
-                        Zmiany z {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
+                        Changes from {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
                         <div class="line-v"></div>
                     </div>
                     <div class="history_card h_{{$autoSave->id}} {{(int)$history_id === $autoSave->id ? 'active' : ''}}" onclick="show({{$currentPost->id}}, {{$autoSave->id}});">
@@ -40,9 +40,9 @@
                             <span class="title">{{ $autoSave->title }}</span>
                             <div class="bottom-info">
                                 <span class="created"><i class="fa-regular fa-clock"></i> {{ $autoSave->updated_at->diffForHumans() }}, <span class="time">{{ $autoSave->updated_at->format('H:i') }}</span></span>
-                                <span class="additional_info"><i class="fa-solid fa-floppy-disk"></i> Autozapis</span>
+                                <span class="additional_info"><i class="fa-solid fa-floppy-disk"></i> Autosave</span>
                             </div>
-                            <span onclick="compare(event, {{ $autoSave->id }});" class="compare{{(int)$history_id === $autoSave->id ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
+                            <span onclick="compare(event, {{ $autoSave->id }});" class="compare{{(int)$history_id === $autoSave->id ? ' hidden' : '' }}">Compare <i class="fa-solid fa-right-left"></i></span>
                         </div>
                     </div>
                 @endif
@@ -51,12 +51,12 @@
                     @if ($autoSave)
                         <div class="date">
                             <div class="line-v"></div>
-                            Zmiany z {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
+                            Changes from {{ \Carbon\Carbon::parse($lastDate)->translatedFormat('d F, Y') }}
                             <div class="line-v"></div>
                         </div>
                     @else
                         <div class="date">
-                            Zmiany z {{ \Carbon\Carbon::parse($currentPost->updated_at)->translatedFormat('d F, Y') }}
+                            Changes from {{ \Carbon\Carbon::parse($currentPost->updated_at)->translatedFormat('d F, Y') }}
                             <div class="line-v"></div>
                         </div>
                     @endif
@@ -78,8 +78,8 @@
                         <span class="title">{{ $currentPost->title }}</span>
                         <div class="bottom-info">
                             <span class="created"><i class="fa-regular fa-clock"></i> {{ $currentPost->updated_at->diffForHumans() }}, <span class="time">{{ $currentPost->updated_at->format('H:i') }}</span></span>
-                            <span class="additional_info"><i class="fa-solid fa-bolt"></i> Aktualny</span>
-                            <span class="additional_info">{!! $currentPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}</span>
+                            <span class="additional_info"><i class="fa-solid fa-bolt"></i> Current</span>
+                            <span class="additional_info">{!! $currentPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Restored' : '' !!}</span>
                         </div>
                         @if ($currentPost->changelog)
                             <div class="changelog-info">
@@ -87,7 +87,7 @@
                                 <span class="changelog"><i class="fa-solid fa-square-pen"></i> <span class="text">{{ $currentPost->changelog }}</span></span>
                             </div>
                         @endif
-                        <span onclick="compare(event, 'current');" class="compare{{ $history_id === 'current' ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
+                        <span onclick="compare(event, 'current');" class="compare{{ $history_id === 'current' ? ' hidden' : '' }}">Compare <i class="fa-solid fa-right-left"></i></span>
                     </div>
                 </div>
                 @foreach($historyPosts as $historyPost)
@@ -96,7 +96,7 @@
                         @php($lastDate = $postDate)
                         <div class="date">
                             <div class="line-v"></div>
-                            Zmiany z {{ \Carbon\Carbon::parse($postDate)->translatedFormat('d F, Y') }}
+                            Changes from {{ \Carbon\Carbon::parse($postDate)->translatedFormat('d F, Y') }}
                             <div class="line-v"></div>
                         </div>
                     @elseif($historyPost->additional_info == 2)
@@ -120,7 +120,7 @@
                             <span class="title">{{ $historyPost->title }}</span>
                             <div class="bottom-info">
                                     <span class="created"><i class="fa-regular fa-clock"></i> {{ $historyPost->updated_at->diffForHumans() }}, <span class="time">{{ $historyPost->updated_at->format('H:i') }}</span></span>
-                                    <span class="additional_info">{!! $historyPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Przywrócono' : '' !!}{!! $historyPost->additional_info == 2 ? '<i class="fa-solid fa-floppy-disk"></i> Autozapis' : '' !!}</span>
+                                    <span class="additional_info">{!! $historyPost->additional_info == 1 ? '<i class="fa-solid fa-clock-rotate-left"></i> Restored' : '' !!}{!! $historyPost->additional_info == 2 ? '<i class="fa-solid fa-floppy-disk"></i> Autosave' : '' !!}</span>
                                 </div>
                             @if ($historyPost->changelog)
                                 <div class="changelog-info">
@@ -130,10 +130,10 @@
                             @endif
                             @if ($historyPost->additional_info !== 2)
                                 <span class="actions{{(int)$history_id === $historyPost->id ? '' : ' hidden' }}">
-                                    <span onClick="revert({{ $id }}, {{ $historyPost->id }});">Przywróć <i class="fa-solid fa-clock-rotate-left"></i></span>
+                                    <span onClick="revert({{ $id }}, {{ $historyPost->id }});">Restore <i class="fa-solid fa-clock-rotate-left"></i></span>
                                 </span>
                             @endif
-                            <span onclick="compare(event, {{ $historyPost->id }});" class="compare{{(int)$history_id === $historyPost->id ? ' hidden' : '' }}">Porównaj <i class="fa-solid fa-right-left"></i></span>
+                            <span onclick="compare(event, {{ $historyPost->id }});" class="compare{{(int)$history_id === $historyPost->id ? ' hidden' : '' }}">Compare <i class="fa-solid fa-right-left"></i></span>
                         </div>
                     </div>
                 @endforeach
@@ -152,7 +152,7 @@
                         @endisset
                         @isset($post->read_time)
                             <div class="reading-info">
-                                <p class="reading-text">Czas czytania: </p>
+                                <p class="reading-text">Reading time: </p>
                                 <i class="fa-solid fa-clock"></i>
                                 <p class="reading-time">{{ $post->read_time }} min</p>
                             </div>
@@ -167,18 +167,18 @@
                 {!! $post->body !!}
 
                 <div class="actions">
-                    <a><i class="fa-solid fa-arrow-left"></i> Powrót do strony głównej</a>
-                    <a>Następny post <i class="fa-solid fa-arrow-right"></i></a>
+                    <a><i class="fa-solid fa-arrow-left"></i> Back to home page</a>
+                    <a>Next post <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
 
             </div>
             <div class="post_options">
-                <div class="header">Dodatkowe opcje:</div>
-                <label>Krótki opis</label>
+                <div class="header">Additional options:</div>
+                <label>Short description</label>
                 <div class="excerpt">{{ isset($post) ? $post->excerpt  : '' }}</div>
-                <label>Widoczność</label>
+                <label>Visibility</label>
                 <div class="published">
-                    <p>Ustawiona widoczność na publiczne</p>
+                    <p>Visibility set to public</p>
                     <label class="switch">
                         <input type="checkbox" name="is_published" {{ isset($post) ? ($post->is_published ? 'checked' : '') : 'checked' }} disabled>
                         <span class="slider round"></span>
@@ -194,7 +194,7 @@
                         <p class="preview_title"></p>
                         <div class="category"></div>
                         <div class="reading-info">
-                            <p class="reading-text">Czas czytania: </p>
+                            <p class="reading-text">Reading time: </p>
                             <i class="fa-solid fa-clock"></i>
                             <p class="reading-time">0 min</p>
                         </div>
@@ -206,12 +206,12 @@
 
             </div>
             <div class="post_options">
-                <div class="header">Dodatkowe opcje:</div>
-                <label>Krótki opis</label>
+                <div class="header">Additional options:</div>
+                <label>Short description</label>
                 <div class="excerpt"></div>
-                <label>Widoczność</label>
+                <label>Visibility</label>
                 <div class="published">
-                    <p>Ustawiona widoczność na publiczne</p>
+                    <p>Visibility set to public</p>
                     <label class="switch">
                         <input type="checkbox" name="is_published" disabled>
                         <span class="slider round"></span>
@@ -222,6 +222,6 @@
         <div class="loading hidden">
             <div class="loader"></div>
         </div>
-        <div onclick="switchShowCompare();" class="switch-compare">Przełącz</div>
+        <div onclick="switchShowCompare();" class="switch-compare">Switch</div>
     </div>
 </x-admin-layout>
